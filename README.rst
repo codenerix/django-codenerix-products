@@ -31,7 +31,7 @@ Quickstart
         'codenerix_products',
     ]
 
-3. Add in settings the params:
+3. Add in settings the params::
 
     # path for codenerix_products
     CDNX_PRODUCTS_URL = "products"
