@@ -1729,15 +1729,32 @@ class ListProducts(GenList):
             lang = settings.LANGUAGES[0][0].lower()
 
         if pk and type_list:
+
+            # aplicamos los filtros recibidos
+            params = ast.literal_eval(info.request.GET.get("json"))
+
+            slug_period = None
+            if "period" in params and params["period"]:
+                if params["period"]['period'] != '*':
+                    slug_period = params["period"]['period']
+
             only_with_stock = None
             # filtramos dependiendo de la url original que estemos visitando
             if type_list == 'SUB':
                 only_with_stock = Category.objects.filter(subcategory__pk=pk, show_only_product_stock=True).exists()
                 limits['type_list'] = Q(product__subcategory__pk=pk)
+
+            elif type_list == 'CAT':
+                limits['type_list'] = Q(product__category__pk=pk)
+                if slug_period:
+                    limits['by_period'] = Q(**{"product__subcategory__{}__slug".format(lang): slug_period})
+
             elif type_list == 'BRAND':
                 limits['type_list'] = Q(product__brand__pk=pk)
+
             elif type_list == 'SEARCH':
                 only_with_stock = settings.CDNX_PRODUCTS_SHOW_ONLY_STOCK
+
             else:
                 raise Exception("Pendiente de definir")
 
