@@ -1,6 +1,6 @@
-===========================
+=========================
 django-codenerix-products
-===========================
+=========================
 
 Codenerix Products is a module that enables `CODENERIX.com <http://www.codenerix.com/>`_ to set products on several platforms in a general manner
 
