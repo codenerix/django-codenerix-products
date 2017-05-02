@@ -33,12 +33,12 @@ Quickstart
 
 3. Add in settings the params:
 
-	# path for codenerix_products
-	CDNX_PRODUCTS_URL = "products"
-	# if you show the products without stock
-	CDNX_PRODUCTS_SHOW_ONLY_STOCK = False
-	# number of the days for one products to be considered new
-	CDNX_PRODUCTS_NOVELTY_DAYS = 5
+    # path for codenerix_products
+    CDNX_PRODUCTS_URL = "products"
+    # if you show the products without stock
+    CDNX_PRODUCTS_SHOW_ONLY_STOCK = False
+    # number of the days for one products to be considered new
+    CDNX_PRODUCTS_NOVELTY_DAYS = 5
 
 4. Since Codenerix Products is a library, you only need to import its parts into your project and use them.
 
