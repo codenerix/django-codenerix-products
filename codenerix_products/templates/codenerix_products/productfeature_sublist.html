@@ -1,0 +1,62 @@
+{% extends "codenerix/sublist.html" %}
+{% load codenerix_common %}
+{% load i18n %}
+{% comment %}
+
+django-codenerix-products
+
+Copyright 2017 Centrologic Computational Logistic Center S.L.
+
+Project URL : http://www.codenerix.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+{% endcomment %}
+{% block table_content %}
+<div class="col-md-12 column panel panel-default scrolling-container">
+    <table class="table table-condensed table-hover list">
+        <thead>
+            <tr>
+                <th>{% trans "Feature" %}</th>
+                <th>{% trans "Value" %}</th>
+                <th class="text-center">{% trans "Delete" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object_list %}
+            <tr>
+                <td ng-click="details({{obj.pk}})">
+                    {{obj.feature}}
+                </td>
+                <td ng-click="details({{obj.pk}})">
+                    {{obj.value}}
+                </td>
+                <td class="text-center">
+                    {% if linkedit %}
+                    <i ng-click="removerecord({{obj.pk}}, '{% trans "Delete option?" %}')" class="glyphicon glyphicon-trash pointer"></i>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+            
+{% if linkedit %}
+    <div class="row clearfix ng-scope">&nbsp;</div>
+    <button type="button" class="btn green btn-sm" popover-placement="top" uib-popover="{{gentranslate.Add}}" popover-trigger="mouseenter" ng-click="addrecord(currentTab)"><span class="glyphicon glyphicon-plus"></span>&nbsp;{{gentranslate.Add}}</button>
+    <div class="row clearfix ng-scope">&nbsp;</div>
+    <div class="row clearfix">&nbsp;</div>
+{% endif %}
+
+{% endblock %}

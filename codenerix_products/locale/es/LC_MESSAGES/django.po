@@ -1,0 +1,697 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-28 14:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: codenerix_products/forms.py:24 codenerix_products/forms.py:39
+#: codenerix_products/forms.py:58 codenerix_products/forms.py:91
+#: codenerix_products/forms.py:125 codenerix_products/forms.py:156
+#: codenerix_products/forms.py:173 codenerix_products/forms.py:188
+#: codenerix_products/forms.py:208 codenerix_products/forms.py:226
+#: codenerix_products/forms.py:242 codenerix_products/forms.py:263
+#: codenerix_products/forms.py:295 codenerix_products/forms.py:333
+#: codenerix_products/forms.py:360 codenerix_products/forms.py:406
+#: codenerix_products/forms.py:422 codenerix_products/forms.py:438
+#: codenerix_products/forms.py:452 codenerix_products/forms.py:472
+#: codenerix_products/forms.py:483 codenerix_products/forms.py:521
+#: codenerix_products/forms.py:542 codenerix_products/forms.py:556
+#: codenerix_products/forms.py:585 codenerix_products/forms.py:611
+#: codenerix_products/forms.py:621 codenerix_products/forms.py:666
+#: codenerix_products/forms.py:679 codenerix_products/forms.py:705
+#: codenerix_products/forms.py:715 codenerix_products/forms.py:732
+#: codenerix_products/forms.py:741 codenerix_products/forms.py:760
+#: codenerix_products/forms.py:774 codenerix_products/forms.py:787
+msgid "Details"
+msgstr ""
+
+#: codenerix_products/forms.py:78 codenerix_products/forms.py:112
+#: codenerix_products/forms.py:146
+msgid "Debe elegir un lista de valores"
+msgstr ""
+
+#: codenerix_products/forms.py:312 codenerix_products/forms.py:350
+msgid "Packaging information"
+msgstr ""
+
+#: codenerix_products/forms.py:387 codenerix_products/forms.py:572
+#: codenerix_products/models.py:464 codenerix_products/models.py:476
+#: codenerix_products/models.py:484 codenerix_products/models.py:496
+#: codenerix_products/models.py:527 codenerix_products/models.py:535
+#: codenerix_products/models.py:546 codenerix_products/models.py:572
+#: codenerix_products/models.py:777 codenerix_products/models.py:786
+#: codenerix_products/models.py:794 codenerix_products/models.py:803
+#: codenerix_products/models.py:825 codenerix_products/models.py:864
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:9
+#: codenerix_products/templates/products/productfeaturespecial_sublist.html:9
+#: codenerix_products/views.py:99 codenerix_products/views.py:538
+msgid "Product"
+msgstr ""
+
+#: codenerix_products/forms.py:496 codenerix_products/forms.py:505
+msgid "Related products"
+msgstr ""
+
+#: codenerix_products/forms.py:632 codenerix_products/forms.py:633
+#: codenerix_products/forms.py:634 codenerix_products/models.py:779
+#: codenerix_products/models.py:788 codenerix_products/models.py:796
+#: codenerix_products/models.py:805 codenerix_products/models.py:814
+#: codenerix_products/models.py:827
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:10
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:11
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:10
+#: codenerix_products/templates/products/productfeature_sublist.html:10
+#: codenerix_products/templates/products/productfeaturespecial_sublist.html:11
+#: codenerix_products/templates/products/productfinalattribute_sublist.html:10
+msgid "Value"
+msgstr ""
+
+#: codenerix_products/forms.py:798
+msgid "The select product haven't video url"
+msgstr ""
+
+#: codenerix_products/forms.py:812
+msgid "Title and alternative text of the image"
+msgstr ""
+
+#: codenerix_products/forms.py:814 codenerix_products/models.py:147
+#: codenerix_products/models.py:151 codenerix_products/models.py:164
+#: codenerix_products/models.py:169 codenerix_products/models.py:185
+msgid "Description"
+msgstr ""
+
+#: codenerix_products/models.py:26
+msgid "Porcentaje sobre el precio del producto"
+msgstr ""
+
+#: codenerix_products/models.py:27
+msgid "Incremento sobre el precio del producto"
+msgstr ""
+
+#: codenerix_products/models.py:28
+msgid "Precio final"
+msgstr ""
+
+#: codenerix_products/models.py:35
+msgid "Sin validacion"
+msgstr ""
+
+#: codenerix_products/models.py:36
+msgid "Boolean"
+msgstr ""
+
+#: codenerix_products/models.py:37
+msgid "Lista de opciones"
+msgstr ""
+
+#: codenerix_products/models.py:41
+msgid "Right"
+msgstr ""
+
+#: codenerix_products/models.py:42
+msgid "Left"
+msgstr ""
+
+#: codenerix_products/models.py:75 codenerix_products/models.py:84
+#: codenerix_products/models.py:200
+msgid "Tax (%)"
+msgstr ""
+
+#: codenerix_products/models.py:76 codenerix_products/models.py:83
+#: codenerix_products/models.py:90 codenerix_products/models.py:98
+#: codenerix_products/models.py:163 codenerix_products/models.py:168
+#: codenerix_products/models.py:197 codenerix_products/models.py:226
+#: codenerix_products/models.py:257 codenerix_products/models.py:266
+#: codenerix_products/models.py:332 codenerix_products/models.py:336
+#: codenerix_products/models.py:370 codenerix_products/models.py:395
+#: codenerix_products/models.py:421 codenerix_products/models.py:436
+#: codenerix_products/models.py:446
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:9
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:12
+#: codenerix_products/templates/products/productdocument_sublist.html:9
+#: codenerix_products/templates/products/subcategory_sublist.html:12
+#: codenerix_products/views.py:1537
+msgid "Name"
+msgstr ""
+
+#: codenerix_products/models.py:89 codenerix_products/models.py:231
+msgid "Tax"
+msgstr ""
+
+#: codenerix_products/models.py:91 codenerix_products/models.py:101
+msgid "Recargo de equivalencia (%)"
+msgstr ""
+
+#: codenerix_products/models.py:99
+msgid "Type Tax"
+msgstr ""
+
+#: codenerix_products/models.py:100
+msgid "Value (%)"
+msgstr ""
+
+#: codenerix_products/models.py:120
+msgid "Type value"
+msgstr ""
+
+#: codenerix_products/models.py:121 codenerix_products/models.py:557
+#: codenerix_products/models.py:575
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:14
+#: codenerix_products/templates/products/productrelated_sublist.html:14
+#: codenerix_products/views.py:1541
+msgid "Price"
+msgstr ""
+
+#: codenerix_products/models.py:122
+msgid "Type price"
+msgstr ""
+
+#: codenerix_products/models.py:123 codenerix_products/models.py:131
+#: codenerix_products/models.py:205 codenerix_products/models.py:230
+#: codenerix_products/models.py:259 codenerix_products/models.py:365
+#: codenerix_products/models.py:372 codenerix_products/models.py:384
+#: codenerix_products/models.py:399 codenerix_products/models.py:409
+#: codenerix_products/models.py:427 codenerix_products/models.py:486
+#: codenerix_products/models.py:498 codenerix_products/models.py:528
+#: codenerix_products/models.py:536 codenerix_products/models.py:855
+#: codenerix_products/models.py:865
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:11
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:11
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:13
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:13
+#: codenerix_products/templates/products/productdocument_sublist.html:11
+#: codenerix_products/templates/products/productimage_sublist.html:11
+#: codenerix_products/templates/products/productrelated_sublist.html:13
+#: codenerix_products/templates/products/subcategory_sublist.html:13
+msgid "Public"
+msgstr ""
+
+#: codenerix_products/models.py:124 codenerix_products/models.py:132
+#: codenerix_products/models.py:412 codenerix_products/models.py:430
+#: codenerix_products/models.py:439 codenerix_products/models.py:449
+#: codenerix_products/models.py:485 codenerix_products/models.py:497
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:10
+#: codenerix_products/templates/products/productimage_sublist.html:10
+msgid "Order"
+msgstr ""
+
+#: codenerix_products/models.py:128 codenerix_products/models.py:202
+#: codenerix_products/models.py:227 codenerix_products/models.py:282
+#: codenerix_products/models.py:299 codenerix_products/models.py:313
+#: codenerix_products/models.py:383
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:9
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:9
+#: codenerix_products/templates/products/productrelated_sublist.html:9
+#: codenerix_products/templates/products/subcategory_sublist.html:9
+#: codenerix_products/views.py:309
+msgid "Family"
+msgstr ""
+
+#: codenerix_products/models.py:129 codenerix_products/models.py:203
+#: codenerix_products/models.py:228 codenerix_products/models.py:283
+#: codenerix_products/models.py:300 codenerix_products/models.py:314
+#: codenerix_products/models.py:408
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:10
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:10
+#: codenerix_products/templates/products/productrelated_sublist.html:10
+#: codenerix_products/templates/products/subcategory_sublist.html:10
+#: codenerix_products/views.py:344
+msgid "Category"
+msgstr ""
+
+#: codenerix_products/models.py:130
+msgid "Type Value"
+msgstr ""
+
+#: codenerix_products/models.py:162 codenerix_products/models.py:256
+#: codenerix_products/models.py:271 codenerix_products/models.py:437
+#: codenerix_products/models.py:447 codenerix_products/views.py:1538
+msgid "Slug"
+msgstr ""
+
+#: codenerix_products/models.py:184
+msgid "Text alternavive image"
+msgstr ""
+
+#: codenerix_products/models.py:198
+msgid "Model"
+msgstr ""
+
+#: codenerix_products/models.py:199
+msgid "Brand"
+msgstr ""
+
+#: codenerix_products/models.py:201
+msgid "Recargo Equivalencia (%)"
+msgstr ""
+
+#: codenerix_products/models.py:204 codenerix_products/models.py:229
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:11
+#: codenerix_products/templates/products/productrelated_sublist.html:11
+#: codenerix_products/views.py:439
+msgid "Subcategory"
+msgstr ""
+
+#: codenerix_products/models.py:206 codenerix_products/models.py:233
+#: codenerix_products/models.py:364 codenerix_products/models.py:371
+#: codenerix_products/models.py:382 codenerix_products/models.py:396
+#: codenerix_products/models.py:407 codenerix_products/models.py:422
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:12
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:11
+#: codenerix_products/templates/products/productrelated_sublist.html:12
+#: codenerix_products/templates/products/subcategory_sublist.html:11
+msgid "Code"
+msgstr ""
+
+#: codenerix_products/models.py:207 codenerix_products/models.py:234
+msgid "Price base"
+msgstr ""
+
+#: codenerix_products/models.py:209 codenerix_products/models.py:235
+msgid "Sales"
+msgstr ""
+
+#: codenerix_products/models.py:211
+msgid "Purchase"
+msgstr ""
+
+#: codenerix_products/models.py:213 codenerix_products/models.py:237
+msgid "Force stock"
+msgstr ""
+
+#: codenerix_products/models.py:214 codenerix_products/models.py:238
+msgid "Url Video"
+msgstr ""
+
+#: codenerix_products/models.py:216 codenerix_products/models.py:239
+#: codenerix_products/models.py:826
+msgid "Feature special"
+msgstr ""
+
+#: codenerix_products/models.py:217 codenerix_products/models.py:240
+msgid "Packing cost"
+msgstr ""
+
+#: codenerix_products/models.py:218 codenerix_products/models.py:241
+msgid "Weight"
+msgstr ""
+
+#: codenerix_products/models.py:232
+msgid "Recargo Equivalencia"
+msgstr ""
+
+#: codenerix_products/models.py:236
+msgid "Pruchase"
+msgstr ""
+
+#: codenerix_products/models.py:251
+msgid "Meta Title"
+msgstr ""
+
+#: codenerix_products/models.py:252 codenerix_products/models.py:268
+msgid "Meta Description"
+msgstr ""
+
+#: codenerix_products/models.py:253 codenerix_products/models.py:269
+msgid "Description short"
+msgstr ""
+
+#: codenerix_products/models.py:254 codenerix_products/models.py:270
+msgid "Description long"
+msgstr ""
+
+#: codenerix_products/models.py:267
+msgid "Tittle"
+msgstr ""
+
+#: codenerix_products/models.py:284 codenerix_products/models.py:302
+#: codenerix_products/models.py:315
+msgid "List value"
+msgstr ""
+
+#: codenerix_products/models.py:301 codenerix_products/models.py:787
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:9
+#: codenerix_products/templates/products/productfinalattribute_sublist.html:9
+#: codenerix_products/views.py:194
+msgid "Attribute"
+msgstr ""
+
+#: codenerix_products/models.py:316 codenerix_products/models.py:320
+msgid "The value must unique"
+msgstr ""
+
+#: codenerix_products/models.py:337
+msgid "Option value"
+msgstr ""
+
+#: codenerix_products/models.py:346
+msgid "Options value"
+msgstr ""
+
+#: codenerix_products/models.py:366 codenerix_products/models.py:385
+#: codenerix_products/models.py:410
+msgid "Show menu"
+msgstr ""
+
+#: codenerix_products/models.py:373 codenerix_products/models.py:400
+#: codenerix_products/models.py:428
+msgid "Show Menu"
+msgstr ""
+
+#: codenerix_products/models.py:386
+msgid "Show only products in stock"
+msgstr ""
+
+#: codenerix_products/models.py:387 codenerix_products/models.py:413
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:9
+#: codenerix_products/templates/products/productimage_sublist.html:9
+#: codenerix_products/views.py:1539
+msgid "Image"
+msgstr ""
+
+#: codenerix_products/models.py:387 codenerix_products/models.py:413
+msgid "Se aconseja un tamaño comprendido entre 1200px y 2000px"
+msgstr ""
+
+#: codenerix_products/models.py:388 codenerix_products/models.py:414
+msgid "Icon"
+msgstr ""
+
+#: codenerix_products/models.py:388 codenerix_products/models.py:414
+msgid ""
+"Se aconseja que sea una imagen superior a 200px transparente y en formato "
+"png o svg"
+msgstr ""
+
+#: codenerix_products/models.py:397 codenerix_products/models.py:425
+msgid "Family name"
+msgstr ""
+
+#: codenerix_products/models.py:398 codenerix_products/models.py:426
+msgid "Family code"
+msgstr ""
+
+#: codenerix_products/models.py:401
+msgid "Show Only Products with Stock"
+msgstr ""
+
+#: codenerix_products/models.py:411 codenerix_products/models.py:429
+#: codenerix_products/models.py:438 codenerix_products/models.py:448
+#: codenerix_products/models.py:489 codenerix_products/models.py:551
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:14
+#: codenerix_products/templates/products/productimage_sublist.html:14
+msgid "Outstanding"
+msgstr ""
+
+#: codenerix_products/models.py:423
+msgid "Category name"
+msgstr ""
+
+#: codenerix_products/models.py:424
+msgid "Category code"
+msgstr ""
+
+#: codenerix_products/models.py:465 codenerix_products/models.py:477
+msgid "Products related"
+msgstr ""
+
+#: codenerix_products/models.py:466 codenerix_products/models.py:478
+msgid "Hits"
+msgstr ""
+
+#: codenerix_products/models.py:487 codenerix_products/models.py:499
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:12
+#: codenerix_products/templates/products/productimage_sublist.html:12
+#: codenerix_products/views.py:1540
+msgid "Principal"
+msgstr ""
+
+#: codenerix_products/models.py:488 codenerix_products/models.py:854
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:13
+#: codenerix_products/templates/products/productimage_sublist.html:13
+msgid "Flagship product"
+msgstr ""
+
+#: codenerix_products/models.py:550 codenerix_products/views.py:1543
+msgid "Offer"
+msgstr ""
+
+#: codenerix_products/models.py:552
+msgid "Most sold"
+msgstr ""
+
+#: codenerix_products/models.py:555 codenerix_products/models.py:573
+#: codenerix_products/models.py:815 codenerix_products/models.py:828
+msgid "Stock real"
+msgstr ""
+
+#: codenerix_products/models.py:556 codenerix_products/models.py:574
+msgid "Stock lock"
+msgstr ""
+
+#: codenerix_products/models.py:558
+msgid "Reviews"
+msgstr ""
+
+#: codenerix_products/models.py:559
+msgid "Reviews count"
+msgstr ""
+
+#: codenerix_products/models.py:571
+msgid "Identifier"
+msgstr ""
+
+#: codenerix_products/models.py:778 codenerix_products/views.py:844
+msgid "Attributes"
+msgstr ""
+
+#: codenerix_products/models.py:795 codenerix_products/models.py:804
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:9
+#: codenerix_products/templates/products/productfeature_sublist.html:9
+#: codenerix_products/views.py:132
+msgid "Feature"
+msgstr ""
+
+#: codenerix_products/models.py:813
+msgid "Product final"
+msgstr ""
+
+#: codenerix_products/models.py:840
+msgid "Ya existe un producto final con el valor de la caracteristicas especial"
+msgstr ""
+
+#: codenerix_products/models.py:842
+msgid "Product don't seleted"
+msgstr ""
+
+#: codenerix_products/models.py:856
+msgid "View video"
+msgstr ""
+
+#: codenerix_products/models.py:857 codenerix_products/models.py:867
+msgid "Orientazion"
+msgstr ""
+
+#: codenerix_products/models.py:866
+msgid "View Video"
+msgstr ""
+
+#: codenerix_products/templates/codenerix_products/optionvalue_sublist.html:9
+#: codenerix_products/templates/products/optionvalue_sublist.html:9
+msgid "Description ES"
+msgstr ""
+
+#: codenerix_products/templates/codenerix_products/optionvalue_sublist.html:10
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:12
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:11
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:12
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:11
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:15
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:15
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:14
+#: codenerix_products/templates/products/optionvalue_sublist.html:10
+#: codenerix_products/templates/products/productdocument_sublist.html:12
+#: codenerix_products/templates/products/productfeature_sublist.html:11
+#: codenerix_products/templates/products/productfeaturespecial_sublist.html:12
+#: codenerix_products/templates/products/productfinalattribute_sublist.html:11
+#: codenerix_products/templates/products/productimage_sublist.html:15
+#: codenerix_products/templates/products/productrelated_sublist.html:15
+#: codenerix_products/templates/products/subcategory_sublist.html:14
+msgid "Delete"
+msgstr ""
+
+#: codenerix_products/templates/codenerix_products/optionvalue_sublist.html:21
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:29
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:25
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:29
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:25
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:41
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:41
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:37
+#: codenerix_products/templates/products/optionvalue_sublist.html:21
+#: codenerix_products/templates/products/productdocument_sublist.html:29
+#: codenerix_products/templates/products/productfeature_sublist.html:25
+#: codenerix_products/templates/products/productfeaturespecial_sublist.html:29
+#: codenerix_products/templates/products/productfinalattribute_sublist.html:25
+#: codenerix_products/templates/products/productimage_sublist.html:41
+#: codenerix_products/templates/products/productrelated_sublist.html:41
+#: codenerix_products/templates/products/subcategory_sublist.html:37
+msgid "Delete option?"
+msgstr ""
+
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:10
+#: codenerix_products/templates/products/productdocument_sublist.html:10
+msgid "File"
+msgstr ""
+
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:10
+#: codenerix_products/templates/products/productfeaturespecial_sublist.html:10
+#: codenerix_products/views.py:845
+msgid "Feature Special"
+msgstr ""
+
+#: codenerix_products/views.py:60
+msgid "TypeTax"
+msgstr ""
+
+#: codenerix_products/views.py:60 codenerix_products/views.py:132
+#: codenerix_products/views.py:194 codenerix_products/views.py:251
+#: codenerix_products/views.py:309 codenerix_products/views.py:344
+#: codenerix_products/views.py:439 codenerix_products/views.py:538
+#: codenerix_products/views.py:599 codenerix_products/views.py:633
+#: codenerix_products/views.py:666 codenerix_products/views.py:737
+#: codenerix_products/views.py:809 codenerix_products/views.py:1019
+#: codenerix_products/views.py:1104 codenerix_products/views.py:1248
+#: codenerix_products/views.py:1354 codenerix_products/views.py:1404
+#: codenerix_products/views.py:1497
+msgid "People"
+msgstr ""
+
+#: codenerix_products/views.py:99
+msgid "TypeRecargoEquivalencia"
+msgstr ""
+
+#: codenerix_products/views.py:251
+msgid "FeatureSpecial"
+msgstr ""
+
+#: codenerix_products/views.py:393
+msgid "Subcategories"
+msgstr ""
+
+#: codenerix_products/views.py:571
+msgid "Features"
+msgstr ""
+
+#: codenerix_products/views.py:572
+msgid "Documents"
+msgstr ""
+
+#: codenerix_products/views.py:573
+msgid "Images"
+msgstr ""
+
+#: codenerix_products/views.py:599 codenerix_products/views.py:633
+msgid "ProductRelationSold"
+msgstr ""
+
+#: codenerix_products/views.py:666
+msgid "ProductImage"
+msgstr ""
+
+#: codenerix_products/views.py:737
+msgid "ProductDocument"
+msgstr ""
+
+#: codenerix_products/views.py:809
+msgid "ProductFinal"
+msgstr ""
+
+#: codenerix_products/views.py:846
+msgid "Product related"
+msgstr ""
+
+#: codenerix_products/views.py:847
+msgid "Product accesory"
+msgstr ""
+
+#: codenerix_products/views.py:1019
+msgid "ProductFinalAttribute"
+msgstr ""
+
+#: codenerix_products/views.py:1104
+msgid "ProductFeature"
+msgstr ""
+
+#: codenerix_products/views.py:1135 codenerix_products/views.py:1194
+msgid "Option invalid"
+msgstr ""
+
+#: codenerix_products/views.py:1142 codenerix_products/views.py:1201
+msgid "Value invalid"
+msgstr ""
+
+#: codenerix_products/views.py:1248
+msgid "ProductUnique"
+msgstr ""
+
+#: codenerix_products/views.py:1279 codenerix_products/views.py:1310
+msgid "Value existing"
+msgstr ""
+
+#: codenerix_products/views.py:1354
+msgid "GroupValue"
+msgstr ""
+
+#: codenerix_products/views.py:1379 codenerix_products/views.py:1392
+msgid "List values"
+msgstr ""
+
+#: codenerix_products/views.py:1404
+msgid "OptionValue"
+msgstr ""
+
+#: codenerix_products/views.py:1497
+msgid "FlagshipProduct"
+msgstr ""
+
+#: codenerix_products/views.py:1529
+msgid "Buy"
+msgstr ""
+
+#: codenerix_products/views.py:1530
+msgid "New"
+msgstr ""
+
+#: codenerix_products/views.py:1531
+msgid "Wish list"
+msgstr ""
+
+#: codenerix_products/views.py:1532
+msgid "Shopping cart"
+msgstr ""
+
+#: codenerix_products/views.py:1544
+msgid "Created"
+msgstr ""
+
+#: codenerix_products/views.py:1545
+msgid "reviews_value"
+msgstr ""
+
+#: codenerix_products/views.py:1546
+msgid "reviews_count"
+msgstr ""
