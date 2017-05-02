@@ -32,6 +32,7 @@ Quickstart
     ]
 
 3. Add in settings the params:
+
 	# path for codenerix_products
 	CDNX_PRODUCTS_URL = "products"
 	# if you show the products without stock
