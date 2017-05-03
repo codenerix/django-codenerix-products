@@ -1734,9 +1734,14 @@ class ListProducts(GenList):
             params = ast.literal_eval(info.request.GET.get("json"))
 
             slug_period = None
-            if "period" in params and params["period"]:
-                if params["period"]['period'] != '*':
-                    slug_period = params["period"]['period']
+            if "subcategory" in params and params["subcategory"]:
+                if params["subcategory"] != '*':
+                    slug_period = params["subcategory"]
+
+            slug_type = None
+            if "brand" in params and params["brand"]:
+                if params["brand"] != '*':
+                    slug_type = params["brand"]
 
             only_with_stock = None
             # filtramos dependiendo de la url original que estemos visitando
@@ -1746,8 +1751,12 @@ class ListProducts(GenList):
 
             elif type_list == 'CAT':
                 limits['type_list'] = Q(product__category__pk=pk)
+
                 if slug_period:
-                    limits['by_period'] = Q(**{"product__subcategory__{}__slug".format(lang): slug_period})
+                    limits['by_sucategory'] = Q(**{"product__subcategory__{}__slug".format(lang): slug_period})
+
+                if slug_type:
+                    limits['by_brand'] = Q(**{"product__brand__{}__slug".format(lang): slug_type})
 
             elif type_list == 'BRAND':
                 limits['type_list'] = Q(product__brand__pk=pk)
