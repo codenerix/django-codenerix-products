@@ -178,7 +178,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
         return fields
 
     def __unicode__(self):
-        return u"{} ({}) ({})".format(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).description, self.price, self.type_value)
+        return u"{}".format(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).description)
 
     def __str__(self):
         return self.__unicode__()
@@ -1079,7 +1079,24 @@ class ProductFinalAttribute(CodenerixModel):
     value = models.CharField(_("Value"), max_length=80)
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.product))
+        value = ''
+        if self.attribute.type_value == TYPE_VALUE_BOOLEAN:
+            value = bool(self.value) and _('True') or _('False')
+        elif self.attribute.type_value == TYPE_VALUE_FREE:
+            value = self.value
+        elif self.attribute.type_value == TYPE_VALUE_LIST:
+            lang = get_language_database()
+            field = '{}__description'.format(lang)
+            ov = OptionValue.objects.filter(
+                group=self.attribute.list_value,
+                pk=int(self.value)
+            ).values(
+                field
+            ).first()
+            if ov:
+                value = ov[field]
+
+        return u"{}: {}".format(smart_text(self.attribute), smart_text(value))
 
     def __str__(self):
         return self.__unicode__()
