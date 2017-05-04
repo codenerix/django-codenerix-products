@@ -1,0 +1,30 @@
+<td>
+    {{row.pk}}
+</td>
+<td>
+    <ul>
+        <li ng-repeat="attr in row.products_final_attr">{{attr}}</li>
+    </ul>
+</td>
+<td>
+    {{row.stock_real}}
+</td>
+<td>
+    {{row.stock_lock}}
+</td>
+<td>
+    <div ng-show="row.outstanding=='True'" class="text-success glyphicon glyphicon-ok"></div>
+    <div ng-hide="row.outstanding=='True'" class="text-danger glyphicon glyphicon-remove"></div>
+</td>
+<td>
+    <div ng-show="row.most_sold=='True'" class="text-success glyphicon glyphicon-ok"></div>
+    <div ng-hide="row.most_sold=='True'" class="text-danger glyphicon glyphicon-remove"></div>
+</td>
+<td ng-repeat="column in data.table.head.columns_lang">
+    <div ng-show="row[column]=='True'" class="text-success glyphicon glyphicon-ok"></div>
+    <div ng-hide="row[column]=='True'" class="text-danger glyphicon glyphicon-remove"></div>
+</td>
+
+<td class="text-center" ng-click="$event.stopPropagation()">
+    <a href="/{{data.table.head.url_products}}/productfinals#/{{row.pk}}" class="glyphicon glyphicon-pencil pointer"></a>
+</td>

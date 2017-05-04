@@ -596,6 +596,26 @@ class ProductFinalFormCreate(GenModelForm):
         return g
 
 
+class ProductFinalFormCreateModal(ProductFinalFormCreate):
+    class Meta:
+        model = ProductFinal
+        exclude = ['product', ]
+        autofill = {
+            'ProductFinalFormCreate_product': ['select', 3, 'CDNX_products_products_foreign'],
+        }
+
+    def __groups__(self):
+        g = [(
+            _('Details'), 12,
+            ["offer", 4],
+            ["outstanding", 4],
+            ['most_sold', 4],
+            ["related", 6],
+            ["related_accesory", 6],
+        )]
+        return g
+
+
 class ProductFinalForm(GenModelForm):
     class Meta:
         model = ProductFinal

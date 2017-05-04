@@ -47,7 +47,7 @@ from .models import TypeTax, Feature, Attribute, FeatureSpecial, Family, Categor
     ProductDocument, ProductFinal, ProductFeature, ProductUnique, GroupValue, OptionValue, ProductFinalAttribute, TypeRecargoEquivalencia, Brand, FlagshipProduct
 from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_SLIDERS, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
 from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, FamilyForm, CategoryForm, SubcategoryForm, SubcategoryOwnForm, ProductFormCreate, \
-    ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalForm, ProductFeatureForm, ProductUniqueForm, GroupValueForm, OptionValueForm, \
+    ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm, GroupValueForm, OptionValueForm, \
     ProductFinalAttributeForm, ProductFinalRelatedSubForm, TypeRecargoEquivalenciaForm, BrandForm, FlagshipProductForm
 
 
@@ -651,6 +651,7 @@ class ProductDetails(GenProductUrl, GenDetail):
         {'id': 'Feature', 'name': _('Features'), 'ws': 'CDNX_products_productfeatures_sublist', 'rows': 'base'},
         {'id': 'Document', 'name': _('Documents'), 'ws': 'CDNX_products_productdocuments_sublist', 'rows': 'base'},
         {'id': 'Images', 'name': _('Images'), 'ws': 'CDNX_products_productimages_sublist', 'rows': 'base'},
+        {'id': 'ProductFinal', 'name': _('Products Final'), 'ws': 'CDNX_products_productfinals_sublist', 'rows': 'base', 'static_partial_row': 'codenerix_products/productfinals_sublist_rows.html'},
     ]
     exclude_fields = ["related", ]
 
@@ -916,7 +917,19 @@ class ProductFinalCreate(GenProductFinalUrl, MultiForm, GenCreate):
 
 
 class ProductFinalCreateModal(GenCreateModal, ProductFinalCreate):
-    pass
+    def dispatch(self, *args, **kwargs):
+        self.__product_pk = kwargs.get('cpk', None)
+        if self.__product_pk:
+            self.form_class = ProductFinalFormCreateModal
+        return super(ProductFinalCreateModal, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form, forms):
+        if self.__product_pk:
+            product = Product.objects.get(pk=self.__product_pk)
+            self.request.product = product
+            form.instance.product = product
+
+        return super(ProductFinalCreateModal, self).form_valid(form, forms)
 
 
 class ProductFinalUpdate(GenProductFinalUrl, MultiForm, GenUpdate):
@@ -947,6 +960,37 @@ class ProductFinalDetails(GenProductFinalUrl, GenDetail):
         {'id': 'Accesory', 'name': _('Product accesory'), 'ws': 'CDNX_products_productfinalaccesory_sublist', 'rows': 'base'},
     ]
     exclude_fields = ['related', 'related_accesory']
+
+
+class ProductFinalDetailsModal(GenProductDocumentUrl, GenDetailModal, ProductFinalDetails):
+    pass
+
+
+class ProductFinalSubList(GenProductFinalUrl, GenList):
+    model = ProductFinal
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['file_link'] = Q(product__pk=pk)
+        return limit
+
+    def __fields__(self, info):
+        fields = []
+        fields.append(('pk', _("Identifier")))
+        fields.append(('products_final_attr', _("Attributes")))
+        fields.append(('stock_real', _("Stock real")))
+        fields.append(('stock_lock', _("Stock lock")))
+        fields.append(('outstanding', _("Outstanding")))
+        fields.append(('most_sold', _("Most sold")))
+        for lang in settings.LANGUAGES_DATABASES:
+            fields.append(('{}__public'.format(lang.lower()), _("Public {}".format(lang))))
+        return fields
+
+    def json_builder(self, answer, context):
+        answer['table']['head']['url_products'] = settings.CDNX_PRODUCTS_URL
+        answer['table']['head']['columns_lang'] = ["{}__public".format(lang.lower()) for lang in settings.LANGUAGES_DATABASES]
+        return answer
 
 
 class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):

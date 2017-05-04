@@ -48,8 +48,8 @@ from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, C
     BrandList, BrandCreate, BrandCreateModal, BrandUpdate, BrandUpdateModal, BrandDelete, \
     FlagshipProductList, FlagshipProductCreate, FlagshipProductCreateModal, FlagshipProductUpdate, FlagshipProductUpdateModal, FlagshipProductDelete, \
     CategorySubListPro, CategoryDetailModalPro, CategoryUpdateModalPro, \
-    ListProducts, OptionValueSubListModal, TypeTaxDetails
-
+    ListProducts, OptionValueSubListModal, TypeTaxDetails, \
+    ProductFinalSubList, ProductFinalDetailsModal
 
 urlpatterns = [
     url(r'^typetaxs$', TypeTaxList.as_view(), name='CDNX_products_typetaxs_list'),
@@ -196,6 +196,15 @@ urlpatterns = [
     url(r'^productfinals/(?P<pk>\w+)/accesory/add$', ProductFinalAccesorySubUpdateModal.as_view(), name='CDNX_products_productfinalaccesory_sublist_add'),
     url(r'^productfinals/(?P<pk>\w+)/accesory/addmodal$', ProductFinalAccesorySubUpdateModal.as_view(), name='CDNX_products_productfinalaccesory_sublist_addmodal'),
     url(r'^productfinals/(?P<tpk>\w+)/accesory/(?P<pk>\w+)/delete$', ProductFinalAccesorySubDelete.as_view(), name='CDNX_products_productfinalaccesory_sublist_delete'),
+
+    url(r'^productfinals/(?P<pk>\w+)/sublist$', ProductFinalSubList.as_view(), name='CDNX_products_productfinals_sublist'),
+    url(r'^productfinals/(?P<cpk>\w+)/sublist/add$', ProductFinalCreateModal.as_view(), name='CDNX_products_productfinals_sublist_add'),
+    url(r'^productfinals/(?P<cpk>\w+)/sublist/addmodal$', ProductFinalCreateModal.as_view(), name='CDNX_products_productfinals_sublist_addmodal'),
+    url(r'^productfinals/(?P<cpk>\w+)/sublist/(?P<pk>\w+)$', ProductFinalDetailsModal.as_view(), name='CDNX_products_productfinals_sublist_details'),
+    url(r'^productfinals/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/edit$', ProductFinalUpdateModal.as_view(), name='CDNX_products_productfinals_sublist_edit'),
+    url(r'^productfinals/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/editmodal$', ProductFinalUpdateModal.as_view(), name='CDNX_products_productfinals_sublist_editmodal'),
+    url(r'^productfinals/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', ProductFinalDelete.as_view(), name='CDNX_products_productfinals_sublist_delete'),
+
 
     url(r'^productfinalimages$', ProductFinalImageList.as_view(), name='CDNX_products_productfinalimages_list'),
     url(r'^productfinalimages/(?P<pk>\w+)/edit$', ProductFinalImageUpdate.as_view(), name='CDNX_products_productfinalimages_edit'),
