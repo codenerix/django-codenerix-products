@@ -660,7 +660,7 @@ class ProductDetails(GenProductUrl, GenDetail):
 
 class ProductForeign(GenForeignKey):
     model = Product
-    label = '{name} - {model}'
+    label = '{code} - {<LANGUAGE_CODE>__name} - {<LANGUAGE_CODE>__slug}'
 
     def get_foreign(self, queryset, search, filters):
         # Filter with search string
