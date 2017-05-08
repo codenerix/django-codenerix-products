@@ -22,6 +22,8 @@ from django.contrib import admin
 from django.conf import settings
 
 from .models import Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductDocument, ProductFinal, ProductFeature, ProductUnique, Brand
+from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial
+from .models import OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
 from .models import MODELS, MODELS_PRODUCTS, MODELS_SLUG, MODELS_SLIDERS
 
 admin.site.register(Feature)
@@ -38,6 +40,13 @@ admin.site.register(ProductFinal)
 admin.site.register(ProductFeature)
 admin.site.register(ProductUnique)
 admin.site.register(Brand)
+admin.site.register(GroupValueFeature)
+admin.site.register(GroupValueAttribute)
+admin.site.register(GroupValueFeatureSpecial)
+admin.site.register(OptionValueFeature)
+admin.site.register(OptionValueAttribute)
+admin.site.register(OptionValueFeatureSpecial)
+
 
 for info in MODELS + MODELS_PRODUCTS + MODELS_SLIDERS + MODELS_SLUG:
     model = info[1]

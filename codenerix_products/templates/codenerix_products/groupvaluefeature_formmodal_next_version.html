@@ -1,0 +1,50 @@
+{% extends "codenerix/formmodal.html" %}
+{% load codenerix_lists %}
+{% load codenerix_common %}
+{% comment %}
+
+django-codenerix-products
+
+Copyright 2017 Centrologic Computational Logistic Center S.L.
+
+Project URL : http://www.codenerix.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+{% endcomment %}
+
+{% block buttons_bottom %}
+    {# following div contains the simply detail view #}
+    <div class="col-sm-12 col-md-12 col-lg-12">
+    {{block.super}}
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div id="tabs" ng-controller="SubListStaticCtrl">
+        
+            <uib-tabset class="hidden-xs hidden-sm">
+            {% for tab in tabs %}
+                <uib-tab ng-click="onClickTab('{% url tab.ws object.id %}')">
+                    <uib-tab-heading>
+                        <span>
+                        {{tab.name}}{#<span class="badge">{{x}}</span>#}
+                        </span>
+                    </uib-tab-heading>
+                    
+                </uib-tab>
+            {% endfor %}
+            </uib-tabset>
+            
+            <div ng-init="onClickTab('{% url tabs.0.ws object.id %}')" ng-include="currentTab"></div>
+        </div>
+    </div>
+{% endblock %}

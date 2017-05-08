@@ -19,16 +19,12 @@
 # limitations under the License.
 
 from django.conf.urls import url
-
 from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, CategoryList, SubcategoryList, ProductList, ProductRelationSoldList, ProductImageList, ProductDocumentList, ProductFinalList, ProductFeatureList, ProductUniqueList, \
     FeatureCreate, AttributeCreate, FeatureSpecialCreate, FamilyCreate, CategoryCreate, SubcategoryCreate, ProductCreate, ProductRelationSoldCreate, ProductFinalCreate, \
     FeatureCreateModal, AttributeCreateModal, FeatureSpecialCreateModal, FamilyCreateModal, CategoryCreateModal, SubcategoryCreateModal, SubcategoryCreateModalAll, ProductCreateModal, ProductRelationSoldCreateModal, ProductImageCreateModal, ProductDocumentCreateModal, ProductFinalCreateModal, ProductFeatureCreateModal, ProductUniqueCreateModal, \
     FeatureUpdate, AttributeUpdate, FeatureSpecialUpdate, FamilyUpdate, CategoryUpdate, SubcategoryUpdate, ProductUpdate, ProductRelationSoldUpdate, ProductImageUpdate, ProductDocumentUpdate, ProductFinalUpdate, ProductFeatureUpdate, ProductUniqueUpdate, \
     FeatureUpdateModal, AttributeUpdateModal, FeatureSpecialUpdateModal, FamilyUpdateModal, CategoryUpdateModal, SubcategoryUpdateModal, ProductUpdateModal, ProductRelationSoldUpdateModal, ProductImageUpdateModal, ProductDocumentUpdateModal, ProductFinalUpdateModal, ProductFeatureUpdateModal, ProductUniqueUpdateModal, \
     FeatureDelete, AttributeDelete, FeatureSpecialDelete, FamilyDelete, CategoryDelete, SubcategoryDelete, ProductDelete, ProductRelationSoldDelete, ProductImageDelete, ProductDocumentDelete, ProductFinalDelete, ProductFeatureDelete, ProductUniqueDelete, \
-    GroupValueList, GroupValueCreate, GroupValueCreateModal, GroupValueUpdate, GroupValueUpdateModal, GroupValueDelete, \
-    OptionValueList, OptionValueCreateModal, OptionValueUpdate, OptionValueUpdateModal, OptionValueDelete, OptionValueForeign, \
-    GroupValueDetails, OptionValueSubList, OptionValueDetailsModal, \
     ProductDetails, ProductFeatureSubList, ProductFeatureDetailsModal, \
     ProductDocumentSubList, ProductDocumentDetailsModal, \
     ProductFinalDetails, CategoryDetails, \
@@ -48,8 +44,15 @@ from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, C
     BrandList, BrandCreate, BrandCreateModal, BrandUpdate, BrandUpdateModal, BrandDelete, \
     FlagshipProductList, FlagshipProductCreate, FlagshipProductCreateModal, FlagshipProductUpdate, FlagshipProductUpdateModal, FlagshipProductDelete, \
     CategorySubListPro, CategoryDetailModalPro, CategoryUpdateModalPro, \
-    ListProducts, OptionValueSubListModal, TypeTaxDetails, \
-    ProductFinalSubList, ProductFinalDetailsModal
+    ListProducts, TypeTaxDetails, \
+    ProductFinalSubList, ProductFinalDetailsModal, \
+    GroupValueFeatureList, GroupValueFeatureCreate, GroupValueFeatureCreateModal, GroupValueFeatureDetails, GroupValueFeatureUpdate, GroupValueFeatureUpdateModal, GroupValueFeatureDelete, \
+    GroupValueAttributeList, GroupValueAttributeCreate, GroupValueAttributeCreateModal, GroupValueAttributeDetails, GroupValueAttributeUpdate, GroupValueAttributeUpdateModal, GroupValueAttributeDelete, \
+    GroupValueFeatureSpecialList, GroupValueFeatureSpecialCreate, GroupValueFeatureSpecialCreateModal, GroupValueFeatureSpecialDetails, GroupValueFeatureSpecialUpdate, GroupValueFeatureSpecialUpdateModal, GroupValueFeatureSpecialDelete, \
+    OptionValueFeatureList, OptionValueFeatureUpdate, OptionValueFeatureUpdateModal, OptionValueFeatureDelete, OptionValueFeatureSubList, OptionValueFeatureSubListModal, OptionValueFeatureCreateModal, OptionValueFeatureDetailsModal, OptionValueFeatureForeign, \
+    OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign, \
+    OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
+
 
 urlpatterns = [
     url(r'^typetaxs$', TypeTaxList.as_view(), name='CDNX_products_typetaxs_list'),
@@ -254,29 +257,6 @@ urlpatterns = [
     url(r'^productuniques/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/editmodal$', ProductUniqueUpdateModal.as_view(), name='CDNX_products_productuniques_sublist_editmodal'),
     url(r'^productuniques/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', ProductUniqueDelete.as_view(), name='CDNX_products_productuniques_sublist_delete'),
 
-    url(r'^groupvalues$', GroupValueList.as_view(), name='CDNX_products_groupvalues_list'),
-    url(r'^groupvalues/add$', GroupValueCreate.as_view(), name='CDNX_products_groupvalues_add'),
-    url(r'^groupvalues/addmodal$', GroupValueCreateModal.as_view(), name='CDNX_products_groupvalues_addmodal'),
-    url(r'^groupvalues/(?P<pk>\w+)$', GroupValueDetails.as_view(), name='CDNX_products_groupvalues_details'),
-    url(r'^groupvalues/(?P<pk>[0-9]+)/edit$', GroupValueUpdate.as_view(), name='CDNX_products_groupvalues_edit'),
-    url(r'^groupvalues/(?P<pk>\w+)/editmodal$', GroupValueUpdateModal.as_view(), name='CDNX_products_groupvalues_editmodal'),
-    url(r'^groupvalues/(?P<pk>\w+)/delete$', GroupValueDelete.as_view(), name='CDNX_products_groupvalues_delete'),
-
-    url(r'^optionvalues$', OptionValueList.as_view(), name='CDNX_products_optionvalues_list'),
-    url(r'^optionvalues/(?P<gpk>\w+)/edit$', OptionValueUpdate.as_view(), name='CDNX_products_optionvalues_edit'),
-    url(r'^optionvalues/(?P<gpk>\w+)/editmodal$', OptionValueUpdateModal.as_view(), name='CDNX_products_optionvalues_editmodal'),
-    url(r'^optionvalues/(?P<gpk>\w+)/delete$', OptionValueDelete.as_view(), name='CDNX_products_optionvalues_delete'),
-    url(r'^optionvalues/(?P<pk>\w+)/sublist$', OptionValueSubList.as_view(), name='CDNX_products_optionvalues_sublist'),
-    url(r'^optionvalues/(?P<pk>\w+)/sublistm$', OptionValueSubListModal.as_view(), name='CDNX_products_optionvalues_sublist_modal'),
-    url(r'^optionvalues/(?P<gpk>[0-9]+)/sublist/add$', OptionValueCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add'),
-    url(r'^optionvalues/(?P<gpk>[0-9]+)/sublistm/add$', OptionValueCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add2'),
-    url(r'^optionvalues/(?P<gpk>[0-9]+)/sublist/addmodal$', OptionValueCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_addmodal'),
-    url(r'^optionvalues/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)$', OptionValueDetailsModal.as_view(), name='CDNX_products_optionvalues_sublist_details'),
-    url(r'^optionvalues/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)$', OptionValueDetailsModal.as_view(), name='CDNX_products_optionvalues_sublist_details'),
-    url(r'^optionvalues/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueUpdateModal.as_view(), name='CDNX_products_optionvalues_sublist_editmodal'),
-    url(r'^optionvalues/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueUpdateModal.as_view(), name='CDNX_products_optionvalues_sublist_editmodal'),
-    url(r'^optionvalues/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueDelete.as_view(), name='CDNX_products_optionvalues_sublist_delete'),
-    url(r'^optionvalues/foreign/(?P<search>[\w\W]+|\*)$', OptionValueForeign.as_view(), name='CDNX_products_features_values_foreign'),
 
     url(r'^flagshipproducts$', FlagshipProductList.as_view(), name='CDNX_products_flagshipproducts_list'),
     url(r'^flagshipproducts/add$', FlagshipProductCreate.as_view(), name='CDNX_products_flagshipproducts_add'),
@@ -286,4 +266,77 @@ urlpatterns = [
     url(r'^flagshipproducts/(?P<pk>\w+)/delete$', FlagshipProductDelete.as_view(), name='CDNX_products_flagshipproducts_delete'),
 
     url(r'^listproducts/(?P<type>\w+)/(?P<pk>[0-9]+)$', ListProducts.as_view(), name='CDNX_products_list_products'),
+
+    url(r'^groupvaluefeatures$', GroupValueFeatureList.as_view(), name='CDNX_products_GroupValueFeatures_list'),
+    url(r'^groupvaluefeatures/add$', GroupValueFeatureCreate.as_view(), name='CDNX_products_GroupValueFeatures_add'),
+    url(r'^groupvaluefeatures/addmodal$', GroupValueFeatureCreateModal.as_view(), name='CDNX_products_GroupValueFeatures_addmodal'),
+    url(r'^groupvaluefeatures/(?P<pk>\w+)$', GroupValueFeatureDetails.as_view(), name='CDNX_products_GroupValueFeatures_details'),
+    url(r'^groupvaluefeatures/(?P<pk>[0-9]+)/edit$', GroupValueFeatureUpdate.as_view(), name='CDNX_products_GroupValueFeatures_edit'),
+    url(r'^groupvaluefeatures/(?P<pk>\w+)/editmodal$', GroupValueFeatureUpdateModal.as_view(), name='CDNX_products_GroupValueFeatures_editmodal'),
+    url(r'^groupvaluefeatures/(?P<pk>\w+)/delete$', GroupValueFeatureDelete.as_view(), name='CDNX_products_GroupValueFeatures_delete'),
+
+    url(r'^groupvalueattributes$', GroupValueAttributeList.as_view(), name='CDNX_products_GroupValueAttributes_list'),
+    url(r'^groupvalueattributes/add$', GroupValueAttributeCreate.as_view(), name='CDNX_products_GroupValueAttributes_add'),
+    url(r'^groupvalueattributes/addmodal$', GroupValueAttributeCreateModal.as_view(), name='CDNX_products_GroupValueAttributes_addmodal'),
+    url(r'^groupvalueattributes/(?P<pk>\w+)$', GroupValueAttributeDetails.as_view(), name='CDNX_products_GroupValueAttributes_details'),
+    url(r'^groupvalueattributes/(?P<pk>[0-9]+)/edit$', GroupValueAttributeUpdate.as_view(), name='CDNX_products_GroupValueAttributes_edit'),
+    url(r'^groupvalueattributes/(?P<pk>\w+)/editmodal$', GroupValueAttributeUpdateModal.as_view(), name='CDNX_products_GroupValueAttributes_editmodal'),
+    url(r'^groupvalueattributes/(?P<pk>\w+)/delete$', GroupValueAttributeDelete.as_view(), name='CDNX_products_GroupValueAttributes_delete'),
+
+    url(r'^groupvaluefeaturespecials$', GroupValueFeatureSpecialList.as_view(), name='CDNX_products_GroupValueFeatureSpecials_list'),
+    url(r'^groupvaluefeaturespecials/add$', GroupValueFeatureSpecialCreate.as_view(), name='CDNX_products_GroupValueFeatureSpecials_add'),
+    url(r'^groupvaluefeaturespecials/addmodal$', GroupValueFeatureSpecialCreateModal.as_view(), name='CDNX_products_GroupValueFeatureSpecials_addmodal'),
+    url(r'^groupvaluefeaturespecials/(?P<pk>\w+)$', GroupValueFeatureSpecialDetails.as_view(), name='CDNX_products_GroupValueFeatureSpecials_details'),
+    url(r'^groupvaluefeaturespecials/(?P<pk>[0-9]+)/edit$', GroupValueFeatureSpecialUpdate.as_view(), name='CDNX_products_GroupValueFeatureSpecials_edit'),
+    url(r'^groupvaluefeaturespecials/(?P<pk>\w+)/editmodal$', GroupValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_GroupValueFeatureSpecials_editmodal'),
+    url(r'^groupvaluefeaturespecials/(?P<pk>\w+)/delete$', GroupValueFeatureSpecialDelete.as_view(), name='CDNX_products_GroupValueFeatureSpecials_delete'),
+
+
+    url(r'^optionvaluefeatures$', OptionValueFeatureList.as_view(), name='CDNX_products_OptionValueFeatures_list'),
+    url(r'^optionvaluefeatures/(?P<gpk>\w+)/edit$', OptionValueFeatureUpdate.as_view(), name='CDNX_products_OptionValueFeatures_edit'),
+    url(r'^optionvaluefeatures/(?P<gpk>\w+)/editmodal$', OptionValueFeatureUpdateModal.as_view(), name='CDNX_products_OptionValueFeatures_editmodal'),
+    url(r'^optionvaluefeatures/(?P<gpk>\w+)/delete$', OptionValueFeatureDelete.as_view(), name='CDNX_products_OptionValueFeatures_delete'),
+    url(r'^optionvaluefeatures/(?P<pk>\w+)/sublist$', OptionValueFeatureSubList.as_view(), name='CDNX_products_OptionValueFeatures_sublist'),
+    url(r'^optionvaluefeatures/(?P<pk>\w+)/sublistm$', OptionValueFeatureSubListModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_modal'),
+    url(r'^optionvaluefeatures/(?P<gpk>[0-9]+)/sublist/add$', OptionValueFeatureCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add'),
+    url(r'^optionvaluefeatures/(?P<gpk>[0-9]+)/sublistm/add$', OptionValueFeatureCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add2'),
+    url(r'^optionvaluefeatures/(?P<gpk>[0-9]+)/sublist/addmodal$', OptionValueFeatureCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_addmodal'),
+    url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)$', OptionValueFeatureDetailsModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_details'),
+    url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)$', OptionValueFeatureDetailsModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_details'),
+    url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueFeatureUpdateModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_editmodal'),
+    url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueFeatureUpdateModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_editmodal'),
+    url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueFeatureDelete.as_view(), name='CDNX_products_OptionValueFeatures_sublist_delete'),
+    url(r'^optionvaluefeatures/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureForeign.as_view(), name='CDNX_products_features_values_foreign'),
+
+    url(r'^optionvalueattributes$', OptionValueAttributeList.as_view(), name='CDNX_products_OptionValueAttributes_list'),
+    url(r'^optionvalueattributes/(?P<gpk>\w+)/edit$', OptionValueAttributeUpdate.as_view(), name='CDNX_products_OptionValueAttributes_edit'),
+    url(r'^optionvalueattributes/(?P<gpk>\w+)/editmodal$', OptionValueAttributeUpdateModal.as_view(), name='CDNX_products_OptionValueAttributes_editmodal'),
+    url(r'^optionvalueattributes/(?P<gpk>\w+)/delete$', OptionValueAttributeDelete.as_view(), name='CDNX_products_OptionValueAttributes_delete'),
+    url(r'^optionvalueattributes/(?P<pk>\w+)/sublist$', OptionValueAttributeSubList.as_view(), name='CDNX_products_OptionValueAttributes_sublist'),
+    url(r'^optionvalueattributes/(?P<pk>\w+)/sublistm$', OptionValueAttributeSubListModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_modal'),
+    url(r'^optionvalueattributes/(?P<gpk>[0-9]+)/sublist/add$', OptionValueAttributeCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add'),
+    url(r'^optionvalueattributes/(?P<gpk>[0-9]+)/sublistm/add$', OptionValueAttributeCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add2'),
+    url(r'^optionvalueattributes/(?P<gpk>[0-9]+)/sublist/addmodal$', OptionValueAttributeCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_addmodal'),
+    url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)$', OptionValueAttributeDetailsModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_details'),
+    url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)$', OptionValueAttributeDetailsModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_details'),
+    url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueAttributeUpdateModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_editmodal'),
+    url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueAttributeUpdateModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_editmodal'),
+    url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueAttributeDelete.as_view(), name='CDNX_products_OptionValueAttributes_sublist_delete'),
+    url(r'^optionvalueattributes/foreign/(?P<search>[\w\W]+|\*)$', OptionValueAttributeForeign.as_view(), name='CDNX_products_features_values_foreign'),
+
+    url(r'^optionvaluefeaturespecials$', OptionValueFeatureSpecialList.as_view(), name='CDNX_products_OptionValueFeatureSpecials_list'),
+    url(r'^optionvaluefeaturespecials/(?P<gpk>\w+)/edit$', OptionValueFeatureSpecialUpdate.as_view(), name='CDNX_products_OptionValueFeatureSpecials_edit'),
+    url(r'^optionvaluefeaturespecials/(?P<gpk>\w+)/editmodal$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_editmodal'),
+    url(r'^optionvaluefeaturespecials/(?P<gpk>\w+)/delete$', OptionValueFeatureSpecialDelete.as_view(), name='CDNX_products_OptionValueFeatureSpecials_delete'),
+    url(r'^optionvaluefeaturespecials/(?P<pk>\w+)/sublist$', OptionValueFeatureSpecialSubList.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist'),
+    url(r'^optionvaluefeaturespecials/(?P<pk>\w+)/sublistm$', OptionValueFeatureSpecialSubListModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_modal'),
+    url(r'^optionvaluefeaturespecials/(?P<gpk>[0-9]+)/sublist/add$', OptionValueFeatureSpecialCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add'),
+    url(r'^optionvaluefeaturespecials/(?P<gpk>[0-9]+)/sublistm/add$', OptionValueFeatureSpecialCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_add2'),
+    url(r'^optionvaluefeaturespecials/(?P<gpk>[0-9]+)/sublist/addmodal$', OptionValueFeatureSpecialCreateModal.as_view(), name='CDNX_products_optionv2alues_sublist_addmodal'),
+    url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)$', OptionValueFeatureSpecialDetailsModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_details'),
+    url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)$', OptionValueFeatureSpecialDetailsModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_details'),
+    url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_editmodal'),
+    url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_editmodal'),
+    url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueFeatureSpecialDelete.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_delete'),
+    url(r'^optionvaluefeaturespecials/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureSpecialForeign.as_view(), name='CDNX_products_features_values_foreign'),
 ]

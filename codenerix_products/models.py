@@ -394,13 +394,15 @@ class Subcategory(CodenerixModel):
 
 
 # grupo de valores
-class GroupValue(CodenerixModel):
+class GroupValues(CodenerixModel):  # META: Abstract class
+    class Meta:
+        abstract = True
+
     name = models.CharField(_("Name"), max_length=250, blank=True, null=True, unique=True)
 
     def __fields__(self, info):
         fields = []
         fields.append(('name', _("Name")))
-        fields.append(('options_value', _("Option value")))
         return fields
 
     def __unicode__(self):
@@ -409,22 +411,60 @@ class GroupValue(CodenerixModel):
     def __str__(self):
         return self.__unicode__()
 
+
+# grupo de valores para features
+class GroupValueFeature(GroupValues):
+    def __fields__(self, info):
+        fields = super(GroupValueFeature, self).__fields__(info)
+        fields.append(('options_value_feature', _('Option value')))
+        return fields
+
     def lock_delete(self):
-        if self.options_value.exists():
+        if self.options_value_feature.exists():
             return _("Cannot delete group value model, relationship between group value model and options")
         elif self.features.exists():
             return _("Cannot delete group value model, relationship between group value model and features")
+        else:
+            return super(GroupValueFeature, self).lock_delete()
+
+
+# grupo de valores para attributes
+class GroupValueAttribute(GroupValues):
+    def __fields__(self, info):
+        fields = super(GroupValueAttribute, self).__fields__(info)
+        fields.append(('options_value_attribute', _('Option value')))
+        return fields
+
+    def lock_delete(self):
+        if self.options_value_attribute.exists():
+            return _("Cannot delete group value model, relationship between group value model and options")
+
         elif self.attributes.exists():
             return _("Cannot delete group value model, relationship between group value model and attributes")
+        else:
+            return super(GroupValueAttribute, self).lock_delete()
+
+
+# grupo de valores para features special
+class GroupValueFeatureSpecial(GroupValues):
+    def __fields__(self, info):
+        fields = super(GroupValueFeatureSpecial, self).__fields__(info)
+        fields.append(('options_value_feature_special', _('Option value')))
+        return fields
+
+    def lock_delete(self):
+        if self.options_value_feature_special.exists():
+            return _("Cannot delete group value model, relationship between group value model and options")
         elif self.feature_specials.exists():
             return _("Cannot delete group value model, relationship between group value model and feature special")
         else:
-            return super(GroupValue, self).lock_delete()
+            return super(GroupValueFeatureSpecial, self).lock_delete()
 
 
 # opciones de los grupos de valores
-class OptionValue(CodenerixModel):
-    group = models.ForeignKey(GroupValue, related_name='options_value', verbose_name=_("Options value"))
+class OptionValues(CodenerixModel):  # META: Abstract class
+    class Meta:
+        abstract = True
 
     def __fields__(self, info):
         fields = []
@@ -443,11 +483,26 @@ class OptionValue(CodenerixModel):
         return self.__unicode__()
 
 
+# opciones de los grupos de valores para features
+class OptionValueFeature(OptionValues):
+    group = models.ForeignKey(GroupValueFeature, related_name='options_value_feature', verbose_name=_("Options value"))
+
+
+# opciones de los grupos de valores para attributes
+class OptionValueAttribute(OptionValues):
+    group = models.ForeignKey(GroupValueAttribute, related_name='options_value_attribute', verbose_name=_("Options value"))
+
+
+# opciones de los grupos de valores features special
+class OptionValueFeatureSpecial(OptionValues):
+    group = models.ForeignKey(GroupValueFeatureSpecial, related_name='options_value_feature_special', verbose_name=_("Options value"))
+
+
 # caracteristicas (comunes a todos los productos (resolución, RAM))
 class Feature(GenAttr):
     family = models.ForeignKey(Family, related_name='features', verbose_name=_("Family"), blank=True, null=True)
     category = models.ForeignKey(Category, related_name='features', verbose_name=_("Category"), blank=True, null=True)
-    list_value = models.ForeignKey(GroupValue, related_name='features', verbose_name=_("List value"), blank=True, null=True)
+    list_value = models.ForeignKey(GroupValueFeature, related_name='features', verbose_name=_("List value"), blank=True, null=True)
 
     def save(self, *args, **kwards):
         result = super(Feature, self).save(*args, **kwards)
@@ -471,7 +526,7 @@ class Attribute(GenAttr):
     family = models.ForeignKey(Family, related_name='attributes', verbose_name=_("Family"), blank=True, null=True)
     category = models.ForeignKey(Category, related_name='attributes', verbose_name=_("Category"), blank=True, null=True)
     attribute = models.ForeignKey("self", related_name='attributes', verbose_name=_("Attribute"), blank=True, null=True)
-    list_value = models.ForeignKey(GroupValue, related_name='attributes', verbose_name=_("List value"), blank=True, null=True)
+    list_value = models.ForeignKey(GroupValueAttribute, related_name='attributes', verbose_name=_("List value"), blank=True, null=True)
 
     def save(self, *args, **kwards):
         result = super(Attribute, self).save(*args, **kwards)
@@ -490,7 +545,7 @@ class Attribute(GenAttr):
 class FeatureSpecial(GenAttr):
     family = models.ForeignKey(Family, related_name='feature_specials', verbose_name=_("Family"), blank=True, null=True)
     category = models.ForeignKey(Category, related_name='feature_specials', verbose_name=_("Category"), blank=True, null=True)
-    list_value = models.ForeignKey(GroupValue, related_name='feature_specials', verbose_name=_("List value"), blank=True, null=True)
+    list_value = models.ForeignKey(GroupValueFeatureSpecial, related_name='feature_specials', verbose_name=_("List value"), blank=True, null=True)
     unique = models.BooleanField(_("The value must unique"), blank=True, null=False, default=True)
 
     def __fields__(self, info):
@@ -1087,7 +1142,7 @@ class ProductFinalAttribute(CodenerixModel):
         elif self.attribute.type_value == TYPE_VALUE_LIST:
             lang = get_language_database()
             field = '{}__description'.format(lang)
-            ov = OptionValue.objects.filter(
+            ov = OptionValueAttribute.objects.filter(
                 group=self.attribute.list_value,
                 pk=int(self.value)
             ).values(
@@ -1254,7 +1309,9 @@ MODELS = [
     ("product_image", "ProductImage"),        # para los alt y los titles de las imagenes
     ("product_final_image", "ProductFinalImage"),
     ("product_document", "ProductDocument"),  # para los titles de los enlaces
-    ("option_value", "OptionValue")
+    ("option_value", "OptionValueFeature"),
+    ("option_value", "OptionValueAttribute"),
+    ("option_value", "OptionValueFeatureSpecial"),
 ]
 
 for info in MODELS:

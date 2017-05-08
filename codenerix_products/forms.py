@@ -27,10 +27,12 @@ from codenerix.forms import GenModelForm
 from codenerix.widgets import MultiStaticSelect, DynamicSelect
 
 from .models import TypeTax, TypeRecargoEquivalencia
-from .models import Feature, Attribute, FeatureSpecial, ProductFinalAttribute, GroupValue, OptionValue
+from .models import Feature, Attribute, FeatureSpecial, ProductFinalAttribute
 from .models import Family, Category, Subcategory, Brand
 from .models import Product, ProductFinal, FlagshipProduct
 from .models import ProductRelationSold, ProductImage, ProductDocument, ProductFeature, ProductUnique, ProductFinalImage
+from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
+
 from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_SLIDERS, TYPE_VALUES, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
 
 
@@ -536,7 +538,6 @@ class ProductDocumentForm(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                #[ 'name_file', 9],
                 ['doc_path', 9],
                 ['public', 3],
             )
@@ -814,11 +815,7 @@ class ProductUniqueForm(GenModelForm):
         return g
 
 
-class GroupValueForm(GenModelForm):
-    class Meta:
-        model = GroupValue
-        exclude = []
-
+class GroupValuesForm(GenModelForm):
     def __groups__(self):
         g = [
             (
@@ -839,11 +836,25 @@ class GroupValueForm(GenModelForm):
         return g
 
 
-class OptionValueForm(GenModelForm):
+class GroupValueFeatureForm(GroupValuesForm):
     class Meta:
-        model = OptionValue
-        exclude = ['group', ]
+        model = GroupValueFeature
+        exclude = []
 
+
+class GroupValueAttributeForm(GroupValuesForm):
+    class Meta:
+        model = GroupValueAttribute
+        exclude = []
+
+
+class GroupValueFeatureSpecialForm(GroupValuesForm):
+    class Meta:
+        model = GroupValueFeatureSpecial
+        exclude = []
+
+
+class OptionValuesForm(GenModelForm):
     def __groups__(self):
         g = []
         return g
@@ -857,6 +868,24 @@ class OptionValueForm(GenModelForm):
             )
         ]
         return g
+
+
+class OptionValueFeatureForm(OptionValuesForm):
+    class Meta:
+        model = OptionValueFeature
+        exclude = ['group', ]
+
+
+class OptionValueAttributeForm(OptionValuesForm):
+    class Meta:
+        model = OptionValueAttribute
+        exclude = ['group', ]
+
+
+class OptionValueFeatureSpecialForm(OptionValuesForm):
+    class Meta:
+        model = OptionValueFeatureSpecial
+        exclude = ['group', ]
 
 
 class FlagshipProductForm(GenModelForm):

@@ -44,11 +44,13 @@ from codenerix.views import GenList, GenCreate, GenCreateModal, GenUpdate, GenUp
 from codenerix_extensions.files.views import DocumentFileView, ImageFileView
 
 from .models import TypeTax, Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductFinalImage, \
-    ProductDocument, ProductFinal, ProductFeature, ProductUnique, GroupValue, OptionValue, ProductFinalAttribute, TypeRecargoEquivalencia, Brand, FlagshipProduct
+    ProductDocument, ProductFinal, ProductFeature, ProductUnique, ProductFinalAttribute, TypeRecargoEquivalencia, Brand, FlagshipProduct, \
+    GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
 from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_SLIDERS, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
 from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, FamilyForm, CategoryForm, SubcategoryForm, SubcategoryOwnForm, ProductFormCreate, \
-    ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm, GroupValueForm, OptionValueForm, \
-    ProductFinalAttributeForm, ProductFinalRelatedSubForm, TypeRecargoEquivalenciaForm, BrandForm, FlagshipProductForm
+    ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm,  \
+    ProductFinalAttributeForm, ProductFinalRelatedSubForm, TypeRecargoEquivalenciaForm, BrandForm, FlagshipProductForm, \
+    GroupValueFeatureForm, GroupValueAttributeForm, GroupValueFeatureSpecialForm, OptionValueFeatureForm, OptionValueAttributeForm, OptionValueFeatureSpecialForm
 
 
 # ###########################################
@@ -1333,7 +1335,7 @@ class ProductFeatureCreate(GenCreate):
             value = form.cleaned_data['value_free']
         elif feature.type_value == TYPE_VALUE_LIST:
             value = form.cleaned_data['value_list']
-            if not OptionValue.objects.filter(
+            if not OptionValueFeature.objects.filter(
                 pk=value, group__features=feature
             ).exists():
                 errors = form._errors.setdefault("value", ErrorList())
@@ -1392,7 +1394,7 @@ class ProductFeatureUpdate(GenUpdate):
             value = form.cleaned_data['value_free']
         elif feature.type_value == TYPE_VALUE_LIST:
             value = form.cleaned_data['value_list']
-            if not OptionValue.objects.filter(
+            if not OptionValueFeature.objects.filter(
                 pk=value, group__features=feature
             ).exists():
                 errors = form._errors.setdefault("value", ErrorList())
@@ -1543,120 +1545,253 @@ class ProductUniqueDetailsModal(GenDetailModal, ProductUniqueDetails):
 
 
 # ############################################
-class GenGroupValueUrl(object):
-    ws_entry_point = '{}/groupvalues'.format(settings.CDNX_PRODUCTS_URL)
+class GenGroupValueFeatureUrl(object):
+    ws_entry_point = '{}/groupvaluefeatures'.format(settings.CDNX_PRODUCTS_URL)
 
 
-# GroupValue
-class GroupValueList(GenGroupValueUrl, GenList):
-    model = GroupValue
+# GroupValueFeature
+class GroupValueFeatureList(GenGroupValueFeatureUrl, GenList):
+    model = GroupValueFeature
     show_details = True
     extra_context = {
-        'menu': ['GroupValue', 'people'],
-        'bread': [_('GroupValue'), _('People')]
+        'menu': ['GroupValueFeature', 'people'],
+        'bread': [_('GroupValueFeature'), _('People')]
     }
 
 
-class GroupValueCreate(GenGroupValueUrl, GenCreate):
-    model = GroupValue
-    form_class = GroupValueForm
+class GroupValueFeatureCreate(GenGroupValueFeatureUrl, GenCreate):
+    model = GroupValueFeature
+    form_class = GroupValueFeatureForm
 
 
-class GroupValueCreateModal(GenCreateModal, GroupValueCreate):
+class GroupValueFeatureCreateModal(GenCreateModal, GroupValueFeatureCreate):
     pass
 
 
-class GroupValueUpdate(GenGroupValueUrl, GenUpdate):
-    model = GroupValue
+class GroupValueFeatureUpdate(GenGroupValueFeatureUrl, GenUpdate):
+    model = GroupValueFeature
     show_details = True
-    form_class = GroupValueForm
+    form_class = GroupValueFeatureForm
 
 
-class GroupValueUpdateModal(GenUpdateModal, GroupValueUpdate):
-    template_model = "codenerix_products/groupvalue_formmodal.html"
+class GroupValueFeatureUpdateModal(GenUpdateModal, GroupValueFeatureUpdate):
+    """
+    Next version, update and sublist
+    """
+    # template_model = "codenerix_products/groupvaluefeature_formmodal.html"
     tabs = [
         {
             'id': 'Values',
             'name': _('List values'),
-            'ws': 'CDNX_products_optionvalues_sublist_modal',
-            'wsbase': 'CDNX_products_optionvalues_list',
+            'ws': 'CDNX_products_OptionValueFeatures_sublist_modal',
+            'wsbase': 'CDNX_products_OptionValueFeatures_list',
             'rows': 'base'
         },
     ]
 
 
-class GroupValueDelete(GenGroupValueUrl, GenDelete):
-    model = GroupValue
+class GroupValueFeatureDelete(GenGroupValueFeatureUrl, GenDelete):
+    model = GroupValueFeature
 
 
-class GroupValueDetails(GenGroupValueUrl, GenDetail):
-    model = GroupValue
-    groups = GroupValueForm.__groups_details__()
-    template_model = "codenerix_products/groupvalue_details.html"
+class GroupValueFeatureDetails(GenGroupValueFeatureUrl, GenDetail):
+    model = GroupValueFeature
+    groups = GroupValueFeatureForm.__groups_details__()
+    template_model = "codenerix_products/groupvaluefeature_details.html"
     tabs = [
         {
             'id': 'Values',
             'name': _('List values'),
-            'ws': 'CDNX_products_optionvalues_sublist',
-            'wsbase': 'CDNX_products_optionvalues_list',
+            'ws': 'CDNX_products_OptionValueFeatures_sublist',
+            'wsbase': 'CDNX_products_OptionValueFeatures_list',
             'rows': 'base'
         },
     ]
 
 
 # ############################################
-class GenOptionValueUrl(object):
-    ws_entry_point = '{}/optionvalues'.format(settings.CDNX_PRODUCTS_URL)
+class GenGroupValueAttributeUrl(object):
+    ws_entry_point = '{}/groupvalueattributes'.format(settings.CDNX_PRODUCTS_URL)
 
 
-# OptionValue
-class OptionValueList(GenOptionValueUrl, GenList):
-    model = OptionValue
+# GroupValueAttribute
+class GroupValueAttributeList(GenGroupValueAttributeUrl, GenList):
+    model = GroupValueAttribute
+    show_details = True
     extra_context = {
-        'menu': ['OptionValue', 'people'],
-        'bread': [_('OptionValue'), _('People')]
+        'menu': ['GroupValueAttribute', 'people'],
+        'bread': [_('GroupValueAttribute'), _('People')]
     }
 
 
-class OptionValueCreate(GenOptionValueUrl, MultiForm, GenCreate):
-    model = OptionValue
-    form_class = OptionValueForm
-    forms = formsfull["OptionValue"]
+class GroupValueAttributeCreate(GenGroupValueAttributeUrl, GenCreate):
+    model = GroupValueAttribute
+    form_class = GroupValueAttributeForm
+
+
+class GroupValueAttributeCreateModal(GenCreateModal, GroupValueAttributeCreate):
+    pass
+
+
+class GroupValueAttributeUpdate(GenGroupValueAttributeUrl, GenUpdate):
+    model = GroupValueAttribute
+    show_details = True
+    form_class = GroupValueAttributeForm
+
+
+class GroupValueAttributeUpdateModal(GenUpdateModal, GroupValueAttributeUpdate):
+    """
+    Next version, update and sublist
+    """
+    # template_model = "codenerix_products/groupvalueattribute_formmodal.html"
+    tabs = [
+        {
+            'id': 'Values',
+            'name': _('List values'),
+            'ws': 'CDNX_products_OptionValueAttributes_sublist_modal',
+            'wsbase': 'CDNX_products_OptionValueAttributes_list',
+            'rows': 'base'
+        },
+    ]
+
+
+class GroupValueAttributeDelete(GenGroupValueAttributeUrl, GenDelete):
+    model = GroupValueAttribute
+
+
+class GroupValueAttributeDetails(GenGroupValueAttributeUrl, GenDetail):
+    model = GroupValueAttribute
+    groups = GroupValueAttributeForm.__groups_details__()
+    template_model = "codenerix_products/GroupValueAttribute_details.html"
+    tabs = [
+        {
+            'id': 'Values',
+            'name': _('List values'),
+            'ws': 'CDNX_products_OptionValueAttributes_sublist',
+            'wsbase': 'CDNX_products_OptionValueAttributes_list',
+            'rows': 'base'
+        },
+    ]
+
+
+# ############################################
+class GenGroupValueFeatureSpecialUrl(object):
+    ws_entry_point = '{}/groupvaluefeaturespecials'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# GroupValueFeatureSpecial
+class GroupValueFeatureSpecialList(GenGroupValueFeatureSpecialUrl, GenList):
+    model = GroupValueFeatureSpecial
+    show_details = True
+    extra_context = {
+        'menu': ['GroupValueFeatureSpecial', 'people'],
+        'bread': [_('GroupValueFeatureSpecial'), _('People')]
+    }
+
+
+class GroupValueFeatureSpecialCreate(GenGroupValueFeatureSpecialUrl, GenCreate):
+    model = GroupValueFeatureSpecial
+    form_class = GroupValueFeatureSpecialForm
+
+
+class GroupValueFeatureSpecialCreateModal(GenCreateModal, GroupValueFeatureSpecialCreate):
+    pass
+
+
+class GroupValueFeatureSpecialUpdate(GenGroupValueFeatureSpecialUrl, GenUpdate):
+    model = GroupValueFeatureSpecial
+    show_details = True
+    form_class = GroupValueFeatureSpecialForm
+
+
+class GroupValueFeatureSpecialUpdateModal(GenUpdateModal, GroupValueFeatureSpecialUpdate):
+    """
+    Next version, update and sublist
+    """
+    # template_model = "codenerix_products/groupvaluefeaturespecial_formmodal.html"
+    tabs = [
+        {
+            'id': 'Values',
+            'name': _('List values'),
+            'ws': 'CDNX_products_OptionValueFeatureSpecials_sublist_modal',
+            'wsbase': 'CDNX_products_OptionValueFeatureSpecials_list',
+            'rows': 'base'
+        },
+    ]
+
+
+class GroupValueFeatureSpecialDelete(GenGroupValueFeatureSpecialUrl, GenDelete):
+    model = GroupValueFeatureSpecial
+
+
+class GroupValueFeatureSpecialDetails(GenGroupValueFeatureSpecialUrl, GenDetail):
+    model = GroupValueFeatureSpecial
+    groups = GroupValueFeatureSpecialForm.__groups_details__()
+    template_model = "codenerix_products/GroupValueFeatureSpecial_details.html"
+    tabs = [
+        {
+            'id': 'Values',
+            'name': _('List values'),
+            'ws': 'CDNX_products_OptionValueFeatureSpecials_sublist',
+            'wsbase': 'CDNX_products_OptionValueFeatureSpecials_list',
+            'rows': 'base'
+        },
+    ]
+
+
+# ############################################
+class GenOptionValueFeatureUrl(object):
+    ws_entry_point = '{}/optionvaluefeatures'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# OptionValueFeature
+class OptionValueFeatureList(GenOptionValueFeatureUrl, GenList):
+    model = OptionValueFeature
+    extra_context = {
+        'menu': ['OptionValueFeature', 'people'],
+        'bread': [_('OptionValueFeature'), _('People')]
+    }
+
+
+class OptionValueFeatureCreate(GenOptionValueFeatureUrl, MultiForm, GenCreate):
+    model = OptionValueFeature
+    form_class = OptionValueFeatureForm
+    forms = formsfull["OptionValueFeature"]
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         self.__group_pk = kwargs.get('gpk', None)
-        return super(OptionValueCreate, self).dispatch(*args, **kwargs)
+        return super(OptionValueFeatureCreate, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form, forms):
         if self.__group_pk:
-            group = GroupValue.objects.get(pk=self.__group_pk)
+            group = GroupValueFeature.objects.get(pk=self.__group_pk)
             self.request.group = group
             form.instance.group = group
 
-        return super(OptionValueCreate, self).form_valid(form, forms)
+        return super(OptionValueFeatureCreate, self).form_valid(form, forms)
 
 
-class OptionValueCreateModal(GenCreateModal, OptionValueCreate):
+class OptionValueFeatureCreateModal(GenCreateModal, OptionValueFeatureCreate):
     pass
 
 
-class OptionValueUpdate(GenOptionValueUrl, MultiForm, GenUpdate):
-    model = OptionValue
-    form_class = OptionValueForm
-    forms = formsfull["OptionValue"]
+class OptionValueFeatureUpdate(GenOptionValueFeatureUrl, MultiForm, GenUpdate):
+    model = OptionValueFeature
+    form_class = OptionValueFeatureForm
+    forms = formsfull["OptionValueFeature"]
 
 
-class OptionValueUpdateModal(GenUpdateModal, OptionValueUpdate):
+class OptionValueFeatureUpdateModal(GenUpdateModal, OptionValueFeatureUpdate):
     pass
 
 
-class OptionValueDelete(GenOptionValueUrl, GenDelete):
-    model = OptionValue
+class OptionValueFeatureDelete(GenOptionValueFeatureUrl, GenDelete):
+    model = OptionValueFeature
 
 
-class OptionValueSubList(GenOptionValueUrl, GenList):
-    model = OptionValue
+class OptionValueFeatureSubList(GenOptionValueFeatureUrl, GenList):
+    model = OptionValueFeature
 
     def __limitQ__(self, info):
         limit = {}
@@ -1665,22 +1800,206 @@ class OptionValueSubList(GenOptionValueUrl, GenList):
         return limit
 
 
-class OptionValueSubListModal(OptionValueSubList):
+class OptionValueFeatureSubListModal(OptionValueFeatureSubList):
     json = False
-    template_model = "codenerix_products/optionvalue_sublist.html"
+    template_model = "codenerix_products/optionvaluefeature_sublist.html"
 
 
-class OptionValueDetails(GenOptionValueUrl, GenDetail):
-    model = OptionValue
-    groups = OptionValueForm.__groups_details__()
+class OptionValueFeatureDetails(GenOptionValueFeatureUrl, GenDetail):
+    model = OptionValueFeature
+    groups = OptionValueFeatureForm.__groups_details__()
 
 
-class OptionValueDetailsModal(GenDetailModal, OptionValueDetails):
+class OptionValueFeatureDetailsModal(GenDetailModal, OptionValueFeatureDetails):
     pass
 
 
-class OptionValueForeign(GenOptionValueUrl, GenForeignKey):
-    model = OptionValue
+class OptionValueFeatureForeign(GenOptionValueFeatureUrl, GenForeignKey):
+    model = OptionValueFeature
+    label = "{<LANGUAGE_CODE>__description}"
+
+    def get_foreign(self, queryset, search, filters):
+        qs = queryset.all()
+        product_pk = filters.get('product_pk', None)
+        feature_pk = filters.get('feature', None)
+
+        if product_pk:
+            qs = qs.filter(group__features__product_features__product__pk=product_pk)
+        if feature_pk:
+            qs = qs.filter(group__features__pk=feature_pk)
+
+        return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
+
+
+# ############################################
+class GenOptionValueAttributeUrl(object):
+    ws_entry_point = '{}/optiovalueattributes'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# OptionValueAttribute
+class OptionValueAttributeList(GenOptionValueAttributeUrl, GenList):
+    model = OptionValueAttribute
+    extra_context = {
+        'menu': ['OptionValueAttribute', 'people'],
+        'bread': [_('OptionValueAttribute'), _('People')]
+    }
+
+
+class OptionValueAttributeCreate(GenOptionValueAttributeUrl, MultiForm, GenCreate):
+    model = OptionValueAttribute
+    form_class = OptionValueAttributeForm
+    forms = formsfull["OptionValueAttribute"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__group_pk = kwargs.get('gpk', None)
+        return super(OptionValueAttributeCreate, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form, forms):
+        if self.__group_pk:
+            group = GroupValueAttribute.objects.get(pk=self.__group_pk)
+            self.request.group = group
+            form.instance.group = group
+
+        return super(OptionValueAttributeCreate, self).form_valid(form, forms)
+
+
+class OptionValueAttributeCreateModal(GenCreateModal, OptionValueAttributeCreate):
+    pass
+
+
+class OptionValueAttributeUpdate(GenOptionValueAttributeUrl, MultiForm, GenUpdate):
+    model = OptionValueAttribute
+    form_class = OptionValueAttributeForm
+    forms = formsfull["OptionValueAttribute"]
+
+
+class OptionValueAttributeUpdateModal(GenUpdateModal, OptionValueAttributeUpdate):
+    pass
+
+
+class OptionValueAttributeDelete(GenOptionValueAttributeUrl, GenDelete):
+    model = OptionValueAttribute
+
+
+class OptionValueAttributeSubList(GenOptionValueAttributeUrl, GenList):
+    model = OptionValueAttribute
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['file_link'] = Q(group__pk=pk)
+        return limit
+
+
+class OptionValueAttributeSubListModal(OptionValueAttributeSubList):
+    json = False
+    template_model = "codenerix_products/optionvalueattribute_sublist.html"
+
+
+class OptionValueAttributeDetails(GenOptionValueAttributeUrl, GenDetail):
+    model = OptionValueAttribute
+    groups = OptionValueAttributeForm.__groups_details__()
+
+
+class OptionValueAttributeDetailsModal(GenDetailModal, OptionValueAttributeDetails):
+    pass
+
+
+class OptionValueAttributeForeign(GenOptionValueAttributeUrl, GenForeignKey):
+    model = OptionValueAttribute
+    label = "{<LANGUAGE_CODE>__description}"
+
+    def get_foreign(self, queryset, search, filters):
+        qs = queryset.all()
+        product_pk = filters.get('product_pk', None)
+        feature_pk = filters.get('feature', None)
+
+        if product_pk:
+            qs = qs.filter(group__features__product_features__product__pk=product_pk)
+        if feature_pk:
+            qs = qs.filter(group__features__pk=feature_pk)
+
+        return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
+
+
+# ############################################
+class GenOptionValueFeatureSpecialUrl(object):
+    ws_entry_point = '{}/optionvaluefeaturespecials'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# OptionValueFeatureSpecial
+class OptionValueFeatureSpecialList(GenOptionValueFeatureSpecialUrl, GenList):
+    model = OptionValueFeatureSpecial
+    extra_context = {
+        'menu': ['OptionValueFeatureSpecial', 'people'],
+        'bread': [_('OptionValueFeatureSpecial'), _('People')]
+    }
+
+
+class OptionValueFeatureSpecialCreate(GenOptionValueFeatureSpecialUrl, MultiForm, GenCreate):
+    model = OptionValueFeatureSpecial
+    form_class = OptionValueFeatureSpecialForm
+    forms = formsfull["OptionValueFeatureSpecial"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__group_pk = kwargs.get('gpk', None)
+        return super(OptionValueFeatureSpecialCreate, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form, forms):
+        if self.__group_pk:
+            group = GroupValueFeatureSpecial.objects.get(pk=self.__group_pk)
+            self.request.group = group
+            form.instance.group = group
+
+        return super(OptionValueFeatureSpecialCreate, self).form_valid(form, forms)
+
+
+class OptionValueFeatureSpecialCreateModal(GenCreateModal, OptionValueFeatureSpecialCreate):
+    pass
+
+
+class OptionValueFeatureSpecialUpdate(GenOptionValueFeatureSpecialUrl, MultiForm, GenUpdate):
+    model = OptionValueFeatureSpecial
+    form_class = OptionValueFeatureSpecialForm
+    forms = formsfull["OptionValueFeatureSpecial"]
+
+
+class OptionValueFeatureSpecialUpdateModal(GenUpdateModal, OptionValueFeatureSpecialUpdate):
+    pass
+
+
+class OptionValueFeatureSpecialDelete(GenOptionValueFeatureSpecialUrl, GenDelete):
+    model = OptionValueFeatureSpecial
+
+
+class OptionValueFeatureSpecialSubList(GenOptionValueFeatureSpecialUrl, GenList):
+    model = OptionValueFeatureSpecial
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['file_link'] = Q(group__pk=pk)
+        return limit
+
+
+class OptionValueFeatureSpecialSubListModal(OptionValueFeatureSpecialSubList):
+    json = False
+    template_model = "codenerix_products/optionvaluefeaturespecial_sublist.html"
+
+
+class OptionValueFeatureSpecialDetails(GenOptionValueFeatureSpecialUrl, GenDetail):
+    model = OptionValueFeatureSpecial
+    groups = OptionValueFeatureSpecialForm.__groups_details__()
+
+
+class OptionValueFeatureSpecialDetailsModal(GenDetailModal, OptionValueFeatureSpecialDetails):
+    pass
+
+
+class OptionValueFeatureSpecialForeign(GenOptionValueFeatureSpecialUrl, GenForeignKey):
+    model = OptionValueFeatureSpecial
     label = "{<LANGUAGE_CODE>__description}"
 
     def get_foreign(self, queryset, search, filters):
