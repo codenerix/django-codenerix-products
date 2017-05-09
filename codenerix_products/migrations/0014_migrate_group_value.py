@@ -85,7 +85,7 @@ def migrate_group_value(model_group, table_source, model_option):
                     cond_extra = []
                     for v, o in zip(values, option):
                         # Field name, description value
-                        cond_extra.append('{} = "{}"'.format(o, v))
+                        cond_extra.append('{} = "{}"'.format(v, o))
 
                     # We built the new query
                     q_option = "SELECT COUNT(*) FROM {} WHERE {} AND {}".format(
