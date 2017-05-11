@@ -1279,6 +1279,7 @@ class ProductFinalAttributeDelete(GenProductFinalAttributeUrl, GenDelete):
 
 class ProductFinalAttributeSubList(GenProductFinalAttributeUrl, GenList):
     model = ProductFinalAttribute
+    default_ordering = ['attribute', ]
 
     def __limitQ__(self, info):
         limit = {}

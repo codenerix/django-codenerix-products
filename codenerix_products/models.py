@@ -795,11 +795,13 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
     stock_lock = models.FloatField(_("Stock lock"), null=False, blank=False, default=0, editable=False)
     price = models.FloatField(_("Price"), null=False, blank=False, default=0, editable=False)
+    ean13 = models.CharField(_("EAN-13"), null=True, blank=True, max_length=13)
+
     reviews_value = models.FloatField(_("Reviews"), null=False, blank=False, default=0, editable=False)
     reviews_count = models.IntegerField(_("Reviews count"), null=False, blank=False, default=0, editable=False)
 
     def __unicode__(self):
-        name = u"{}- {}".format(self.pk, smart_text(self.product))
+        name = u"{} - {}".format(self.pk, smart_text(self.product))
         if self.products_unique.exists:
             for fe in self.products_unique.all():
                 name += u"({}) ".format(fe.value)
@@ -853,7 +855,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     def calculate_price(self, apply_overcharge=False):
         price = float(self.product.price_base)
         tax = float(self.product.tax.tax)
-        overcharge = float(self.product.recargo_equivalencia.recargo_equivalencia)
+        if self.product.recargo_equivalencia:
+            overcharge = float(self.product.recargo_equivalencia.recargo_equivalencia)
+        else:
+            overcharge = 0
 
         # atributos
         update = True
@@ -1131,9 +1136,10 @@ class ProductFinalAttribute(CodenerixModel):
     """
     product = models.ForeignKey(ProductFinal, blank=False, null=False, related_name='products_final_attr', verbose_name=_('Product'))
     attribute = models.ForeignKey(Attribute, blank=False, null=True, related_name='products_final_attr', verbose_name=_('Attributes'))
-    value = models.CharField(_("Value"), max_length=80)
 
-    def __unicode__(self):
+    value = models.CharField(_("Value"), max_length=80)
+    
+    def __unicode__(self, show_attribute=True):
         value = ''
         if self.attribute.type_value == TYPE_VALUE_BOOLEAN:
             value = bool(self.value) and _('True') or _('False')
@@ -1150,17 +1156,22 @@ class ProductFinalAttribute(CodenerixModel):
             ).first()
             if ov:
                 value = ov[field]
-
-        return u"{}: {}".format(smart_text(self.attribute), smart_text(value))
+        if show_attribute:
+            return u"{}: {}".format(smart_text(self.attribute), smart_text(value))
+        else:
+            return u"{}".format(smart_text(value))
 
     def __str__(self):
         return self.__unicode__()
+
+    def get_value_attribute(self):
+        return self.__unicode__(show_attribute=False)
 
     def __fields__(self, info):
         fields = []
         fields.append(('product', _("Product")))
         fields.append(('attribute', _("Attribute")))
-        fields.append(('value', _("Value")))
+        fields.append(('get_value_attribute', _("Value")))
         return fields
 
 
