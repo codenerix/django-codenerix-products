@@ -1821,11 +1821,11 @@ class OptionValueFeatureForeign(GenOptionValueFeatureUrl, GenForeignKey):
 
     def get_foreign(self, queryset, search, filters):
         qs = queryset.all()
-        product_pk = filters.get('product_pk', None)
+        # product_pk = filters.get('product_pk', None)
         feature_pk = filters.get('feature', None)
 
-        if product_pk:
-            qs = qs.filter(group__features__product_features__product__pk=product_pk)
+        # if product_pk:
+        #     qs = qs.filter(group__features__product_features__product__pk=product_pk)
         if feature_pk:
             qs = qs.filter(group__features__pk=feature_pk)
 
@@ -1913,11 +1913,11 @@ class OptionValueAttributeForeign(GenOptionValueAttributeUrl, GenForeignKey):
 
     def get_foreign(self, queryset, search, filters):
         qs = queryset.all()
-        product_pk = filters.get('product_pk', None)
+        # product_pk = filters.get('product_pk', None)
         feature_pk = filters.get('feature', None)
 
-        if product_pk:
-            qs = qs.filter(group__features__product_features__product__pk=product_pk)
+        # if product_pk:
+        #     qs = qs.filter(group__features__product_features__product__pk=product_pk)
         if feature_pk:
             qs = qs.filter(group__features__pk=feature_pk)
 
@@ -2005,11 +2005,11 @@ class OptionValueFeatureSpecialForeign(GenOptionValueFeatureSpecialUrl, GenForei
 
     def get_foreign(self, queryset, search, filters):
         qs = queryset.all()
-        product_pk = filters.get('product_pk', None)
+        # product_pk = filters.get('product_pk', None)
         feature_pk = filters.get('feature', None)
 
-        if product_pk:
-            qs = qs.filter(group__features__product_features__product__pk=product_pk)
+        # if product_pk:
+        #     qs = qs.filter(group__features__product_features__product__pk=product_pk)
         if feature_pk:
             qs = qs.filter(group__features__pk=feature_pk)
 

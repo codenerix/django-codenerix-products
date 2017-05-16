@@ -306,7 +306,7 @@ urlpatterns = [
     url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueFeatureUpdateModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_editmodal'),
     url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueFeatureUpdateModal.as_view(), name='CDNX_products_OptionValueFeatures_sublist_editmodal'),
     url(r'^optionvaluefeatures/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueFeatureDelete.as_view(), name='CDNX_products_OptionValueFeatures_sublist_delete'),
-    url(r'^optionvaluefeatures/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureForeign.as_view(), name='CDNX_products_features_values_foreign'),
+    url(r'^optionvaluefeatures/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureForeign.as_view(), name='CDNX_products_OptionValueFeatures_foreign'),
 
     url(r'^optionvalueattributes$', OptionValueAttributeList.as_view(), name='CDNX_products_OptionValueAttributes_list'),
     url(r'^optionvalueattributes/(?P<gpk>\w+)/edit$', OptionValueAttributeUpdate.as_view(), name='CDNX_products_OptionValueAttributes_edit'),
@@ -322,7 +322,7 @@ urlpatterns = [
     url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueAttributeUpdateModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_editmodal'),
     url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueAttributeUpdateModal.as_view(), name='CDNX_products_OptionValueAttributes_sublist_editmodal'),
     url(r'^optionvalueattributes/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueAttributeDelete.as_view(), name='CDNX_products_OptionValueAttributes_sublist_delete'),
-    url(r'^optionvalueattributes/foreign/(?P<search>[\w\W]+|\*)$', OptionValueAttributeForeign.as_view(), name='CDNX_products_features_values_foreign'),
+    url(r'^optionvalueattributes/foreign/(?P<search>[\w\W]+|\*)$', OptionValueAttributeForeign.as_view(), name='CDNX_products_OptionValueAttributes_foreign'),
 
     url(r'^optionvaluefeaturespecials$', OptionValueFeatureSpecialList.as_view(), name='CDNX_products_OptionValueFeatureSpecials_list'),
     url(r'^optionvaluefeaturespecials/(?P<gpk>\w+)/edit$', OptionValueFeatureSpecialUpdate.as_view(), name='CDNX_products_OptionValueFeatureSpecials_edit'),
@@ -338,5 +338,5 @@ urlpatterns = [
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublistm/(?P<pk>[0-9]+)/edit$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_editmodal'),
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_editmodal'),
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueFeatureSpecialDelete.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_delete'),
-    url(r'^optionvaluefeaturespecials/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureSpecialForeign.as_view(), name='CDNX_products_features_values_foreign'),
+    url(r'^optionvaluefeaturespecials/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureSpecialForeign.as_view(), name='CDNX_products_OptionValueFeatureSpecials_foreign'),
 ]

@@ -728,7 +728,7 @@ class ProductFeatureForm(GenModelForm):
         exclude = ["product", "product_pk", ]
         autofill = {
             'feature': ['select', 3, 'CDNX_products_features_foreign', 'product_pk'],
-            'value_list': ['select', 3, 'CDNX_products_features_values_foreign', 'product_pk', 'feature'],
+            'value_list': ['select', 3, 'CDNX_products_OptionValueFeatures_foreign', 'product_pk', 'feature'],
         }
 
     def __init__(self, *args, **kwargs):
