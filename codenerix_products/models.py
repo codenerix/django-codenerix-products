@@ -801,10 +801,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     reviews_count = models.IntegerField(_("Reviews count"), null=False, blank=False, default=0, editable=False)
 
     def __unicode__(self):
-        name = u"{} - {}".format(self.pk, smart_text(self.product))
-        if self.products_unique.exists:
-            for fe in self.products_unique.all():
-                name += u"({}) ".format(fe.value)
+        name = u"{} - {} ({})".format(self.pk, smart_text(self.product), self.ean13)
         return name
 
     def __str__(self):
