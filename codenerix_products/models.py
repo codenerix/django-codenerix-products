@@ -672,6 +672,8 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         return text_filters
 
 
+
+
 # productos
 class Product(GenProduct):
 
@@ -690,6 +692,11 @@ class Product(GenProduct):
             return _("Cannot delete product model, relationship between product model and products related sold")
         else:
             return super(Product, self).lock_delete()
+
+    def save(self, *args, **kwards):
+        for product_final in self.products_final.all():
+            product_final.save()
+        return super(Product, self).save(*args, **kwards)
 
 
 # productos relacionados mas vendidos
