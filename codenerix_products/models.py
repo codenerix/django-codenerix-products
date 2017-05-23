@@ -612,7 +612,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     model = models.CharField(_("Model"), max_length=250, blank=True, null=True)
     brand = models.ForeignKey(Brand, related_name='products', verbose_name=_("Brand"), blank=True, null=True)
     tax = models.ForeignKey(TypeTax, related_name='products', verbose_name=_("Tax (%)"), null=True)
-    recargo_equivalencia = models.ForeignKey(TypeRecargoEquivalencia, related_name='products', verbose_name=_("Recargo Equivalencia (%)"), null=True)
+    recargo_equivalencia = models.ForeignKey(TypeRecargoEquivalencia, related_name='products', verbose_name=_("Recargo Equivalencia (%)"), null=True, blank=True)
     family = models.ForeignKey(Family, related_name='products', verbose_name=_("Family"))
     category = models.ForeignKey(Category, related_name='products', verbose_name=_("Category"))
     subcategory = models.ForeignKey(Subcategory, related_name='products', verbose_name=_("Subcategory"))
