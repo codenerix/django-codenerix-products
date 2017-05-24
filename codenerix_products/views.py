@@ -200,8 +200,10 @@ class FeatureDelete(GenFeatureUrl, GenDelete):
 class FeatureForeign(GenFeatureUrl, GenForeignKey):
     model = Feature
     label = "{<LANGUAGE_CODE>__description}"
+    clear_fields = ['value_free', 'value_bool', 'value_list', ]
 
     def custom_choice(self, obj, info):
+        info['_clear_'] = ['value_free', 'value_bool', 'value_list', ]
         info['type'] = obj.type_value
         return info
 
