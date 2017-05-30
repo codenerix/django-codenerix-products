@@ -756,9 +756,9 @@ class ProductFeatureForm(GenModelForm):
             (
                 _('Details'), 12,
                 ['feature', 12],
-                ['value_free', 12, None, None, None, None, None, None, ["ng-if=show_optionvalue('{}')".format(TYPE_VALUE_FREE)]],
-                ['value_bool', 12, None, None, None, None, None, None, ["ng-if=show_optionvalue('{}')".format(TYPE_VALUE_BOOLEAN)]],
-                ['value_list', 12, None, None, None, None, None, None, ["ng-if=show_optionvalue('{}')".format(TYPE_VALUE_LIST)]],
+                ['value_free', 12, None, None, None, None, None, None, ["ng-show=show_optionvalue('{}')".format(TYPE_VALUE_FREE)]],
+                ['value_bool', 12, None, None, None, None, None, None, ["ng-show=show_optionvalue('{}')".format(TYPE_VALUE_BOOLEAN)]],
+                ['value_list', 12, None, None, None, None, None, None, ["ng-show=show_optionvalue('{}')".format(TYPE_VALUE_LIST)]],
             )
         ]
         return g

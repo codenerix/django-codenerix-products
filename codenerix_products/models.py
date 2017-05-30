@@ -117,6 +117,20 @@ class TypeTax(CodenerixModel):
         else:
             return super(TypeTax, self).lock_delete()
 
+    def save(self, *args, **kwargs):
+        if self.pk:
+            obj = TypeTax.objects.get(pk=self.pk)
+            if obj.tax != self.tax:
+                result = super(TypeTax, self).save(*args, **kwargs)
+                for product in self.products.all():
+                    for pf in product.products_final.all():
+                        pf.recalculate()
+            else:
+                result = super(TypeTax, self).save(*args, **kwargs)
+        else:
+            result = super(TypeTax, self).save(*args, **kwargs)
+        return result
+
 
 class TypeRecargoEquivalencia(CodenerixModel):
     type_tax = models.ForeignKey(TypeTax, related_name='type_recargo_equivalencia', verbose_name=_("Tax"))
@@ -142,6 +156,20 @@ class TypeRecargoEquivalencia(CodenerixModel):
             return _("Cannot delete recargo equivalencia model, relationship between recargo equivalencia model and products")
         else:
             return super(TypeRecargoEquivalencia, self).lock_delete()
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            obj = TypeRecargoEquivalencia.objects.get(pk=self.pk)
+            if obj.recargo_equivalencia != self.recargo_equivalencia:
+                result = super(TypeRecargoEquivalencia, self).save(*args, **kwargs)
+                for product in self.products.all():
+                    for pf in product.products_final.all():
+                        pf.recalculate()
+            else:
+                result = super(TypeRecargoEquivalencia, self).save(*args, **kwargs)
+        else:
+            result = super(TypeRecargoEquivalencia, self).save(*args, **kwargs)
+        return result
 
 
 # atributos
@@ -504,10 +532,17 @@ class Feature(GenAttr):
     category = models.ForeignKey(Category, related_name='features', verbose_name=_("Category"), blank=True, null=True)
     list_value = models.ForeignKey(GroupValueFeature, related_name='features', verbose_name=_("List value"), blank=True, null=True)
 
-    def save(self, *args, **kwards):
-        result = super(Feature, self).save(*args, **kwards)
-        for pf in ProductFinal.objects.filter(product__product_features__feature=self):
-            pf.save()
+    def save(self, *args, **kwargs):
+        if self.pk:
+            obj = Feature.objects.get(pk=self.pk)
+            if obj.price != self.price:
+                result = super(Feature, self).save(*args, **kwargs)
+                for pf in ProductFinal.objects.filter(product__product_features__feature=self):
+                    pf.recalculate()
+            else:
+                result = super(Feature, self).save(*args, **kwargs)
+        else:
+            result = super(Feature, self).save(*args, **kwargs)
         return result
 
     def lock_delete(self):
@@ -528,10 +563,17 @@ class Attribute(GenAttr):
     attribute = models.ForeignKey("self", related_name='attributes', verbose_name=_("Attribute"), blank=True, null=True)
     list_value = models.ForeignKey(GroupValueAttribute, related_name='attributes', verbose_name=_("List value"), blank=True, null=True)
 
-    def save(self, *args, **kwards):
-        result = super(Attribute, self).save(*args, **kwards)
-        for pf in ProductFinal.objects.filter(products_final_attr__attribute=self):
-            pf.save()
+    def save(self, *args, **kwargs):
+        if self.pk:
+            obj = Attribute.objects.get(pk=self.pk)
+            if obj.price != self.price:
+                result = super(Attribute, self).save(*args, **kwargs)
+                for pf in ProductFinal.objects.filter(products_final_attr__attribute=self):
+                    pf.recalculate()
+            else:
+                result = super(Attribute, self).save(*args, **kwargs)
+        else:
+            result = super(Attribute, self).save(*args, **kwargs)
         return result
 
     def lock_delete(self):
@@ -553,10 +595,17 @@ class FeatureSpecial(GenAttr):
         fields.append(('unique', _("The value must unique")))
         return fields
 
-    def save(self, *args, **kwards):
-        result = super(FeatureSpecial, self).save(*args, **kwards)
-        for pf in ProductFinal.objects.filter(product__feature_special=self):
-            pf.save()
+    def save(self, *args, **kwargs):
+        if self.pk:
+            obj = FeatureSpecial.objects.get(pk=self.pk)
+            if obj.price != self.price:
+                result = super(FeatureSpecial, self).save(*args, **kwargs)
+                for pf in ProductFinal.objects.filter(product__feature_special=self):
+                    pf.recalculate()
+            else:
+                result = super(FeatureSpecial, self).save(*args, **kwargs)
+        else:
+            result = super(FeatureSpecial, self).save(*args, **kwargs)
         return result
 
     def lock_delete(self):
@@ -693,10 +742,19 @@ class Product(GenProduct):
         else:
             return super(Product, self).lock_delete()
 
-    def save(self, *args, **kwards):
-        for product_final in self.products_final.all():
-            product_final.save()
-        return super(Product, self).save(*args, **kwards)
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            obj = Product.objects.get(pk=self.pk)
+            if obj.price_base != self.price_base or obj.tax != self.tax or obj.recargo_equivalencia != self.recargo_equivalencia:
+                result = super(Product, self).save(*args, **kwargs)
+                for pf in self.products_final.all():
+                    pf.recalculate()
+            else:
+                result = super(Product, self).save(*args, **kwargs)
+        else:
+            result = super(Product, self).save(*args, **kwargs)
+        return result
 
 
 # productos relacionados mas vendidos
@@ -841,8 +899,15 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return text_filters
 
     def save(self, *args, **kwards):
-        self.price = self.calculate_price()['price_total']
+        self.recalculate(commit=False)
         return super(ProductFinal, self).save(*args, **kwards)
+
+    def recalculate(self, commit=True):
+        newprice = self.calculate_price()['price_total']
+        if self.price != newprice:
+            self.price = newprice
+            if commit:
+                self.save()
 
     def lock_delete(self):
         if self.products_final_attr.exists():
