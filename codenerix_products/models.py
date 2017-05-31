@@ -389,6 +389,7 @@ class Subcategory(CodenerixModel):
     category = models.ForeignKey(Category, related_name='subcategory', verbose_name=_("Category"))
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
+    show_brand = models.BooleanField(_("Show brand (for menu)"), blank=True, null=False, default=True)
     outstanding = models.BooleanField(_("Outstanding"), blank=True, null=False, default=False)
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     image = ImageAngularField(_("Image"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja un tamaño comprendido entre 1200px y 2000px'))
@@ -410,6 +411,7 @@ class Subcategory(CodenerixModel):
         fields.append(('category__family__code', _("Family code")))
         fields.append(('public', _("Public")))
         fields.append(('show_menu', _("Show Menu")))
+        fields.append(('show_brand', _("Show brand (for menu)")))
         fields.append(('outstanding', _("Outstanding")))
         fields.append(('order', _("Order")))
         return fields
