@@ -2220,6 +2220,12 @@ class ListProducts(GenList):
             else:
                 temp['new'] = 0
 
+            attrs = []
+            for attr in ProductFinalAttribute.objects.filter(product__pk=product['pk']):
+                attrs.append(attr.__unicode__(show_attribute=False))
+            if attrs:
+                temp['name'] += ' '
+                temp['name'] += ' '.join(attrs)
             # clean info
             temp.pop('product__products_image__image')
             temp.pop('product__products_image__principal')
