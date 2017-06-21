@@ -723,6 +723,8 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         return text_filters
 
 
+
+
 # productos
 class Product(GenProduct):
 
@@ -741,6 +743,7 @@ class Product(GenProduct):
             return _("Cannot delete product model, relationship between product model and products related sold")
         else:
             return super(Product, self).lock_delete()
+
 
     def save(self, *args, **kwargs):
         if self.pk:
@@ -1018,6 +1021,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "product__tax__tax",
             "product__{}__name".format(lang),
             "product__model",
+            "product__category__{}__name".format(lang),
             "product__brand__{}__name".format(lang),
             "product__products_image__image",
             "{}__meta_title".format(lang),
@@ -1025,6 +1029,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             meta_title="{}__meta_title".format(lang),
             image="product__products_image__image",
             name="product__{}__name".format(lang),
+            category_name="product__category__{}__name".format(lang),
             pop_annotations=True
         )[:16]:
             prices = cls.objects.get(pk=product['pk']).calculate_price(apply_overcharge)
@@ -1055,6 +1060,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "offer",
             "pk",
             "product__tax__tax",
+            "product__{}__name".format(lang),
             "product__model",
             "product__brand__{}__name".format(lang),
             "product__products_image__image",
@@ -1062,6 +1068,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             slug="{}__slug".format(lang),
             meta_title="{}__meta_title".format(lang),
             image="product__products_image__image",
+            name="product__{}__name".format(lang),
             pop_annotations=True
         ):
             prices = cls.objects.get(pk=product['pk']).calculate_price(apply_overcharge)
