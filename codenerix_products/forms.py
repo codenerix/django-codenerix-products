@@ -46,7 +46,8 @@ class TypeTaxForm(GenModelForm):
             (
                 _('Details'), 12,
                 ['name', 6],
-                ['tax', 6],
+                ['tax', 3],
+                ['default', 3],
             )
         ]
         return g

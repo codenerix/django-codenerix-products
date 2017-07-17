@@ -96,6 +96,7 @@ class CustomQueryMixin(object):
 class TypeTax(CodenerixModel):
     tax = models.FloatField(_("Tax (%)"), validators=[MinValueValidator(0), MaxValueValidator(100)], blank=False, null=False)
     name = models.CharField(_("Name"), max_length=250, blank=False, null=False, unique=True)
+    default = models.BooleanField(_("Default"), blank=False, default=False)
 
     def __unicode__(self):
         return u"{}".format(smart_text(self.name))
@@ -107,6 +108,7 @@ class TypeTax(CodenerixModel):
         fields = []
         fields.append(('name', _("Name")))
         fields.append(('tax', _("Tax (%)")))
+        fields.append(('default', _('Default')))
         return fields
 
     def lock_delete(self):
@@ -118,6 +120,13 @@ class TypeTax(CodenerixModel):
             return super(TypeTax, self).lock_delete()
 
     def save(self, *args, **kwargs):
+        with transaction.atomic():
+            if self.default:
+                TypeTax.objects.exclude(pk=self.pk).update(default=False)
+            else:
+                if not TypeTax.objects.exclude(pk=self.pk).filter(default=True).exists():
+                    self.default = True
+        
         if self.pk:
             obj = TypeTax.objects.get(pk=self.pk)
             if obj.tax != self.tax:
