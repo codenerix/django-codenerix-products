@@ -2099,15 +2099,20 @@ class ListProducts(GenList):
             # aplicamos los filtros recibidos
             params = ast.literal_eval(info.request.GET.get("json"))
 
-            slug_period = None
+            slug_subcategory = None
             if "subcategory" in params and params["subcategory"]:
                 if params["subcategory"] != '*':
-                    slug_period = params["subcategory"]
+                    slug_subcategory = params["subcategory"]
 
             slug_type = None
             if "brand" in params and params["brand"]:
                 if params["brand"] != '*':
                     slug_type = params["brand"]
+
+            slug_family = None
+            if "family" in params and params["family"]:
+                if params["family"] != '*':
+                    slug_family = params["family"]
 
             only_with_stock = None
             # filtramos dependiendo de la url original que estemos visitando
@@ -2118,12 +2123,6 @@ class ListProducts(GenList):
             elif type_list == 'CAT':
                 limits['type_list'] = Q(product__category__pk=pk)
 
-                if slug_period:
-                    limits['by_sucategory'] = Q(**{"product__subcategory__{}__slug".format(lang): slug_period})
-
-                if slug_type:
-                    limits['by_brand'] = Q(**{"product__brand__{}__slug".format(lang): slug_type})
-
             elif type_list == 'BRAND':
                 limits['type_list'] = Q(product__brand__pk=pk)
 
@@ -2132,6 +2131,15 @@ class ListProducts(GenList):
 
             else:
                 raise Exception("Pendiente de definir")
+
+            if slug_subcategory:
+                limits['by_sucategory'] = Q(**{"product__subcategory__{}__slug".format(lang): slug_subcategory})
+
+            if slug_type:
+                limits['by_brand'] = Q(**{"product__brand__{}__slug".format(lang): slug_type})
+
+            if slug_family:
+                limits['by_family'] = Q(**{"product__family__{}__slug".format(lang): slug_type})
 
             # aplicamos los filtros recibidos
             params = ast.literal_eval(info.request.GET.get("json"))

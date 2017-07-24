@@ -258,8 +258,8 @@ class SubcategoryForm(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                ['code', 3],
                 ['order', 2],
+                ['code', 3],
                 ['category', 3],
                 ['public', 1],
                 ['show_menu', 1],
@@ -276,8 +276,8 @@ class SubcategoryForm(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                ['code', 3],
                 ['order', 2],
+                ['code', 3],
                 ['category', 3],
                 ['public', 1],
                 ['show_menu', 1],
@@ -299,8 +299,8 @@ class SubcategoryOwnForm(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                ['code', 3],
                 ['order', 3],
+                ['code', 3],
                 ['public', 2],
                 ['show_menu', 2],
                 ['outstanding', 2],
