@@ -51,6 +51,8 @@ from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, 
     ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm,  \
     ProductFinalAttributeForm, ProductFinalRelatedSubForm, TypeRecargoEquivalenciaForm, BrandForm, FlagshipProductForm, \
     GroupValueFeatureForm, GroupValueAttributeForm, GroupValueFeatureSpecialForm, OptionValueFeatureForm, OptionValueAttributeForm, OptionValueFeatureSpecialForm
+from .models import Pack, PackOption, PackImage
+from .forms import PackForm, PackOptionForm, PackOptionFormWithoutPack, PackImageForm
 
 
 # ###########################################
@@ -772,7 +774,7 @@ class ProductImageList(GenProductImageUrl, GenList):
     }
 
 
-class ProductImageCreate(GenProductImageUrl, ProductImage, MultiForm, GenCreate):
+class ProductImageCreate(GenProductImageUrl, ImageFileView, MultiForm, GenCreate):
     model = ProductImage
     form_class = ProductImageForm
     forms = formsfull["ProductImage"]
@@ -795,7 +797,7 @@ class ProductImageCreateModal(GenCreateModal, ProductImageCreate):
     pass
 
 
-class ProductImageUpdate(GenProductImageUrl, ProductImage, MultiForm, GenUpdate):
+class ProductImageUpdate(GenProductImageUrl, ImageFileView, MultiForm, GenUpdate):
     model = ProductImage
     form_class = ProductImageForm
     forms = formsfull["ProductImage"]
@@ -1235,7 +1237,7 @@ class ProductFinalAttributeCreate(GenProductFinalAttributeUrl, GenCreate):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        self.__product_pk = kwargs.get('pk', None)
+        self.__product_pk = kwargs.get('cpk', None)
         return super(ProductFinalAttributeCreate, self).dispatch(*args, **kwargs)
 
     def get_form_kwargs(self, *args, **kwargs):
@@ -1321,7 +1323,7 @@ class ProductFeatureCreate(GenCreate):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        self.__product_pk = kwargs.get('pk', None)
+        self.__product_pk = kwargs.get('cpk', None)
         return super(ProductFeatureCreate, self).dispatch(*args, **kwargs)
 
     def get_form_kwargs(self, *args, **kwargs):
@@ -2244,3 +2246,224 @@ class ListProducts(GenList):
         answer['table']['body'] = products
         context._container[0] = json.dumps(answer)
         return context
+
+
+# ###########################################
+class GenPackUrl(object):
+    ws_entry_point = '{}/packs'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# Pack
+class PackList(GenPackUrl, GenList):
+    model = Pack
+    extra_context = {'menu': ['products', 'pack'], 'bread': [_('Products'), _('Pack')]}
+    show_details = True
+
+
+class PackCreate(GenPackUrl, MultiForm, GenCreate):
+    model = Pack
+    form_class = PackForm
+    forms = formsfull["Pack"]
+    show_details = True
+
+
+class PackCreateModal(GenCreateModal, PackCreate):
+    pass
+
+
+class PackUpdate(GenPackUrl, MultiForm, GenUpdate):
+    model = Pack
+    form_class = PackForm
+    forms = formsfull["Pack"]
+    show_details = True
+
+
+class PackUpdateModal(GenUpdateModal, PackUpdate):
+    pass
+
+
+class PackDelete(GenPackUrl, GenDelete):
+    model = Pack
+
+
+"""
+class PackSubList(GenPackUrl, GenList):
+    model = Pack
+    extra_context = {'menu': ['products', 'pack'], 'bread': [_('Products'), _('Pack')]}
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['link'] = Q(xxxxxxx__pk=pk)
+        return limit
+"""
+
+
+class PackDetails(GenPackUrl, GenDetail):
+    model = Pack
+    groups = PackForm.__groups_details__()
+    tabs = [
+        {
+            'id': 'PackOption',
+            'name': _('Options'),
+            'ws': 'CDNX_products_packoptions_sublist',
+            'rows': 'base'
+        },
+        {
+            'id': 'PackImage',
+            'name': _('Images'),
+            'ws': 'CDNX_products_packimages_sublist',
+            'rows': 'base'
+        },
+    ]
+
+
+class PackDetailModal(GenDetailModal, PackDetails):
+    pass
+
+
+# ###########################################
+class GenPackOptionUrl(object):
+    ws_entry_point = '{}/packoptions'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# PackOption
+class PackOptionList(GenPackOptionUrl, GenList):
+    model = PackOption
+    extra_context = {'menu': ['products', 'packoption'], 'bread': [_('Products'), _('PackOption')]}
+
+
+class PackOptionCreate(GenPackOptionUrl, MultiForm, GenCreate):
+    model = PackOption
+    form_class = PackOptionForm
+    forms = formsfull["PackOption"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__pack_pk = kwargs.get('cpk', None)
+        if self.__pack_pk:
+            self.form_class = PackOptionFormWithoutPack
+        return super(PackOptionCreate, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form, multiform):
+        if self.__pack_pk:
+            pack = Pack.objects.get(pk=self.__pack_pk)
+            self.request.pack = pack
+            form.instance.pack = pack
+
+        return super(PackOptionCreate, self).form_valid(form, multiform)
+
+
+class PackOptionCreateModal(GenCreateModal, PackOptionCreate):
+    pass
+
+
+class PackOptionUpdate(GenPackOptionUrl, MultiForm, GenUpdate):
+    model = PackOption
+    form_class = PackOptionForm
+    forms = formsfull["PackOption"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__pack_pk = kwargs.get('cpk', None)
+        if self.__pack_pk:
+            self.form_class = PackOptionFormWithoutPack
+        return super(PackOptionUpdate, self).dispatch(*args, **kwargs)
+
+
+class PackOptionUpdateModal(GenUpdateModal, PackOptionUpdate):
+    pass
+
+
+class PackOptionDelete(GenPackOptionUrl, GenDelete):
+    model = PackOption
+
+
+class PackOptionSubList(GenPackOptionUrl, GenList):
+    model = PackOption
+    extra_context = {'menu': ['products', 'packoption'], 'bread': [_('Products'), _('PackOption')]}
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['link'] = Q(pack__pk=pk)
+        return limit
+
+
+class PackOptionDetails(GenPackOptionUrl, GenDetail):
+    model = PackOption
+    groups = PackOptionForm.__groups_details__()
+
+
+class PackOptionDetailModal(GenDetailModal, PackOptionDetails):
+    pass
+
+
+# ###########################################
+class GenPackImageUrl(object):
+    ws_entry_point = '{}/packimages'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# PackImage
+class PackImageList(GenPackImageUrl, GenList):
+    model = PackImage
+    extra_context = {
+        'menu': ['products', 'packimage'],
+        'bread': [_('Products'), _('Pack Image')]
+    }
+
+
+class PackImageCreate(GenPackImageUrl, ImageFileView, MultiForm, GenCreate):
+    model = PackImage
+    form_class = PackImageForm
+    forms = formsfull["PackImage"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__pack_pk = kwargs.get('cpk', None)
+        return super(PackImageCreate, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form, forms):
+        if self.__pack_pk:
+            pack = Pack.objects.get(pk=self.__pack_pk)
+            self.request.pack = pack
+            form.instance.pack = pack
+
+        return super(PackImageCreate, self).form_valid(form, forms)
+
+
+class PackImageCreateModal(GenCreateModal, PackImageCreate):
+    pass
+
+
+class PackImageUpdate(GenPackImageUrl, ImageFileView, MultiForm, GenUpdate):
+    model = PackImage
+    form_class = PackImageForm
+    forms = formsfull["PackImage"]
+
+
+class PackImageUpdateModal(GenUpdateModal, PackImageUpdate):
+    pass
+
+
+class PackImageDelete(GenPackImageUrl, GenDelete):
+    model = PackImage
+
+
+class PackImageSubList(GenPackImageUrl, GenList):
+    model = PackImage
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['file_link'] = Q(pack__pk=pk)
+        return limit
+
+
+class PackImageDetails(GenPackImageUrl, GenDetail):
+    model = PackImage
+    groups = PackImageForm.__groups_details__()
+
+
+class PackImageDetailsModal(GenDetailModal, PackImageDetails):
+    pass

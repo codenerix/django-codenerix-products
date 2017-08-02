@@ -1383,10 +1383,93 @@ class FlagshipProduct(CustomQueryMixin, CodenerixModel, GenImageFile):
         return flagship
 
 
+class Pack(CodenerixModel):
+    family = models.ForeignKey(Family, related_name='packs', verbose_name=_("Family"))
+    category = models.ForeignKey(Category, related_name='packs', verbose_name=_("Category"))
+    subcategory = models.ForeignKey(Subcategory, related_name='packs', verbose_name=_("Subcategory"))
+    code = models.CharField(_("Code"), max_length=250, blank=False, null=False, unique=True)
+    public = models.BooleanField(_("Public"), blank=False, null=False, default=True)
+    show_menu = models.BooleanField(_("Show menu"), blank=False, null=False, default=True)
+    price = models.FloatField(_("Price"), blank=False, null=False)
+    
+    def __unicode__(self):
+        return u"{}".format(smart_text(self.code))
+
+    def __str__(self):
+        return self.__unicode__()
+
+    def __fields__(self, info):
+        lang = get_language_database()
+
+        fields = []
+        fields.append(('code', _("Code")))
+        fields.append(('price', _("Price")))
+        fields.append(('family__{}__name'.format(lang), _("Family")))
+        fields.append(('category__{}__name'.format(lang), _("Category")))
+        fields.append(('subcategory__{}__name'.format(lang), _("Subcategory")))
+        fields.append(('{}__name'.format(lang), _("Name")))
+        fields.append(('public', _("Public")))
+        fields.append(('show_menu', _("Show Menu")))
+        return fields
+
+
+class PackOption(CodenerixModel):
+    pack = models.ForeignKey(Pack, related_name='pack_options', verbose_name=_("Pack Option"), blank=False, null=False)
+    products = models.ManyToManyField(ProductFinal, related_name='pack_options', symmetrical=False, blank=False, null=False)
+    active = models.BooleanField(_("Active"), blank=False, null=False, default=True)
+
+    def __unicode__(self):
+        lang = get_language_database()
+        return u"{}".format(smart_text(getattr(self, lang).name))
+
+    def __str__(self):
+        return self.__unicode__()
+    
+    def __fields__(self, info):
+        fields = []
+        fields.append(('pack', _("Pack")))
+        fields.append(('products', _("Products")))
+        fields.append(('active', _("Active")))
+        return fields
+
+
+class PackImage(CodenerixModel, GenImageFile):
+    pack = models.ForeignKey(Pack, related_name='packs_image', verbose_name=_("Pack"))
+    order = models.SmallIntegerField(_("Order"), blank=True, null=True)
+    public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
+    principal = models.BooleanField(_("Principal"), blank=False, null=False, default=False)
+
+    def __unicode__(self):
+        return u"{} ({})".format(smart_text(self.pack), smart_text(self.order))
+
+    def __str__(self):
+        return self.__unicode__()
+
+    def __fields__(self, info):
+        fields = []
+        fields.append(('pack', _("Pack")))
+        fields.append(('order', _("Order")))
+        fields.append(('public', _("Public")))
+        fields.append(('principal', _("Principal")))
+        return fields
+
+    # Save necesita un check que indique si debe comprobar o no los productos destacados y productos estrella.
+    @transaction.atomic
+    def save(self, *args, **kwards):
+        if self.principal:
+            PackImage.objects.filter(pack=self.pack).exclude(pk=self.pk).update(principal=False)
+        elif not PackImage.objects.exclude(pk=self.pk).filter(principal=True).exists():
+            self.principal = True
+
+        return super(PackImage, self).save(*args, **kwards)
+
+
 MODELS_SLUG = [
     ("family", "Family"),
     ("category", "Category"),
     ("subcategory", "Subcategory"),
+    ("pack", "Pack"),
+    ("packoption", "PackOption"),
 ]
 
 for info in MODELS_SLUG:
@@ -1407,6 +1490,7 @@ MODELS = [
     ("option_value", "OptionValueFeature"),
     ("option_value", "OptionValueAttribute"),
     ("option_value", "OptionValueFeatureSpecial"),
+    ("pack_image", "PackImage"),
 ]
 
 for info in MODELS:

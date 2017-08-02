@@ -32,7 +32,7 @@ from .models import Family, Category, Subcategory, Brand
 from .models import Product, ProductFinal, FlagshipProduct
 from .models import ProductRelationSold, ProductImage, ProductDocument, ProductFeature, ProductUnique, ProductFinalImage
 from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
-
+from .models import Pack, PackOption, PackImage
 from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_SLIDERS, TYPE_VALUES, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
 
 
@@ -939,7 +939,7 @@ for info in MODELS:
     for lang_code in settings.LANGUAGES_DATABASES:
         exec("from codenerix_products.models import {}Text{}\n".format(model, lang_code))
 
-        if model == 'ProductImage':
+        if model in ['ProductImage', 'ProductFinalImage', 'PackImage']:
             label = _('Title and alternative text of the image')
         else:
             label = _('Description')
@@ -1055,3 +1055,135 @@ class {model}TextForm{lang}(GenModelForm):\n
             )]\n"""
 
         exec(query.format(model=model, lang=lang_code, languages="'{}'".format("','".join(settings.LANGUAGES_DATABASES))))
+
+
+class PackForm(GenModelForm):
+    class Meta:
+        model = Pack
+        exclude = []
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['code', 4],
+                ['price', 4],
+                ['public', 2],
+                ['show_menu', 2],
+                ['family', 4],
+                ['category', 4],
+                ['subcategory', 4],
+            )
+        ]
+        return g
+
+    @staticmethod
+    def __groups_details__():
+        g = [
+            (
+                _('Details'), 12,
+                ['code', 6],
+                ['price', 6],
+                ['family', 6],
+                ['category', 6],
+                ['subcategory', 6],
+                ['public', 6],
+                ['show_menu', 6],
+            )
+        ]
+        return g
+
+
+class PackOptionForm(GenModelForm):
+    products = forms.ModelMultipleChoiceField(
+        queryset=ProductFinal.objects.all(),
+        label=_('Related products'),
+        required=False,
+        widget=MultiStaticSelect(
+            attrs={'manytomany': True, }
+        )
+    )
+
+    class Meta:
+        model = PackOption
+        exclude = []
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['pack', 6],
+                ['active', 6],
+                ['products', 12],
+            )
+        ]
+        return g
+
+    @staticmethod
+    def __groups_details__():
+        g = [
+            (
+                _('Details'), 12,
+                ['pack', 6],
+                ['products', 6],
+                ['active', 6],
+            )
+        ]
+        return g
+
+
+class PackOptionFormWithoutPack(GenModelForm):
+    products = forms.ModelMultipleChoiceField(
+        queryset=ProductFinal.objects.all(),
+        label=_('Related products'),
+        required=False,
+        widget=MultiStaticSelect(
+            attrs={'manytomany': True, }
+        )
+    )
+
+    class Meta:
+        model = PackOption
+        exclude = ['pack', ]
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['products', 9],
+                ['active', 3],
+            )
+        ]
+        return g
+
+
+class PackImageForm(GenModelForm):
+    class Meta:
+        model = PackImage
+        exclude = ['pack', 'name_file', ]
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['order', 2],
+                ['public', 2],
+                ['principal', 2],
+                ['image', 6],
+            )
+        ]
+        return g
+
+    @staticmethod
+    def __groups_details__():
+        g = [
+            (
+                _('Details'), 12,
+                ['pack', 6],
+                ['order', 2],
+                ['public', 2],
+                ['principal', 2],
+                ['image', 6],
+            )
+        ]
+        return g
