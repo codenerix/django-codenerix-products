@@ -33,6 +33,7 @@ from .models import Product, ProductFinal, FlagshipProduct
 from .models import ProductRelationSold, ProductImage, ProductDocument, ProductFeature, ProductUnique, ProductFinalImage
 from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
 from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_SLIDERS, TYPE_VALUES, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
+from .models import ProductFinalOption
 
 
 class TypeTaxForm(GenModelForm):
@@ -657,6 +658,7 @@ class ProductFinalForm(GenModelForm):
                 ["reviews_value", 6],
                 ["reviews_count", 6],
                 ["ean13", 6],
+                ["most_sold", 6],
             )
         ]
         return g
@@ -931,6 +933,72 @@ class FlagshipProductForm(GenModelForm):
         if self.cleaned_data['view_video'] and not self.cleaned_data['product_final'].product.url_video:
             msg = _("The select product haven't video url")
             self._errors["view_video"] = ErrorList([_(msg)])
+
+
+class ProductFinalOptionForm(GenModelForm):
+    products_pack = forms.ModelMultipleChoiceField(
+        queryset=ProductFinal.objects.all(),
+        label=_('Option products'),
+        required=False,
+        widget=MultiStaticSelect(
+            attrs={'manytomany': True, }
+        )
+    )
+
+    class Meta:
+        model = ProductFinalOption
+        exclude = []
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['product_final', 6],
+                ['order', 3],
+                ['active', 3],
+                ['products_pack', 12],
+            )
+        ]
+        return g
+
+    @staticmethod
+    def __groups_details__():
+        g = [
+            (
+                _('Details'), 12,
+                ['product_final', 6],
+                ['products_pack', 6],
+                ['active', 6],
+                ['order', 6],
+            )
+        ]
+        return g
+
+
+class ProductFinalOptionFormWithoutProduct(GenModelForm):
+    products_pack = forms.ModelMultipleChoiceField(
+        queryset=ProductFinal.objects.all(),
+        label=_('Option products'),
+        required=False,
+        widget=MultiStaticSelect(
+            attrs={'manytomany': True, }
+        )
+    )
+
+    class Meta:
+        model = ProductFinalOption
+        exclude = ['product_final', ]
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['products_pack', 8],
+                ['order', 2],
+                ['active', 2],
+            )
+        ]
+        return g
 
 
 # MODELS

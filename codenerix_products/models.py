@@ -1382,10 +1382,36 @@ class FlagshipProduct(CustomQueryMixin, CodenerixModel, GenImageFile):
 
         return flagship
 
+
+class ProductFinalOption(CodenerixModel):
+    product_final = models.ForeignKey(ProductFinal, related_name='productfinals_option', verbose_name=_("Product Final"))
+    products_pack = models.ManyToManyField(ProductFinal, related_name='productfinals_optionpack', symmetrical=False, blank=False, null=False)
+    active = models.BooleanField(_("Active"), blank=False, null=False, default=True)
+    order = models.SmallIntegerField(_("Order"), blank=True, null=True)
+
+    def __unicode__(self):
+        lang = get_language_database()
+        return u"{}".format(smart_text(getattr(self, lang).name))
+
+    def __str__(self):
+        return self.__unicode__()
+    
+    def __fields__(self, info):
+        lang = get_language_database()
+        fields = []
+        fields.append(('product_final', _("Product final")))
+        fields.append(('{}__name'.format(lang), _("Option")))
+        fields.append(('order', _("Order")))
+        fields.append(('products_pack', _("Products options")))
+        fields.append(('active', _("Active")))
+        return fields
+
+
 MODELS_SLUG = [
     ("family", "Family"),
     ("category", "Category"),
     ("subcategory", "Subcategory"),
+    ("product_final_option", "ProductFinalOption"),
 ]
 
 for info in MODELS_SLUG:

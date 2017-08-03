@@ -51,6 +51,8 @@ from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, 
     ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm,  \
     ProductFinalAttributeForm, ProductFinalRelatedSubForm, TypeRecargoEquivalenciaForm, BrandForm, FlagshipProductForm, \
     GroupValueFeatureForm, GroupValueAttributeForm, GroupValueFeatureSpecialForm, OptionValueFeatureForm, OptionValueAttributeForm, OptionValueFeatureSpecialForm
+from .models import ProductFinalOption
+from .forms import ProductFinalOptionForm, ProductFinalOptionFormWithoutProduct
 
 
 # ###########################################
@@ -964,6 +966,7 @@ class ProductFinalDetails(GenProductFinalUrl, GenDetail):
         {'id': 'FeatureSpecial', 'name': _('Feature Special'), 'ws': 'CDNX_products_productuniques_sublist', 'rows': 'base'},
         {'id': 'Product', 'name': _('Product related'), 'ws': 'CDNX_products_productfinalrelateds_sublist', 'rows': 'base'},
         {'id': 'Accesory', 'name': _('Product accesory'), 'ws': 'CDNX_products_productfinalaccesory_sublist', 'rows': 'base'},
+        {'id': 'Options', 'name': _('Product options'), 'ws': 'CDNX_products_productfinaloptions_sublist', 'rows': 'base'},
     ]
     exclude_fields = ['related', 'related_accesory']
 
@@ -2246,3 +2249,80 @@ class ListProducts(GenList):
         answer['table']['body'] = products
         context._container[0] = json.dumps(answer)
         return context
+
+
+# ###########################################
+class GenProductFinalOptionUrl(object):
+    ws_entry_point = '{}/ProductFinalOptions'.format(settings.CDNX_PRODUCTS_URL)
+
+
+# ProductFinalOption
+class ProductFinalOptionList(GenProductFinalOptionUrl, GenList):
+    model = ProductFinalOption
+    extra_context = {'menu': ['products', 'ProductFinalOption'], 'bread': [_('Products'), _('ProductFinalOption')]}
+
+
+class ProductFinalOptionCreate(GenProductFinalOptionUrl, MultiForm, GenCreate):
+    model = ProductFinalOption
+    form_class = ProductFinalOptionForm
+    forms = formsfull["ProductFinalOption"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__product_final_pk = kwargs.get('cpk', None)
+        if self.__product_final_pk:
+            self.form_class = ProductFinalOptionFormWithoutProduct
+        return super(ProductFinalOptionCreate, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form, multiform):
+        if self.__product_final_pk:
+            pf = ProductFinal.objects.get(pk=self.__product_final_pk)
+            self.request.product_final = pf
+            form.instance.product_final = pf
+
+        return super(ProductFinalOptionCreate, self).form_valid(form, multiform)
+
+
+class ProductFinalOptionCreateModal(GenCreateModal, ProductFinalOptionCreate):
+    pass
+
+
+class ProductFinalOptionUpdate(GenProductFinalOptionUrl, MultiForm, GenUpdate):
+    model = ProductFinalOption
+    form_class = ProductFinalOptionForm
+    forms = formsfull["ProductFinalOption"]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.__product_final_pk = kwargs.get('cpk', None)
+        if self.__product_final_pk:
+            self.form_class = ProductFinalOptionFormWithoutProduct
+        return super(ProductFinalOptionUpdate, self).dispatch(*args, **kwargs)
+
+
+class ProductFinalOptionUpdateModal(GenUpdateModal, ProductFinalOptionUpdate):
+    pass
+
+
+class ProductFinalOptionDelete(GenProductFinalOptionUrl, GenDelete):
+    model = ProductFinalOption
+
+
+class ProductFinalOptionSubList(GenProductFinalOptionUrl, GenList):
+    model = ProductFinalOption
+    extra_context = {'menu': ['products', 'ProductFinalOption'], 'bread': [_('Products'), _('ProductFinalOption')]}
+
+    def __limitQ__(self, info):
+        limit = {}
+        pk = info.kwargs.get('pk', None)
+        limit['link'] = Q(product_final__pk=pk)
+        return limit
+
+
+class ProductFinalOptionDetails(GenProductFinalOptionUrl, GenDetail):
+    model = ProductFinalOption
+    groups = ProductFinalOptionForm.__groups_details__()
+
+
+class ProductFinalOptionDetailModal(GenDetailModal, ProductFinalOptionDetails):
+    pass

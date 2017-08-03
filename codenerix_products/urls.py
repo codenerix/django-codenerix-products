@@ -52,6 +52,7 @@ from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, C
     OptionValueFeatureList, OptionValueFeatureUpdate, OptionValueFeatureUpdateModal, OptionValueFeatureDelete, OptionValueFeatureSubList, OptionValueFeatureSubListModal, OptionValueFeatureCreateModal, OptionValueFeatureDetailsModal, OptionValueFeatureForeign, \
     OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign, \
     OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
+from .views import ProductFinalOptionList, ProductFinalOptionCreate, ProductFinalOptionCreateModal, ProductFinalOptionUpdate, ProductFinalOptionUpdateModal, ProductFinalOptionDelete, ProductFinalOptionSubList, ProductFinalOptionDetails, ProductFinalOptionDetailModal
 
 
 urlpatterns = [
@@ -339,4 +340,19 @@ urlpatterns = [
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_editmodal'),
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueFeatureSpecialDelete.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_delete'),
     url(r'^optionvaluefeaturespecials/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureSpecialForeign.as_view(), name='CDNX_products_OptionValueFeatureSpecials_foreign'),
+
+    url(r'^productfinaloptions$', ProductFinalOptionList.as_view(), name='CDNX_products_productfinaloptions_list'),
+    url(r'^productfinaloptions/add$', ProductFinalOptionCreate.as_view(), name='CDNX_products_productfinaloptions_add'),
+    url(r'^productfinaloptions/addmodal$', ProductFinalOptionCreateModal.as_view(), name='CDNX_products_productfinaloptions_addmodal'),
+    url(r'^productfinaloptions/(?P<pk>\w+)$', ProductFinalOptionDetails.as_view(), name='CDNX_products_productfinaloptions_details'),
+    url(r'^productfinaloptions/(?P<pk>\w+)/edit$', ProductFinalOptionUpdate.as_view(), name='CDNX_products_productfinaloptions_edit'),
+    url(r'^productfinaloptions/(?P<pk>\w+)/editmodal$', ProductFinalOptionUpdateModal.as_view(), name='CDNX_products_productfinaloptions_editmodal'),
+    url(r'^productfinaloptions/(?P<pk>\w+)/delete$', ProductFinalOptionDelete.as_view(), name='CDNX_products_productfinaloptions_delete'),
+    url(r'^productfinaloptions/(?P<pk>\w+)/sublist$', ProductFinalOptionSubList.as_view(), name='CDNX_products_productfinaloptions_sublist'),
+    url(r'^productfinaloptions/(?P<cpk>\w+)/sublist/add$', ProductFinalOptionCreateModal.as_view(), name='CDNX_products_productfinaloptions_sublist_add'),
+    url(r'^productfinaloptions/(?P<cpk>\w+)/sublist/addmodal$', ProductFinalOptionCreateModal.as_view(), name='CDNX_products_productfinaloptions_sublist_addmodal'),
+    url(r'^productfinaloptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)$', ProductFinalOptionDetailModal.as_view(), name='CDNX_products_productfinaloptions_sublist_details'),
+    url(r'^productfinaloptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/edit$', ProductFinalOptionUpdateModal.as_view(), name='CDNX_products_productfinaloptions_sublist_edit'),
+    url(r'^productfinaloptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/editmodal$', ProductFinalOptionUpdateModal.as_view(), name='CDNX_products_productfinaloptions_sublist_editmodal'),
+    url(r'^productfinaloptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', ProductFinalOptionDelete.as_view(), name='CDNX_products_productfinaloptions_sublist_delete'),
 ]

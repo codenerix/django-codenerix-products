@@ -8,7 +8,6 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('codenerix_invoicing', '0026_auto_20170803_1540'),
         ('codenerix_products', '0028_auto_20170803_1446'),
     ]
 
