@@ -981,6 +981,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         result['price_total'] = float(price) + float(result['tax']) + float(result['overcharge'])
         return result
 
+    def is_pack(self):
+        return self.productfinals_option.exists()
+        
     @classmethod
     def get_recommended_products(cls, lang, apply_overcharge=False, category=None, subcategory=None):
         products = []
