@@ -24,7 +24,6 @@ from django.conf import settings
 from .models import Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductDocument, ProductFinal, ProductFeature, ProductUnique, Brand
 from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial
 from .models import OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
-from .models import Pack, PackOption, PackImage
 from .models import MODELS, MODELS_PRODUCTS, MODELS_SLUG, MODELS_SLIDERS
 
 admin.site.register(Feature)
@@ -47,9 +46,6 @@ admin.site.register(GroupValueFeatureSpecial)
 admin.site.register(OptionValueFeature)
 admin.site.register(OptionValueAttribute)
 admin.site.register(OptionValueFeatureSpecial)
-admin.site.register(Pack)
-admin.site.register(PackOption)
-admin.site.register(PackImage)
 
 for info in MODELS + MODELS_PRODUCTS + MODELS_SLIDERS + MODELS_SLUG:
     model = info[1]

@@ -52,10 +52,6 @@ from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, C
     OptionValueFeatureList, OptionValueFeatureUpdate, OptionValueFeatureUpdateModal, OptionValueFeatureDelete, OptionValueFeatureSubList, OptionValueFeatureSubListModal, OptionValueFeatureCreateModal, OptionValueFeatureDetailsModal, OptionValueFeatureForeign, \
     OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign, \
     OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
-from .views import PackList, PackCreate, PackCreateModal, PackUpdate, PackUpdateModal, PackDelete, PackDetails, PackDetailModal
-# , PackSubList
-from .views import PackOptionList, PackOptionCreate, PackOptionCreateModal, PackOptionUpdate, PackOptionUpdateModal, PackOptionDelete, PackOptionSubList, PackOptionDetails, PackOptionDetailModal
-from .views import PackImageList, PackImageCreateModal, PackImageUpdate, PackImageUpdateModal, PackImageSubList, PackImageDelete, PackImageDetailsModal
 
 
 urlpatterns = [
@@ -343,45 +339,4 @@ urlpatterns = [
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/editmodal$', OptionValueFeatureSpecialUpdateModal.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_editmodal'),
     url(r'^optionvaluefeaturespecials/(?P<cpk>[0-9]+)/sublist/(?P<pk>[0-9]+)/delete$', OptionValueFeatureSpecialDelete.as_view(), name='CDNX_products_OptionValueFeatureSpecials_sublist_delete'),
     url(r'^optionvaluefeaturespecials/foreign/(?P<search>[\w\W]+|\*)$', OptionValueFeatureSpecialForeign.as_view(), name='CDNX_products_OptionValueFeatureSpecials_foreign'),
-
-    url(r'^packs$', PackList.as_view(), name='CDNX_products_packs_list'),
-    url(r'^packs/add$', PackCreate.as_view(), name='CDNX_products_packs_add'),
-    url(r'^packs/addmodal$', PackCreateModal.as_view(), name='CDNX_products_packs_addmodal'),
-    url(r'^packs/(?P<pk>\w+)$', PackDetails.as_view(), name='CDNX_products_packs_details'),
-    url(r'^packs/(?P<pk>\w+)/edit$', PackUpdate.as_view(), name='CDNX_products_packs_edit'),
-    url(r'^packs/(?P<pk>\w+)/editmodal$', PackUpdateModal.as_view(), name='CDNX_products_packs_editmodal'),
-    url(r'^packs/(?P<pk>\w+)/delete$', PackDelete.as_view(), name='CDNX_products_packs_delete'),
-    # url(r'^packs/(?P<pk>\w+)/sublist$', PackSubList.as_view(), name='CDNX_products_packs_sublist'),
-    url(r'^packs/(?P<cpk>\w+)/sublist/add$', PackCreateModal.as_view(), name='CDNX_products_packs_sublist_add'),
-    url(r'^packs/(?P<cpk>\w+)/sublist/(?P<pk>\w+)$', PackDetailModal.as_view(), name='CDNX_products_packs_sublist_details'),
-    url(r'^packs/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/edit$', PackUpdateModal.as_view(), name='CDNX_products_packs_sublist_details'),
-    url(r'^packs/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', PackDelete.as_view(), name='CDNX_products_packs_sublist_delete'),
-
-
-    url(r'^packoptions$', PackOptionList.as_view(), name='CDNX_products_packoptions_list'),
-    url(r'^packoptions/add$', PackOptionCreate.as_view(), name='CDNX_products_packoptions_add'),
-    url(r'^packoptions/addmodal$', PackOptionCreateModal.as_view(), name='CDNX_products_packoptions_addmodal'),
-    url(r'^packoptions/(?P<pk>\w+)$', PackOptionDetails.as_view(), name='CDNX_products_packoptions_details'),
-    url(r'^packoptions/(?P<pk>\w+)/edit$', PackOptionUpdate.as_view(), name='CDNX_products_packoptions_edit'),
-    url(r'^packoptions/(?P<pk>\w+)/editmodal$', PackOptionUpdateModal.as_view(), name='CDNX_products_packoptions_editmodal'),
-    url(r'^packoptions/(?P<pk>\w+)/delete$', PackOptionDelete.as_view(), name='CDNX_products_packoptions_delete'),
-    url(r'^packoptions/(?P<pk>\w+)/sublist$', PackOptionSubList.as_view(), name='CDNX_products_packoptions_sublist'),
-    url(r'^packoptions/(?P<cpk>\w+)/sublist/add$', PackOptionCreateModal.as_view(), name='CDNX_products_packoptions_sublist_add'),
-    url(r'^packoptions/(?P<cpk>\w+)/sublist/addmodal$', PackOptionCreateModal.as_view(), name='CDNX_products_packoptions_sublist_addmodal'),
-    url(r'^packoptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)$', PackOptionDetailModal.as_view(), name='CDNX_products_packoptions_sublist_details'),
-    url(r'^packoptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/edit$', PackOptionUpdateModal.as_view(), name='CDNX_products_packoptions_sublist_edit'),
-    url(r'^packoptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/editmodal$', PackOptionUpdateModal.as_view(), name='CDNX_products_packoptions_sublist_editmodal'),
-    url(r'^packoptions/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', PackOptionDelete.as_view(), name='CDNX_products_packoptions_sublist_delete'),
-
-    url(r'^packimages$', PackImageList.as_view(), name='CDNX_products_packimages_list'),
-    url(r'^packimages/(?P<pk>\w+)/edit$', PackImageUpdate.as_view(), name='CDNX_products_packimages_edit'),
-    url(r'^packimages/(?P<pk>\w+)/editmodal$', PackImageUpdateModal.as_view(), name='CDNX_products_packimages_editmodal'),
-    url(r'^packimages/(?P<pk>\w+)/delete$', PackImageDelete.as_view(), name='CDNX_products_packimages_delete'),
-    url(r'^packimages/(?P<pk>\w+)/sublist$', PackImageSubList.as_view(), name='CDNX_products_packimages_sublist'),
-    url(r'^packimages/(?P<cpk>\w+)/sublist/add$', PackImageCreateModal.as_view(), name='CDNX_products_packimages_sublist_add'),
-    url(r'^packimages/(?P<cpk>\w+)/sublist/addmodal$', PackImageCreateModal.as_view(), name='CDNX_products_packimages_sublist_addmodal'),
-    url(r'^packimages/(?P<cpk>\w+)/sublist/(?P<pk>\w+)$', PackImageDetailsModal.as_view(), name='CDNX_products_packimages_sublist_details'),
-    url(r'^packimages/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/edit$', PackImageUpdateModal.as_view(), name='CDNX_products_packimages_sublist_edit'),
-    url(r'^packimages/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/editmodal$', PackImageUpdateModal.as_view(), name='CDNX_products_packimages_sublist_editmodal'),
-    url(r'^packimages/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', PackImageDelete.as_view(), name='CDNX_products_packimages_sublist_delete'),
 ]

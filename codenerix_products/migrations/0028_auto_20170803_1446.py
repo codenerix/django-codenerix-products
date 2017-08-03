@@ -12,10 +12,4 @@ class Migration(migrations.Migration):
         ('codenerix_products', '0027_auto_20170803_1438'),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='pack',
-            name='tax',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='packs', to='codenerix_products.TypeTax', verbose_name='Tax'),
-        ),
-    ]
+    operations = []
