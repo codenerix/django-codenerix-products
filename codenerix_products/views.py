@@ -484,6 +484,8 @@ class CategoryForeign(GenCategoryUrl, GenForeignKey):
             family = filters.get('ProductForm_family', None)
         if family is None:
             family = filters.get('ProductFormCreate_family', None)
+        if family is None:
+            family = filters.get('PackForm_family', None)
 
         if family:
             qs = qs.filter(family__pk=family)
@@ -563,6 +565,8 @@ class SubcategoryForeign(GenSubcategoryUrl, GenForeignKey):
         category = filters.get('ProductForm_category', None)
         if category is None:
             category = filters.get('ProductFormCreate_category', None)
+        if category is None:
+            category = filters.get('PackForm_category', None)
 
         if category:
             qs = qs.filter(category__pk=category)

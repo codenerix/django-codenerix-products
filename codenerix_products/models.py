@@ -1387,11 +1387,13 @@ class Pack(CodenerixModel):
     family = models.ForeignKey(Family, related_name='packs', verbose_name=_("Family"))
     category = models.ForeignKey(Category, related_name='packs', verbose_name=_("Category"))
     subcategory = models.ForeignKey(Subcategory, related_name='packs', verbose_name=_("Subcategory"))
+    tax = models.ForeignKey(TypeTax, related_name='packs', verbose_name=_("Tax"))
     code = models.CharField(_("Code"), max_length=250, blank=False, null=False, unique=True)
     public = models.BooleanField(_("Public"), blank=False, null=False, default=True)
     show_menu = models.BooleanField(_("Show menu"), blank=False, null=False, default=True)
     price = models.FloatField(_("Price"), blank=False, null=False)
-    
+    order = models.SmallIntegerField(_("Order"), blank=True, null=True)
+
     def __unicode__(self):
         return u"{}".format(smart_text(self.code))
 
@@ -1404,12 +1406,14 @@ class Pack(CodenerixModel):
         fields = []
         fields.append(('code', _("Code")))
         fields.append(('price', _("Price")))
+        fields.append(('tax', _("Tax")))
         fields.append(('family__{}__name'.format(lang), _("Family")))
         fields.append(('category__{}__name'.format(lang), _("Category")))
         fields.append(('subcategory__{}__name'.format(lang), _("Subcategory")))
         fields.append(('{}__name'.format(lang), _("Name")))
         fields.append(('public', _("Public")))
         fields.append(('show_menu', _("Show Menu")))
+        fields.append(('order', _("Order")))
         return fields
 
 

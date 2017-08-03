@@ -1065,15 +1065,21 @@ class PackForm(GenModelForm):
     class Meta:
         model = Pack
         exclude = []
+        autofill = {
+            'PackForm_category': ['select', 3, 'CDNX_products_categorys_foreign', 'PackForm_family', ],
+            'PackForm_subcategory': ['select', 3, 'CDNX_products_subcategorys_foreign', 'PackForm_category', ],
+        }
 
     def __groups__(self):
         g = [
             (
                 _('Details'), 12,
                 ['code', 4],
-                ['price', 4],
+                ['order', 4],
                 ['public', 2],
                 ['show_menu', 2],
+                ['price', 6],
+                ['tax', 6],
                 ['family', 4],
                 ['category', 4],
                 ['subcategory', 4],
@@ -1087,7 +1093,9 @@ class PackForm(GenModelForm):
             (
                 _('Details'), 12,
                 ['code', 6],
+                ['order', 6],
                 ['price', 6],
+                ['tax', 6],
                 ['family', 6],
                 ['category', 6],
                 ['subcategory', 6],
