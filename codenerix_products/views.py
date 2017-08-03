@@ -627,6 +627,7 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
 class ProductCreate(GenProductUrl, MultiForm, GenCreate):
     model = Product
     form_class = ProductFormCreate
+    show_details = True
     forms = formsfull['ProductText']
 
 
@@ -918,6 +919,7 @@ class ProductFinalList(GenProductFinalUrl, GenList):
 class ProductFinalCreate(GenProductFinalUrl, MultiForm, GenCreate):
     model = ProductFinal
     form_class = ProductFinalFormCreate
+    show_details = True
     forms = formsfull['ProductFinal']
     hide_foreignkey_button = True
 

@@ -596,6 +596,7 @@ class ProductFinalFormCreate(GenModelForm):
             ['most_sold', 2],
             ["related", 6],
             ["related_accesory", 6],
+            ["ean13", 6],
         )]
         return g
 
@@ -616,6 +617,7 @@ class ProductFinalFormCreateModal(ProductFinalFormCreate):
             ['most_sold', 4],
             ["related", 6],
             ["related_accesory", 6],
+            ["ean13", 6],
         )]
         return g
 
@@ -636,6 +638,7 @@ class ProductFinalForm(GenModelForm):
                 ["offer", 2],
                 ["outstanding", 2],
                 ['most_sold', 2],
+                ["ean13", 6],
             )
         ]
         return g
@@ -654,6 +657,7 @@ class ProductFinalForm(GenModelForm):
                 ["price", 6],
                 ["reviews_value", 6],
                 ["reviews_count", 6],
+                ["ean13", 6],
             )
         ]
         return g
@@ -1113,7 +1117,8 @@ class PackOptionForm(GenModelForm):
             (
                 _('Details'), 12,
                 ['pack', 6],
-                ['active', 6],
+                ['order', 3],
+                ['active', 3],
                 ['products', 12],
             )
         ]
@@ -1127,6 +1132,7 @@ class PackOptionForm(GenModelForm):
                 ['pack', 6],
                 ['products', 6],
                 ['active', 6],
+                ['order', 6],
             )
         ]
         return g
@@ -1150,8 +1156,9 @@ class PackOptionFormWithoutPack(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                ['products', 9],
-                ['active', 3],
+                ['products', 8],
+                ['order', 2],
+                ['active', 2],
             )
         ]
         return g

@@ -1417,6 +1417,7 @@ class PackOption(CodenerixModel):
     pack = models.ForeignKey(Pack, related_name='pack_options', verbose_name=_("Pack Option"), blank=False, null=False)
     products = models.ManyToManyField(ProductFinal, related_name='pack_options', symmetrical=False, blank=False, null=False)
     active = models.BooleanField(_("Active"), blank=False, null=False, default=True)
+    order = models.SmallIntegerField(_("Order"), blank=True, null=True)
 
     def __unicode__(self):
         lang = get_language_database()
@@ -1428,6 +1429,7 @@ class PackOption(CodenerixModel):
     def __fields__(self, info):
         fields = []
         fields.append(('pack', _("Pack")))
+        fields.append(('order', _("Order")))
         fields.append(('products', _("Products")))
         fields.append(('active', _("Active")))
         return fields
