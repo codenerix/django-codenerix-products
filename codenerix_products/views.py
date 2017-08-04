@@ -1020,9 +1020,9 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
 
             qs = queryset.filter(qsobject)
             if conditional:
-                qs.filter(**{"{}".format(conditional): True})
+                qs.filter(**conditional)
         elif conditional:
-            qs = queryset.filter(**{"{}".format(conditional): True})
+            qs = queryset.filter(**conditional)
 
         answer = {}
         answer['rows'] = []
@@ -1059,14 +1059,42 @@ class ProductFinalForeignSales(ProductFinalForeign):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         search = kwargs.get('search', None)
-        return self.__filter_product__(search, 'product__of_sales')
+        return self.__filter_product__(search, {'product__of_sales': True, 'productfinals_option__isnull': True})
+
+
+class ProductFinalForeignPackSales(ProductFinalForeign):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        search = kwargs.get('search', None)
+        return self.__filter_product__(search, {'product__of_sales': True, 'productfinals_option__isnull': False})
+
+
+class ProductFinalForeignAllSales(ProductFinalForeign):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        search = kwargs.get('search', None)
+        return self.__filter_product__(search, {'product__of_sales': True})
 
 
 class ProductFinalForeignPurchases(ProductFinalForeign):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         search = kwargs.get('search', None)
-        return self.__filter_product__(search, 'product__of_purchase')
+        return self.__filter_product__(search, {'product__of_purchase': True, 'productfinals_option__isnull': True})
+
+
+class ProductFinalForeignPackPurchases(ProductFinalForeign):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        search = kwargs.get('search', None)
+        return self.__filter_product__(search, {'product__of_purchase': True, 'productfinals_option__isnull': False})
+
+
+class ProductFinalForeignAllPurchases(ProductFinalForeign):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        search = kwargs.get('search', None)
+        return self.__filter_product__(search, {'product__of_purchase': True})
 
 
 # ------- sublista de productos relacionados -------

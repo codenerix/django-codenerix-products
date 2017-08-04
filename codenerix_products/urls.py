@@ -40,7 +40,6 @@ from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, C
     TypeTaxList, TypeTaxCreate, TypeTaxCreateModal, TypeTaxUpdate, TypeTaxUpdateModal, TypeTaxDelete, \
     SubcategorySubList, SubcategoryDetailModal, \
     TypeRecargoEquivalenciaList, TypeRecargoEquivalenciaCreate, TypeRecargoEquivalenciaCreateModal, TypeRecargoEquivalenciaUpdate, TypeRecargoEquivalenciaUpdateModal, TypeRecargoEquivalenciaDelete, \
-    ProductFinalForeignSales, ProductFinalForeignPurchases,  \
     BrandList, BrandCreate, BrandCreateModal, BrandUpdate, BrandUpdateModal, BrandDelete, \
     FlagshipProductList, FlagshipProductCreate, FlagshipProductCreateModal, FlagshipProductUpdate, FlagshipProductUpdateModal, FlagshipProductDelete, \
     CategorySubListPro, CategoryDetailModalPro, CategoryUpdateModalPro, \
@@ -53,6 +52,8 @@ from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, C
     OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign, \
     OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
 from .views import ProductFinalOptionList, ProductFinalOptionCreate, ProductFinalOptionCreateModal, ProductFinalOptionUpdate, ProductFinalOptionUpdateModal, ProductFinalOptionDelete, ProductFinalOptionSubList, ProductFinalOptionDetails, ProductFinalOptionDetailModal
+from .views import ProductFinalForeignSales, ProductFinalForeignPackSales, ProductFinalForeignAllSales
+from .views import ProductFinalForeignPurchases, ProductFinalForeignPackPurchases, ProductFinalForeignAllPurchases
 
 
 urlpatterns = [
@@ -189,7 +190,12 @@ urlpatterns = [
     url(r'^productfinals/(?P<pk>\w+)/delete$', ProductFinalDelete.as_view(), name='CDNX_products_productfinals_delete'),
 
     url(r'^productfinals/foreignsales/(?P<search>[\w\W]+|\*)$', ProductFinalForeignSales.as_view(), name='CDNX_products_productfinals_foreign_sales'),
+    url(r'^productfinals/foreignsalespack/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPackSales.as_view(), name='CDNX_products_productfinals_foreign_sales_pack'),
+    url(r'^productfinals/foreignsalesall/(?P<search>[\w\W]+|\*)$', ProductFinalForeignAllSales.as_view(), name='CDNX_products_productfinals_foreign_sales_all'),
+    
     url(r'^productfinals/foreignpurchases/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPurchases.as_view(), name='CDNX_products_productfinals_foreign_purchases'),
+    url(r'^productfinals/foreignpurchasespack/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPackPurchases.as_view(), name='CDNX_products_productfinals_foreign_purchases_pack'),
+    url(r'^productfinals/foreignpurchasesall/(?P<search>[\w\W]+|\*)$', ProductFinalForeignAllPurchases.as_view(), name='CDNX_products_productfinals_foreign_purchases_all'),
 
     url(r'^productfinals/(?P<pk>\w+)/related$', ProductFinalRelatedSubList.as_view(), name='CDNX_products_productfinalrelateds_sublist'),
     url(r'^productfinals/(?P<pk>\w+)/related/add$', ProductFinalRelatedSubUpdateModal.as_view(), name='CDNX_products_productfinalrelateds_sublist_add'),
