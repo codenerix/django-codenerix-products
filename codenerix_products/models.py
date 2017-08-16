@@ -24,7 +24,7 @@ from functools import reduce
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models, transaction
+from django.db import models, transaction, IntegrityError
 from django.db.models import Sum, F, Q
 from django.utils import timezone
 from django.utils.encoding import smart_text
@@ -1260,6 +1260,23 @@ class ProductFinalAttribute(CodenerixModel):
         fields.append(('attribute', _("Attribute")))
         fields.append(('get_value_attribute', _("Value")))
         return fields
+
+    @staticmethod
+    def validate(pk, product, attribute):
+        if pk is None and ProductFinalAttribute.objects.filter(product__pk=product, attribute__pk=attribute).exists():
+            msg = _('A product final can not have the same attribute')
+        elif ProductFinalAttribute.objects.filter(product__pk=product, attribute__=attribute).exclude(pk=pk).exists():
+            msg = _('A product final can not have the same attribute')
+        else:
+            msg = None
+
+        return msg
+        
+    def save(self, *args, **kwargs):
+        msg = ProductFinalAttribute.validate(self.pk, self.product.pk, self.attribute.pk)
+        if msg:
+            raise IntegrityError(msg)
+        return super(ProductFinalAttribute, self).save(*args, **kwargs)
 
 
 # valor de las caracteristicas del producto (talla, color)

@@ -702,6 +702,14 @@ class ProductFinalAttributeForm(GenModelForm):
         self.initial['product_pk'] = product_pk
         return None
 
+    def clean(self):
+        pk = self.cleaned_data.get('pk', None)
+        product = self.cleaned_data['product_pk']
+        attribute = self.cleaned_data['attribute']
+        msg = ProductFinalAttribute.validate(pk, product, attribute.pk)
+        if msg:
+            self._errors["attribute"] = ErrorList([_(msg)])
+
     def __groups__(self):
         g = [
             (
