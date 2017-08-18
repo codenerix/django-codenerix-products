@@ -26,7 +26,7 @@ import time
 from functools import reduce
 
 from django.db import IntegrityError
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse_lazy
@@ -42,6 +42,7 @@ from django.conf import settings
 from codenerix.multiforms import MultiForm
 from codenerix.views import GenList, GenCreate, GenCreateModal, GenUpdate, GenUpdateModal, GenDelete, GenDetail, GenDetailModal, GenForeignKey
 from codenerix_extensions.files.views import DocumentFileView, ImageFileView
+from codenerix_extensions.helpers import get_language_database
 
 from .models import TypeTax, Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductFinalImage, \
     ProductDocument, ProductFinal, ProductFeature, ProductUnique, ProductFinalAttribute, TypeRecargoEquivalencia, Brand, FlagshipProduct, \
@@ -269,6 +270,12 @@ class AttributeDelete(GenAttributeUrl, GenDelete):
 class AttributeForeign(GenAttributeUrl, GenForeignKey):
     model = Attribute
     label = "{<LANGUAGE_CODE>__description}"
+    clear_fields = ['value_free', 'value_bool', 'value_list', ]
+
+    def custom_choice(self, obj, info):
+        info['_clear_'] = ['value_free', 'value_bool', 'value_list', ]
+        info['type'] = obj.type_value
+        return info
 
     def get_foreign(self, queryset, search, filters):
         # Filter with search string
@@ -1030,21 +1037,33 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
         answer['readonly'] = ['price', 'type_tax']
         answer['rows'].append({
             'price': 0,
+            'description': '',
             'type_tax': '0',
             'label': "---------",
             'id': None,
+            # 'options': None,
         })
-        for product in qs:
+        for product in qs.distinct():
             if product.product.tax:
                 tax = product.product.tax.pk
             else:
                 tax = 0
+            pack = []
+            lang = get_language_database()
+            if product.productfinals_option.filter(active=True).exists():
+                for option in product.productfinals_option.filter(active=True):
+                    pack.append({
+                        'id': option.pk,
+                        'label': getattr(option, lang).name,
+                        'products': list(option.products_pack.all().values('pk').annotate(name=F('{}__name'.format(lang))))
+                    })
             answer['rows'].append({
                 'price': product.price,
                 'description': product.__unicode__(),
                 'type_tax': str(tax),
                 'label': product.__unicode__(),
                 'id': product.pk,
+                'packs:__JSON_DATA__': json.dumps(pack),
             })
 
         try:
@@ -1265,6 +1284,7 @@ class ProductFinalAttributeList(GenProductFinalAttributeUrl, GenList):
 class ProductFinalAttributeCreate(GenProductFinalAttributeUrl, GenCreate):
     model = ProductFinalAttribute
     form_class = ProductFinalAttributeForm
+    form_ngcontroller = "CDNXPRODUCTSFormProductAttributeCtrl"
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -1277,6 +1297,39 @@ class ProductFinalAttributeCreate(GenProductFinalAttributeUrl, GenCreate):
         return form_kwargs
 
     def form_valid(self, form):
+        attribute = form.cleaned_data['attribute']
+
+        if attribute.type_value == TYPE_VALUE_BOOLEAN:
+            value = int(form.cleaned_data['value_bool'])
+        elif attribute.type_value == TYPE_VALUE_FREE:
+            value = form.cleaned_data['value_free']
+        elif attribute.type_value == TYPE_VALUE_LIST:
+            value = form.cleaned_data['value_list']
+            if not OptionValueAttribute.objects.filter(
+                pk=value, group__attributes=attribute
+            ).exists():
+                errors = form._errors.setdefault("value", ErrorList())
+                errors.append(_('Option invalid'))
+                return super(ProductFeatureCreate, self).form_invalid(form)
+        else:
+            value = None
+
+        if value is None:
+            errors = form._errors.setdefault("value", ErrorList())
+            errors.append(_('Value invalid'))
+            return super(ProductFeatureCreate, self).form_invalid(form)
+
+        self.request.value = value
+        form.instance.value = value
+
+        if self.__product_pk:
+            product = ProductFinal.objects.get(pk=self.__product_pk)
+            self.request.product = product
+            form.instance.product = product
+
+        return super(ProductFinalAttributeCreate, self).form_valid(form)
+
+    def form_validXXX(self, form):
         if self.__product_pk:
             product = ProductFinal.objects.get(pk=self.__product_pk)
             self.request.product = product
@@ -1292,6 +1345,7 @@ class ProductFinalAttributeCreateModal(GenCreateModal, ProductFinalAttributeCrea
 class ProductFinalAttributeUpdate(GenProductFinalAttributeUrl, GenUpdate):
     model = ProductFinalAttribute
     form_class = ProductFinalAttributeForm
+    form_ngcontroller = "CDNXPRODUCTSFormProductAttributeCtrl"
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -1301,7 +1355,40 @@ class ProductFinalAttributeUpdate(GenProductFinalAttributeUrl, GenUpdate):
     def get_form_kwargs(self, *args, **kwargs):
         form_kwargs = super(ProductFinalAttributeUpdate, self).get_form_kwargs(*args, **kwargs)
         form_kwargs['product_pk'] = self.__product_pk
+        if form_kwargs['instance'].attribute.type_value == TYPE_VALUE_FREE:
+            form_kwargs['value_free'] = form_kwargs['instance'].value
+        elif form_kwargs['instance'].attribute.type_value == TYPE_VALUE_BOOLEAN:
+            form_kwargs['value_bool'] = form_kwargs['instance'].value
+        elif form_kwargs['instance'].attribute.type_value == TYPE_VALUE_LIST:
+            form_kwargs['value_list'] = form_kwargs['instance'].value
         return form_kwargs
+
+    def form_valid(self, form):
+        attribute = form.cleaned_data['attribute']
+
+        if attribute.type_value == TYPE_VALUE_BOOLEAN:
+            value = int(form.cleaned_data['value_bool'])
+        elif attribute.type_value == TYPE_VALUE_FREE:
+            value = form.cleaned_data['value_free']
+        elif attribute.type_value == TYPE_VALUE_LIST:
+            value = form.cleaned_data['value_list']
+            if not OptionValueAttribute.objects.filter(
+                pk=value, group__attributes=attribute
+            ).exists():
+                errors = form._errors.setdefault("value", ErrorList())
+                errors.append(_('Option invalid'))
+                return super(ProductFinalAttributeUpdate, self).form_invalid(form)
+        else:
+            value = None
+
+        if value is None:
+            errors = form._errors.setdefault("value", ErrorList())
+            errors.append(_('Value invalid'))
+            return super(ProductFinalAttributeUpdate, self).form_invalid(form)
+
+        self.request.value = value
+        form.instance.value = value
+        return super(ProductFinalAttributeUpdate, self).form_valid(form)
 
 
 class ProductFinalAttributeUpdateModal(GenUpdateModal, ProductFinalAttributeUpdate):
@@ -1949,12 +2036,12 @@ class OptionValueAttributeForeign(GenOptionValueAttributeUrl, GenForeignKey):
     def get_foreign(self, queryset, search, filters):
         qs = queryset.all()
         # product_pk = filters.get('product_pk', None)
-        feature_pk = filters.get('feature', None)
+        attribute_pk = filters.get('attribute', None)
 
         # if product_pk:
         #     qs = qs.filter(group__features__product_features__product__pk=product_pk)
-        if feature_pk:
-            qs = qs.filter(group__features__pk=feature_pk)
+        if attribute_pk:
+            qs = qs.filter(group__attributes__pk=attribute_pk)
 
         return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
 

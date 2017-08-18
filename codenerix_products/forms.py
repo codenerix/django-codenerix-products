@@ -686,36 +686,47 @@ class ProductFinalRelatedSubForm(GenModelForm):
 
 class ProductFinalAttributeForm(GenModelForm):
     product_pk = forms.CharField(widget=forms.HiddenInput())
+    value = forms.CharField(widget=forms.HiddenInput(), required=False)
+    value_free = forms.CharField(label=_("Value"), max_length=80, required=False)
+    value_bool = forms.BooleanField(label=_("Value"), required=False)
+    value_list = forms.CharField(label=_("Value"), required=False, widget=DynamicSelect())
 
     class Meta:
         model = ProductFinalAttribute
         exclude = ["product", "product_pk", ]
         autofill = {
             'attribute': ['select', 3, 'CDNX_products_attributes_foreign', 'product_pk'],
+            'value_list': ['select', 3, 'CDNX_products_OptionValueAttributes_foreign', 'product_pk', 'attribute'],
         }
 
     def __init__(self, *args, **kwargs):
         product_pk = kwargs.get('product_pk', None)
+        value_bool = kwargs.get('value_bool', None)
+        value_free = kwargs.get('value_free', None)
+        value_list = kwargs.get('value_list', None)
         if product_pk:
             kwargs.pop('product_pk')
-        super(ProductFinalAttributeForm, self).__init__(*args, **kwargs)
+        if value_bool:
+            kwargs.pop('value_bool')
+        if value_free:
+            kwargs.pop('value_free')
+        if value_list:
+            kwargs.pop('value_list')
+        r = super(ProductFinalAttributeForm, self).__init__(*args, **kwargs)
         self.initial['product_pk'] = product_pk
-        return None
-
-    def clean(self):
-        pk = self.cleaned_data.get('pk', None)
-        product = self.cleaned_data['product_pk']
-        attribute = self.cleaned_data['attribute']
-        msg = ProductFinalAttribute.validate(pk, product, attribute.pk)
-        if msg:
-            self._errors["attribute"] = ErrorList([_(msg)])
+        self.initial['value_bool'] = value_bool
+        self.initial['value_free'] = value_free
+        self.initial['value_list'] = value_list
+        return r
 
     def __groups__(self):
         g = [
             (
                 _('Details'), 12,
-                ["attribute", 6],
-                ["value", 6],
+                ["attribute", 12],
+                ['value_free', 12, None, None, None, None, None, None, ["ng-show=show_optionvalue('{}')".format(TYPE_VALUE_FREE)]],
+                ['value_bool', 12, None, None, None, None, None, None, ["ng-show=show_optionvalue('{}')".format(TYPE_VALUE_BOOLEAN)]],
+                ['value_list', 12, None, None, None, None, None, None, ["ng-show=show_optionvalue('{}')".format(TYPE_VALUE_LIST)]],
             )
         ]
         return g

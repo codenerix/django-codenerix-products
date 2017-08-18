@@ -1265,7 +1265,7 @@ class ProductFinalAttribute(CodenerixModel):
     def validate(pk, product, attribute):
         if pk is None and ProductFinalAttribute.objects.filter(product__pk=product, attribute__pk=attribute).exists():
             msg = _('A product final can not have the same attribute')
-        elif ProductFinalAttribute.objects.filter(product__pk=product, attribute__=attribute).exclude(pk=pk).exists():
+        elif ProductFinalAttribute.objects.filter(product__pk=product, attribute__pk=attribute).exclude(pk=pk).exists():
             msg = _('A product final can not have the same attribute')
         else:
             msg = None

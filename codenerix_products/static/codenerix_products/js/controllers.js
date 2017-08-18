@@ -42,4 +42,23 @@ angular.module('codenerixPRODUCTSControllers', [])
             return result;
         }
     }
+])
+.controller('CDNXPRODUCTSFormProductAttributeCtrl', ['$scope', '$rootScope', '$timeout', '$http', '$window', '$uibModal', '$state', '$stateParams', '$templateCache', 'Register',
+    function ($scope, $rootScope, $timeout, $http, $window, $uibModal, $state, $stateParams, $templateCache, Register) {
+        if (ws_entry_point==undefined) { ws_entry_point=""; }
+        $scope.options = [];
+
+        $scope.show_optionvalue = function(type_value){
+            var result = false;
+            if ($scope.valuegetforeingkey['attribute'] != undefined){
+                angular.forEach($scope.valuegetforeingkey['attribute'].rows, function(value, key){
+
+                    if (value.id == $scope[$scope.form_name].attribute.$viewValue && value.type == type_value){
+                        result = true;
+                    }
+                });
+            }
+            return result;
+        }
+    }
 ]);
