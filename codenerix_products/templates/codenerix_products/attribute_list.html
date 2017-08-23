@@ -1,0 +1,36 @@
+{% extends "codenerix/list.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% comment %}
+
+django-codenerix-products
+
+Copyright 2017 Centrologic Computational Logistic Center S.L.
+
+Project URL : http://www.codenerix.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+{% endcomment %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block angular_app_libraries %}
+    <script type="text/javascript" src="{% static "codenerix_products/js/app.js" %}"></script>
+    <script type="text/javascript" src="{% static "codenerix/js/controllers.js" %}"></script>
+    <script type="text/javascript" src="{% static "codenerix_products/js/controllers.js" %}"></script>
+    <script type="text/javascript" src="{% static "codenerix/js/filters.js" %}"></script>
+    <script type="text/javascript" src="{% static static_filters_row %}"></script>    
+    
+{% endblock %}
