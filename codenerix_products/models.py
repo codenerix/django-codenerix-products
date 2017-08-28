@@ -710,7 +710,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         fields.append(('code', _("Code")))
         fields.append(('price_base', _("Price base")))
         fields.append(('of_sales', _("Sales")))
-        fields.append(('of_purchase', _("Pruchase")))
+        fields.append(('of_purchase', _("Purchase")))
         fields.append(('force_stock', _("Force stock")))
         fields.append(('url_video', _("Url Video")))
         fields.append(('feature_special', _("Feature special")))
