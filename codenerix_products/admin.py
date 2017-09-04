@@ -21,12 +21,14 @@
 from django.contrib import admin
 from django.conf import settings
 
+from .models import TypeTax
 from .models import Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductDocument, ProductFinal, ProductFeature, ProductUnique, Brand
 from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial
 from .models import OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
 from .models import MODELS, MODELS_PRODUCTS, MODELS_SLUG, MODELS_SLIDERS
 from .models import ProductFinalOption
 
+admin.site.register(TypeTax)
 admin.site.register(Feature)
 admin.site.register(Attribute)
 admin.site.register(FeatureSpecial)

@@ -97,6 +97,7 @@ class TypeTax(CodenerixModel):
     tax = models.FloatField(_("Tax (%)"), validators=[MinValueValidator(0), MaxValueValidator(100)], blank=False, null=False)
     name = models.CharField(_("Name"), max_length=250, blank=False, null=False, unique=True)
     default = models.BooleanField(_("Default"), blank=False, default=False)
+    recargo_equivalencia = models.FloatField(_("Recargo de equivalencia (%)"), validators=[MinValueValidator(0), MaxValueValidator(100)], blank=False, null=False)
 
     def __unicode__(self):
         return u"{}".format(smart_text(self.name))
@@ -108,13 +109,12 @@ class TypeTax(CodenerixModel):
         fields = []
         fields.append(('name', _("Name")))
         fields.append(('tax', _("Tax (%)")))
+        fields.append(('recargo_equivalencia', _("Recargo de equivalencia (%)")))
         fields.append(('default', _('Default')))
         return fields
 
     def lock_delete(self):
-        if self.type_recargo_equivalencia.exists():
-            return _("Cannot delete type tax model, relationship between type tax model and recargo equivalencia")
-        elif self.products.exists():
+        if self.products.exists():
             return _("Cannot delete type tax model, relationship between type tax model and products")
         else:
             return super(TypeTax, self).lock_delete()
@@ -138,46 +138,6 @@ class TypeTax(CodenerixModel):
                 result = super(TypeTax, self).save(*args, **kwargs)
         else:
             result = super(TypeTax, self).save(*args, **kwargs)
-        return result
-
-
-class TypeRecargoEquivalencia(CodenerixModel):
-    type_tax = models.ForeignKey(TypeTax, related_name='type_recargo_equivalencia', verbose_name=_("Tax"))
-    name = models.CharField(_("Name"), max_length=250, blank=False, null=False)
-    recargo_equivalencia = models.FloatField(_("Recargo de equivalencia (%)"), validators=[MinValueValidator(0), MaxValueValidator(100)], blank=False, null=False)
-
-    def __unicode__(self):
-        return u"{}".format(smart_text(self.name))
-
-    def __str__(self):
-        return self.__unicode__()
-
-    def __fields__(self, info):
-        fields = []
-        fields.append(('name', _("Name")))
-        fields.append(('type_tax__name', _("Type Tax")))
-        fields.append(('type_tax__tax', _("Value (%)")))
-        fields.append(('recargo_equivalencia', _("Recargo de equivalencia (%)")))
-        return fields
-
-    def lock_delete(self):
-        if self.products.exists():
-            return _("Cannot delete recargo equivalencia model, relationship between recargo equivalencia model and products")
-        else:
-            return super(TypeRecargoEquivalencia, self).lock_delete()
-
-    def save(self, *args, **kwargs):
-        if self.pk:
-            obj = TypeRecargoEquivalencia.objects.get(pk=self.pk)
-            if obj.recargo_equivalencia != self.recargo_equivalencia:
-                result = super(TypeRecargoEquivalencia, self).save(*args, **kwargs)
-                for product in self.products.all():
-                    for pf in product.products_final.all():
-                        pf.recalculate()
-            else:
-                result = super(TypeRecargoEquivalencia, self).save(*args, **kwargs)
-        else:
-            result = super(TypeRecargoEquivalencia, self).save(*args, **kwargs)
         return result
 
 
@@ -672,7 +632,6 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     model = models.CharField(_("Model"), max_length=250, blank=True, null=True)
     brand = models.ForeignKey(Brand, related_name='products', verbose_name=_("Brand"), blank=True, null=True)
     tax = models.ForeignKey(TypeTax, related_name='products', verbose_name=_("Tax (%)"), null=True)
-    recargo_equivalencia = models.ForeignKey(TypeRecargoEquivalencia, related_name='products', verbose_name=_("Recargo Equivalencia (%)"), null=True, blank=True)
     family = models.ForeignKey(Family, related_name='products', verbose_name=_("Family"))
     category = models.ForeignKey(Category, related_name='products', verbose_name=_("Category"))
     subcategory = models.ForeignKey(Subcategory, related_name='products', verbose_name=_("Subcategory"))
@@ -706,7 +665,6 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         fields.append(('subcategory__{}__name'.format(lang), _("Subcategory")))
         fields.append(('public', _("Public")))
         fields.append(('tax', _("Tax")))
-        fields.append(('recargo_equivalencia', _("Recargo Equivalencia")))
         fields.append(('code', _("Code")))
         fields.append(('price_base', _("Price base")))
         fields.append(('of_sales', _("Sales")))
@@ -757,7 +715,7 @@ class Product(GenProduct):
     def save(self, *args, **kwargs):
         if self.pk:
             obj = Product.objects.get(pk=self.pk)
-            if obj.price_base != self.price_base or obj.tax != self.tax or obj.recargo_equivalencia != self.recargo_equivalencia:
+            if obj.price_base != self.price_base or obj.tax != self.tax:
                 result = super(Product, self).save(*args, **kwargs)
                 for pf in self.products_final.all():
                     pf.recalculate()
@@ -870,6 +828,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     most_sold = models.BooleanField(_("Most sold"), blank=True, null=False, default=False)
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
     stock_lock = models.FloatField(_("Stock lock"), null=False, blank=False, default=0, editable=False)
+    # price without tax
+    price_base = models.FloatField(_("Price base"), null=False, blank=False, default=0, editable=False)
+    # price with tax
     price = models.FloatField(_("Price"), null=False, blank=False, default=0, editable=False)
     ean13 = models.CharField(_("EAN-13"), null=True, blank=True, max_length=13)
 
@@ -877,7 +838,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     reviews_count = models.IntegerField(_("Reviews count"), null=False, blank=False, default=0, editable=False)
 
     def __unicode__(self):
-        name = u"{} - {} ({})".format(self.pk, smart_text(self.product), self.ean13)
+        if self.ean13:
+            name = u"{} ({})".format(smart_text(self.product), self.ean13)
+        else:
+            name = u"{}".format(smart_text(self.product))
         return name
 
     def __str__(self):
@@ -914,9 +878,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return super(ProductFinal, self).save(*args, **kwards)
 
     def recalculate(self, commit=True):
-        newprice = self.calculate_price()['price_total']
-        if self.price != newprice:
-            self.price = newprice
+        prices = self.calculate_price()
+        if self.price != prices['price_total'] or self.price_base != prices['price_base']:
+            self.price = prices['price_total']
+            self.price_base = prices['price_base']
             if commit:
                 self.save()
 
@@ -932,13 +897,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         else:
             return super(ProductFinal, self).lock_delete()
 
-    def calculate_price(self, apply_overcharge=False):
+    def calculate_price(self):
         price = float(self.product.price_base)
         tax = float(self.product.tax.tax)
-        if self.product.recargo_equivalencia:
-            overcharge = float(self.product.recargo_equivalencia.recargo_equivalencia)
-        else:
-            overcharge = 0
 
         # atributos
         update = True
@@ -973,19 +934,17 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             elif self.product.feature_special.type_price == TYPE_PRICE_PERCENTAGE:
                 price += float(self.product.price_base) * float(self.product.feature_special.price) / 100
 
-        result = {'overcharge': 0}
+        result = {}
         result['price_base'] = float(price)
         result['tax'] = (float(price) * float(tax)) / 100.0
-        if apply_overcharge:
-            result['overcharge'] = (float(price) * float(overcharge)) / 100.0
-        result['price_total'] = float(price) + float(result['tax']) + float(result['overcharge'])
+        result['price_total'] = float(price) + float(result['tax'])
         return result
 
     def is_pack(self):
         return self.productfinals_option.exists()
         
     @classmethod
-    def get_recommended_products(cls, lang, apply_overcharge=False, category=None, subcategory=None):
+    def get_recommended_products(cls, lang, category=None, subcategory=None):
         products = []
         query = Q(most_sold=True) | Q(product__products_image__principal=True)
         if category is not None:
@@ -1016,7 +975,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return products
 
     @classmethod
-    def get_outstanding_products(cls, lang, apply_overcharge=False, category=None, subcategory=None):
+    def get_outstanding_products(cls, lang, category=None, subcategory=None):
         products = []
         query = Q(outstanding=True) | Q(product__products_image__principal=True)
         if category is not None:
@@ -1044,7 +1003,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             category_name="product__category__{}__name".format(lang),
             pop_annotations=True
         )[:16]:
-            prices = cls.objects.get(pk=product['pk']).calculate_price(apply_overcharge)
+            prices = cls.objects.get(pk=product['pk']).calculate_price()
             product['price'] = prices['price_total']
             product['new'] = 1 if (timezone.now() - product['created']).days <= settings.CDNX_PRODUCTS_NOVELTY_DAYS else 0
             products.append(product)
@@ -1052,7 +1011,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return products
 
     @classmethod
-    def get_products(cls, lang, apply_overcharge=False, family=None, category=None, subcategory=None, brand=None):
+    def get_products(cls, lang, family=None, category=None, subcategory=None, brand=None):
         products = []
         query = Q(product__products_image__principal=True)
 
@@ -1083,7 +1042,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             name="product__{}__name".format(lang),
             pop_annotations=True
         ):
-            prices = cls.objects.get(pk=product['pk']).calculate_price(apply_overcharge)
+            prices = cls.objects.get(pk=product['pk']).calculate_price()
             product['price'] = prices['price_total']
             product['new'] = 1 if (timezone.now() - product['created']).days <= settings.CDNX_PRODUCTS_NOVELTY_DAYS else 0
             products.append(product)
@@ -1091,7 +1050,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return products
 
     @classmethod
-    def find_product(cls, query, lang, apply_overcharge=False):
+    def find_product(cls, query, lang):
         product = cls.query_or(
             query,
             "pk",
@@ -1163,7 +1122,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
         if product:
             product_final = cls.objects.get(pk=product['pk'])
-            prices = product_final.calculate_price(apply_overcharge)
+            prices = product_final.calculate_price()
             product['price'] = prices['price_total']
 
         return product

@@ -19,41 +19,42 @@
 # limitations under the License.
 
 from django.conf.urls import url
-from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, CategoryList, SubcategoryList, ProductList, ProductRelationSoldList, ProductImageList, ProductDocumentList, ProductFinalList, ProductFeatureList, ProductUniqueList, \
-    FeatureCreate, AttributeCreate, FeatureSpecialCreate, FamilyCreate, CategoryCreate, SubcategoryCreate, ProductCreate, ProductRelationSoldCreate, ProductFinalCreate, \
-    FeatureCreateModal, AttributeCreateModal, FeatureSpecialCreateModal, FamilyCreateModal, CategoryCreateModal, SubcategoryCreateModal, SubcategoryCreateModalAll, ProductCreateModal, ProductRelationSoldCreateModal, ProductImageCreateModal, ProductDocumentCreateModal, ProductFinalCreateModal, ProductFeatureCreateModal, ProductUniqueCreateModal, \
-    FeatureUpdate, AttributeUpdate, FeatureSpecialUpdate, FamilyUpdate, CategoryUpdate, SubcategoryUpdate, ProductUpdate, ProductRelationSoldUpdate, ProductImageUpdate, ProductDocumentUpdate, ProductFinalUpdate, ProductFeatureUpdate, ProductUniqueUpdate, \
-    FeatureUpdateModal, AttributeUpdateModal, FeatureSpecialUpdateModal, FamilyUpdateModal, CategoryUpdateModal, SubcategoryUpdateModal, ProductUpdateModal, ProductRelationSoldUpdateModal, ProductImageUpdateModal, ProductDocumentUpdateModal, ProductFinalUpdateModal, ProductFeatureUpdateModal, ProductUniqueUpdateModal, \
-    FeatureDelete, AttributeDelete, FeatureSpecialDelete, FamilyDelete, CategoryDelete, SubcategoryDelete, ProductDelete, ProductRelationSoldDelete, ProductImageDelete, ProductDocumentDelete, ProductFinalDelete, ProductFeatureDelete, ProductUniqueDelete, \
-    ProductDetails, ProductFeatureSubList, ProductFeatureDetailsModal, \
-    ProductDocumentSubList, ProductDocumentDetailsModal, \
-    ProductFinalDetails, CategoryDetails, \
-    ProductFinalImageList, ProductFinalImageCreate, ProductFinalImageCreateModal, ProductFinalImageUpdate, ProductFinalImageUpdateModal, ProductFinalImageDelete, ProductFinalImageSubList, ProductFinalImageDetails, ProductFinalImageDetailsModal, \
-    ProductFinalAttributeList, ProductFinalAttributeSubList, ProductFinalAttributeCreateModal, ProductFinalAttributeDetailsModal, ProductFinalAttributeUpdateModal, ProductFinalAttributeDelete, \
-    ProductImageSubList, ProductImageDetailsModal, \
-    ProductUniqueSubList, ProductUniqueDetailsModal, \
-    CategoryForeign, SubcategoryForeign, FeatureForeign, \
-    ProductFinalRelatedSubList, ProductFinalRelatedSubUpdateModal, ProductFinalRelatedSubDelete, \
-    ProductFinalAccesorySubList, ProductFinalAccesorySubUpdateModal, ProductFinalAccesorySubDelete, \
-    ProductForeign, \
-    AttributeForeign, FeatureSpecialForeign, \
-    TypeTaxList, TypeTaxCreate, TypeTaxCreateModal, TypeTaxUpdate, TypeTaxUpdateModal, TypeTaxDelete, \
-    SubcategorySubList, SubcategoryDetailModal, \
-    TypeRecargoEquivalenciaList, TypeRecargoEquivalenciaCreate, TypeRecargoEquivalenciaCreateModal, TypeRecargoEquivalenciaUpdate, TypeRecargoEquivalenciaUpdateModal, TypeRecargoEquivalenciaDelete, \
-    BrandList, BrandCreate, BrandCreateModal, BrandUpdate, BrandUpdateModal, BrandDelete, \
-    FlagshipProductList, FlagshipProductCreate, FlagshipProductCreateModal, FlagshipProductUpdate, FlagshipProductUpdateModal, FlagshipProductDelete, \
-    CategorySubListPro, CategoryDetailModalPro, CategoryUpdateModalPro, \
-    ListProducts, TypeTaxDetails, \
-    ProductFinalSubList, ProductFinalDetailsModal, \
-    GroupValueFeatureList, GroupValueFeatureCreate, GroupValueFeatureCreateModal, GroupValueFeatureDetails, GroupValueFeatureUpdate, GroupValueFeatureUpdateModal, GroupValueFeatureDelete, \
-    GroupValueAttributeList, GroupValueAttributeCreate, GroupValueAttributeCreateModal, GroupValueAttributeDetails, GroupValueAttributeUpdate, GroupValueAttributeUpdateModal, GroupValueAttributeDelete, \
-    GroupValueFeatureSpecialList, GroupValueFeatureSpecialCreate, GroupValueFeatureSpecialCreateModal, GroupValueFeatureSpecialDetails, GroupValueFeatureSpecialUpdate, GroupValueFeatureSpecialUpdateModal, GroupValueFeatureSpecialDelete, \
-    OptionValueFeatureList, OptionValueFeatureUpdate, OptionValueFeatureUpdateModal, OptionValueFeatureDelete, OptionValueFeatureSubList, OptionValueFeatureSubListModal, OptionValueFeatureCreateModal, OptionValueFeatureDetailsModal, OptionValueFeatureForeign, \
-    OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign, \
-    OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
+from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, CategoryList, SubcategoryList, ProductList, ProductRelationSoldList, ProductImageList, ProductDocumentList, ProductFinalList, ProductFeatureList, ProductUniqueList
+from .views import FeatureCreate, AttributeCreate, FeatureSpecialCreate, FamilyCreate, CategoryCreate, SubcategoryCreate, ProductCreate, ProductRelationSoldCreate, ProductFinalCreate
+from .views import FeatureCreateModal, AttributeCreateModal, FeatureSpecialCreateModal, FamilyCreateModal, CategoryCreateModal, SubcategoryCreateModal, SubcategoryCreateModalAll, ProductCreateModal, ProductRelationSoldCreateModal, ProductImageCreateModal, ProductDocumentCreateModal, ProductFinalCreateModal, ProductFeatureCreateModal, ProductUniqueCreateModal
+from .views import FeatureUpdate, AttributeUpdate, FeatureSpecialUpdate, FamilyUpdate, CategoryUpdate, SubcategoryUpdate, ProductUpdate, ProductRelationSoldUpdate, ProductImageUpdate, ProductDocumentUpdate, ProductFinalUpdate, ProductFeatureUpdate, ProductUniqueUpdate
+from .views import FeatureUpdateModal, AttributeUpdateModal, FeatureSpecialUpdateModal, FamilyUpdateModal, CategoryUpdateModal, SubcategoryUpdateModal, ProductUpdateModal, ProductRelationSoldUpdateModal, ProductImageUpdateModal, ProductDocumentUpdateModal, ProductFinalUpdateModal, ProductFeatureUpdateModal, ProductUniqueUpdateModal
+from .views import FeatureDelete, AttributeDelete, FeatureSpecialDelete, FamilyDelete, CategoryDelete, SubcategoryDelete, ProductDelete, ProductRelationSoldDelete, ProductImageDelete, ProductDocumentDelete, ProductFinalDelete, ProductFeatureDelete, ProductUniqueDelete
+from .views import ProductDetails, ProductFeatureSubList, ProductFeatureDetailsModal
+from .views import ProductDocumentSubList, ProductDocumentDetailsModal
+from .views import ProductFinalDetails, CategoryDetails
+# ProductFinalImageCreate,
+from .views import ProductFinalImageList, ProductFinalImageCreateModal, ProductFinalImageUpdate, ProductFinalImageUpdateModal, ProductFinalImageDelete, ProductFinalImageSubList, ProductFinalImageDetails, ProductFinalImageDetailsModal
+from .views import ProductFinalAttributeList, ProductFinalAttributeSubList, ProductFinalAttributeCreateModal, ProductFinalAttributeDetailsModal, ProductFinalAttributeUpdateModal, ProductFinalAttributeDelete
+from .views import ProductImageSubList, ProductImageDetailsModal
+from .views import ProductUniqueSubList, ProductUniqueDetailsModal
+from .views import CategoryForeign, SubcategoryForeign, FeatureForeign
+from .views import ProductFinalRelatedSubList, ProductFinalRelatedSubUpdateModal, ProductFinalRelatedSubDelete
+from .views import ProductFinalAccesorySubList, ProductFinalAccesorySubUpdateModal, ProductFinalAccesorySubDelete
+from .views import ProductForeign
+from .views import AttributeForeign, FeatureSpecialForeign
+from .views import TypeTaxList, TypeTaxCreate, TypeTaxCreateModal, TypeTaxUpdate, TypeTaxUpdateModal, TypeTaxDelete
+from .views import SubcategorySubList, SubcategoryDetailModal
+from .views import BrandList, BrandCreate, BrandCreateModal, BrandUpdate, BrandUpdateModal, BrandDelete
+from .views import FlagshipProductList, FlagshipProductCreate, FlagshipProductCreateModal, FlagshipProductUpdate, FlagshipProductUpdateModal, FlagshipProductDelete
+from .views import CategorySubListPro, CategoryDetailModalPro, CategoryUpdateModalPro
+from .views import ListProducts, TypeTaxDetails
+from .views import ProductFinalSubList, ProductFinalDetailsModal
+from .views import GroupValueFeatureList, GroupValueFeatureCreate, GroupValueFeatureCreateModal, GroupValueFeatureDetails, GroupValueFeatureUpdate, GroupValueFeatureUpdateModal, GroupValueFeatureDelete
+from .views import GroupValueAttributeList, GroupValueAttributeCreate, GroupValueAttributeCreateModal, GroupValueAttributeDetails, GroupValueAttributeUpdate, GroupValueAttributeUpdateModal, GroupValueAttributeDelete
+from .views import GroupValueFeatureSpecialList, GroupValueFeatureSpecialCreate, GroupValueFeatureSpecialCreateModal, GroupValueFeatureSpecialDetails, GroupValueFeatureSpecialUpdate, GroupValueFeatureSpecialUpdateModal, GroupValueFeatureSpecialDelete
+from .views import OptionValueFeatureList, OptionValueFeatureUpdate, OptionValueFeatureUpdateModal, OptionValueFeatureDelete, OptionValueFeatureSubList, OptionValueFeatureSubListModal, OptionValueFeatureCreateModal, OptionValueFeatureDetailsModal, OptionValueFeatureForeign
+from .views import OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign
+from .views import OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
 from .views import ProductFinalOptionList, ProductFinalOptionCreate, ProductFinalOptionCreateModal, ProductFinalOptionUpdate, ProductFinalOptionUpdateModal, ProductFinalOptionDelete, ProductFinalOptionSubList, ProductFinalOptionDetails, ProductFinalOptionDetailModal
 from .views import ProductFinalForeignSales, ProductFinalForeignPackSales, ProductFinalForeignAllSales
 from .views import ProductFinalForeignPurchases, ProductFinalForeignPackPurchases, ProductFinalForeignAllPurchases
+from .views import TypeTaxForeign
 
 
 urlpatterns = [
@@ -64,13 +65,7 @@ urlpatterns = [
     url(r'^typetaxs/(?P<pk>\w+)/edit$', TypeTaxUpdate.as_view(), name='CDNX_products_typetaxs_edit'),
     url(r'^typetaxs/(?P<pk>\w+)/editmodal$', TypeTaxUpdateModal.as_view(), name='CDNX_products_typetaxs_editmodal'),
     url(r'^typetaxs/(?P<pk>\w+)/delete$', TypeTaxDelete.as_view(), name='CDNX_products_typetaxs_delete'),
-
-    url(r'^typerecargoequivalencias$', TypeRecargoEquivalenciaList.as_view(), name='CDNX_products_typerecargoequivalencias_list'),
-    url(r'^typerecargoequivalencias/add$', TypeRecargoEquivalenciaCreate.as_view(), name='CDNX_products_typerecargoequivalencias_add'),
-    url(r'^typerecargoequivalencias/addmodal$', TypeRecargoEquivalenciaCreateModal.as_view(), name='CDNX_products_typerecargoequivalencias_addmodal'),
-    url(r'^typerecargoequivalencias/(?P<pk>\w+)/edit$', TypeRecargoEquivalenciaUpdate.as_view(), name='CDNX_products_typerecargoequivalencias_edit'),
-    url(r'^typerecargoequivalencias/(?P<pk>\w+)/editmodal$', TypeRecargoEquivalenciaUpdateModal.as_view(), name='CDNX_products_typerecargoequivalencias_editmodal'),
-    url(r'^typerecargoequivalencias/(?P<pk>\w+)/delete$', TypeRecargoEquivalenciaDelete.as_view(), name='CDNX_products_typerecargoequivalencias_delete'),
+    url(r'^typetaxs/foreign/(?P<search>[\w\W]+|\*)$', TypeTaxForeign.as_view(), name='CDNX_products_typetaxs_foreing'),
 
     url(r'^features$', FeatureList.as_view(), name='CDNX_products_features_list'),
     url(r'^features/add$', FeatureCreate.as_view(), name='CDNX_products_features_add'),
@@ -217,6 +212,8 @@ urlpatterns = [
 
 
     url(r'^productfinalimages$', ProductFinalImageList.as_view(), name='CDNX_products_productfinalimages_list'),
+    url(r'^productfinalimages/(?P<pk>\w+)$', ProductFinalImageDetails.as_view(), name='CDNX_products_productfinalimages_edit'),
+    url(r'^productfinalimages/(?P<pk>\w+)/edit$', ProductFinalImageUpdate.as_view(), name='CDNX_products_productfinalimages_edit'),
     url(r'^productfinalimages/(?P<pk>\w+)/edit$', ProductFinalImageUpdate.as_view(), name='CDNX_products_productfinalimages_edit'),
     url(r'^productfinalimages/(?P<pk>\w+)/editmodal$', ProductFinalImageUpdateModal.as_view(), name='CDNX_products_productfinalimages_editmodal'),
     url(r'^productfinalimages/(?P<pk>\w+)/delete$', ProductFinalImageDelete.as_view(), name='CDNX_products_productfinalimages_delete'),

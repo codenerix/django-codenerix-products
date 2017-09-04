@@ -26,7 +26,7 @@ from django.conf import settings
 from codenerix.forms import GenModelForm
 from codenerix.widgets import MultiStaticSelect, DynamicSelect
 
-from .models import TypeTax, TypeRecargoEquivalencia
+from .models import TypeTax
 from .models import Feature, Attribute, FeatureSpecial, ProductFinalAttribute
 from .models import Family, Category, Subcategory, Brand
 from .models import Product, ProductFinal, FlagshipProduct
@@ -48,23 +48,21 @@ class TypeTaxForm(GenModelForm):
                 ['name', 6],
                 ['tax', 3],
                 ['default', 3],
+                ['recargo_equivalencia', 4],
+
             )
         ]
         return g
 
-
-class TypeRecargoEquivalenciaForm(GenModelForm):
-    class Meta:
-        model = TypeRecargoEquivalencia
-        exclude = []
-
-    def __groups__(self):
+    @staticmethod
+    def __groups_details__():
         g = [
             (
                 _('Details'), 12,
-                ['name', 4],
+                ['name', 6],
+                ['tax', 3],
+                ['default', 3],
                 ['recargo_equivalencia', 4],
-                ['type_tax', 4],
             )
         ]
         return g
@@ -337,7 +335,6 @@ class ProductFormCreate(GenModelForm):
                 ['category', 4],
                 ['subcategory', 4],
                 ['tax', 4],
-                ['recargo_equivalencia', 4],
                 ['url_video', 4],
             ),
             (
@@ -375,7 +372,6 @@ class ProductForm(GenModelForm):
                 ['category', 4],
                 ['subcategory', 4],
                 ['tax', 4],
-                ['recargo_equivalencia', 4],
                 ['url_video', 4],
             ),
             (
@@ -404,7 +400,6 @@ class ProductForm(GenModelForm):
                 ['of_purchase', 6],
                 ['force_stock', 6],
                 ['tax', 6],
-                ['recargo_equivalencia', 6],
                 ['url_video', 6],
                 ['feature_special', 6],
                 ['packing_cost', 6],

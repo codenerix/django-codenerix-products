@@ -44,15 +44,15 @@ from codenerix.views import GenList, GenCreate, GenCreateModal, GenUpdate, GenUp
 from codenerix_extensions.files.views import DocumentFileView, ImageFileView
 from codenerix_extensions.helpers import get_language_database
 
-from .models import TypeTax, Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductFinalImage, \
-    ProductDocument, ProductFinal, ProductFeature, ProductUnique, ProductFinalAttribute, TypeRecargoEquivalencia, Brand, FlagshipProduct, \
-    GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
+from .models import TypeTax, Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductFinalImage
+from .models import ProductDocument, ProductFinal, ProductFeature, ProductUnique, ProductFinalAttribute, Brand, FlagshipProduct
+from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
 from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_SLIDERS, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
-from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, FamilyForm, CategoryForm, SubcategoryForm, SubcategoryOwnForm, ProductFormCreate, \
-    ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm,  \
-    ProductFinalAttributeForm, ProductFinalRelatedSubForm, TypeRecargoEquivalenciaForm, BrandForm, FlagshipProductForm, \
-    GroupValueFeatureForm, GroupValueAttributeForm, GroupValueFeatureSpecialForm, OptionValueFeatureForm, OptionValueAttributeForm, OptionValueFeatureSpecialForm
-from .models import ProductFinalOption
+from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, FamilyForm, CategoryForm, SubcategoryForm, SubcategoryOwnForm, ProductFormCreate
+from .forms import ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm
+from .forms import ProductFinalAttributeForm, ProductFinalRelatedSubForm, BrandForm, FlagshipProductForm
+from .forms import GroupValueFeatureForm, GroupValueAttributeForm, GroupValueFeatureSpecialForm, OptionValueFeatureForm, OptionValueAttributeForm, OptionValueFeatureSpecialForm
+from .forms import ProductFinalOption
 from .forms import ProductFinalOptionForm, ProductFinalOptionFormWithoutProduct
 
 
@@ -124,42 +124,23 @@ class TypeTaxDelete(GenTypeTaxUrl, GenDelete):
 
 class TypeTaxDetails(GenTypeTaxUrl, GenDetail):
     model = TypeTax
+    groups = TypeTaxForm.__groups_details__()
 
 
-# ###########################################
-class GenTypeRecargoEquivalenciaUrl(object):
-    ws_entry_point = '{}/typerecargoequivalencias'.format(settings.CDNX_PRODUCTS_URL)
+class TypeTaxForeign(GenTypeTaxUrl, GenForeignKey):
+    model = TypeTax
+    label = "{name}"
 
+    def custom_choice(self, obj, info):
+        info['tax'] = obj.tax
+        return info
 
-# TypeRecargoEquivalencia
-class TypeRecargoEquivalenciaList(GenTypeRecargoEquivalenciaUrl, GenList):
-    model = TypeRecargoEquivalencia
-    extra_context = {
-        'menu': ['TypeRecargoEquivalencia', 'product'],
-        'bread': [_('TypeRecargoEquivalencia'), _('Product')]
-    }
+    def get_foreign(self, queryset, search, filters):
+        # Filter with search string
+        qsobject = Q(name__icontains=search)
 
-
-class TypeRecargoEquivalenciaCreate(GenTypeRecargoEquivalenciaUrl, GenCreate):
-    model = TypeRecargoEquivalencia
-    form_class = TypeRecargoEquivalenciaForm
-
-
-class TypeRecargoEquivalenciaCreateModal(GenCreateModal, TypeRecargoEquivalenciaCreate):
-    pass
-
-
-class TypeRecargoEquivalenciaUpdate(GenTypeRecargoEquivalenciaUrl, GenUpdate):
-    model = TypeRecargoEquivalencia
-    form_class = TypeRecargoEquivalenciaForm
-
-
-class TypeRecargoEquivalenciaUpdateModal(GenUpdateModal, TypeRecargoEquivalenciaUpdate):
-    pass
-
-
-class TypeRecargoEquivalenciaDelete(GenTypeRecargoEquivalenciaUrl, GenDelete):
-    model = TypeRecargoEquivalencia
+        qs = queryset.filter(qsobject)
+        return qs[:settings.LIMIT_FOREIGNKEY]
 
 
 # ###########################################
@@ -617,7 +598,6 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
         fields.append(('subcategory', _("Subcategory")))
         fields.append(('public', _("Public")))
         fields.append(('tax', _("Tax")))
-        fields.append(('recargo_equivalencia', _("Recargo Equivalencia")))
         fields.append(('code', _("Code")))
         fields.append(('price_base', _("Price base")))
         fields.append(('of_sales', _("Sales")))
@@ -928,7 +908,7 @@ class ProductFinalCreate(GenProductFinalUrl, MultiForm, GenCreate):
     form_class = ProductFinalFormCreate
     show_details = True
     forms = formsfull['ProductFinal']
-    hide_foreignkey_button = True
+    # hide_foreignkey_button = True
 
 
 class ProductFinalCreateModal(GenCreateModal, ProductFinalCreate):
@@ -952,7 +932,7 @@ class ProductFinalUpdate(GenProductFinalUrl, MultiForm, GenUpdate):
     show_details = True
     form_class = ProductFinalForm
     forms = formsfull['ProductFinal']
-    hide_foreignkey_button = True
+    # hide_foreignkey_button = True
 
 
 class ProductFinalUpdateModal(GenUpdateModal, ProductFinalUpdate):
@@ -1037,8 +1017,10 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
         answer['readonly'] = ['price', 'type_tax']
         answer['rows'].append({
             'price': 0,
+            'price_base': 0,
             'description': '',
             'type_tax': '0',
+            'tax': 0,
             'label': "---------",
             'id': None,
             # 'options': None,
@@ -1059,8 +1041,11 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
                     })
             answer['rows'].append({
                 'price': product.price,
+                'price_base': product.product.price_base,
                 'description': product.__unicode__(),
-                'type_tax': str(tax),
+                'type_tax': product.product.tax.pk,
+                'type_tax__pk': product.product.tax.pk,
+                'tax': product.product.tax.tax,
                 'label': product.__unicode__(),
                 'id': product.pk,
                 'packs:__JSON_DATA__': json.dumps(pack),
