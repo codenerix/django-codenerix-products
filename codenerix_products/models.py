@@ -875,6 +875,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         fields.append(('stock_real', _("Stock real")))
         fields.append(('stock_lock', _("Stock lock")))
         fields.append(('price', _("Price")))
+        fields.append(('is_pack', _("Is pack")))
         return fields
 
     def __searchQ__(self, info, text):
