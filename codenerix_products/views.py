@@ -1669,6 +1669,7 @@ class GroupValueFeatureList(GenGroupValueFeatureUrl, GenList):
 
 class GroupValueFeatureCreate(GenGroupValueFeatureUrl, GenCreate):
     model = GroupValueFeature
+    show_details = True
     form_class = GroupValueFeatureForm
 
 
@@ -1734,6 +1735,7 @@ class GroupValueAttributeList(GenGroupValueAttributeUrl, GenList):
 
 class GroupValueAttributeCreate(GenGroupValueAttributeUrl, GenCreate):
     model = GroupValueAttribute
+    show_details = True
     form_class = GroupValueAttributeForm
 
 

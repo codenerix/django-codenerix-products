@@ -166,7 +166,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
         fields = []
         fields.append(('family', _('Family')))
         fields.append(('category', _('Category')))
-        fields.append(('type_value', _('Type Value')))
+        fields.append(('get_type_value_display', _('Type Value')))
         fields.append(('public', _('Public')))
         fields.append(('order', _('Order')))
 
@@ -287,11 +287,14 @@ class Family(CodenerixModel, GenImageFileNull):
         fields.append(('show_menu', _("Show Menu")))
         return fields
 
-    def __unicode__(self):
-        return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
-
     def __str__(self):
-        return self.__unicode__()
+        if self.code:
+            return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
+        else:
+            return u"{}".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
+
+    def __unicode__(self):
+        return self.__str__()
 
     def lock_delete(self):
         if self.products.exists():
@@ -319,11 +322,14 @@ class Category(CodenerixModel):
     icon = ImageAngularField(_("Icon"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     
-    def __unicode__(self):
-        return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
-
     def __str__(self):
-        return self.__unicode__()
+        if self.code:
+            return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
+        else:
+            return u"{}".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
+
+    def __unicode__(self):
+        return self.__str__()
 
     def __fields__(self, info):
         fields = []
@@ -364,11 +370,14 @@ class Subcategory(CodenerixModel):
     image = ImageAngularField(_("Image"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja un tamaño comprendido entre 1200px y 2000px'))
     icon = ImageAngularField(_("Icon"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
 
-    def __unicode__(self):
-        return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
-
     def __str__(self):
-        return self.__unicode__()
+        if self.code:
+            return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
+        else:
+            return u"{}".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
+
+    def __unicode__(self):
+        return self.__str__()
 
     def __fields__(self, info):
         fields = []
@@ -838,10 +847,17 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     reviews_count = models.IntegerField(_("Reviews count"), null=False, blank=False, default=0, editable=False)
 
     def __unicode__(self):
-        if self.ean13:
-            name = u"{} ({})".format(smart_text(self.product), self.ean13)
+        lang = get_language_database()
+        lang_model = getattr(self, '{}'.format(lang), None)
+        if lang_model:
+            name = lang_model.name
         else:
-            name = u"{}".format(smart_text(self.product))
+            name = self.product
+            
+        if self.ean13:
+            name = u"{} ({})".format(smart_text(name), self.ean13)
+        else:
+            name = u"{}".format(smart_text(name))
         return name
 
     def __str__(self):
