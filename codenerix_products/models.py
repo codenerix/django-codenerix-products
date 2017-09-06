@@ -877,6 +877,12 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         self.recalculate(commit=False)
         return super(ProductFinal, self).save(*args, **kwards)
 
+    def update_stock(self, commit=True):
+        self.stock_real = ProductUnique.objects.filter(product_final=self).aggregate(stock=Sum('stock_real'))['stock']
+        if commit:
+            self.save()
+        return self.stock_real
+
     def recalculate(self, commit=True):
         prices = self.calculate_price()
         if self.price != prices['price_total'] or self.price_base != prices['price_base']:
