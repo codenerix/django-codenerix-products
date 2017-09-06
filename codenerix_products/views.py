@@ -656,8 +656,14 @@ class ProductForeign(GenForeignKey):
 
     def get_foreign(self, queryset, search, filters):
         # Filter with search string
-        qsobject = Q(name__icontains=search)
         qsobject = Q(model__icontains=search)
+
+        for lang in settings.LANGUAGES_DATABASES:
+            qsobject |= Q(**{"{}__name__icontains".format(lang.lower()): search})
+            qsobject |= Q(**{"{}__description_short__icontains".format(lang.lower()): search})
+            qsobject |= Q(**{"family__{}__name__icontains".format(lang.lower()): search})
+            qsobject |= Q(**{"category__{}__name__icontains".format(lang.lower()): search})
+            qsobject |= Q(**{"subcategory__{}__name__icontains".format(lang.lower()): search})
 
         queryset = queryset.filter(qsobject)
 
