@@ -1107,7 +1107,7 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
                 'type_tax': product.product.tax.pk,
                 'type_tax__pk': product.product.tax.pk,
                 'tax': product.product.tax.tax,
-                'label': "{} ({})".format(product.__unicode__(), product.stock_real),
+                'label': u"{} ({})".format(product.__unicode__(), product.stock_real),
                 'id': product.pk,
                 'packs:__JSON_DATA__': json.dumps(pack),
             })
