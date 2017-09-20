@@ -26,7 +26,8 @@ import time
 from functools import reduce
 
 from django.db import IntegrityError, transaction
-from django.db.models import Q, F
+from django.db.models import Q, F, Value
+from django.db.models.functions import Concat
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse_lazy
@@ -816,12 +817,23 @@ class ProductImageDelete(GenProductImageUrl, GenDelete):
 
 class ProductImageSubList(GenProductImageUrl, GenList):
     model = ProductImage
+    annotations = {
+        'image_path': Concat(Value(settings.MEDIA_URL), 'image'),
+    }
 
     def __limitQ__(self, info):
         limit = {}
         pk = info.kwargs.get('pk', None)
         limit['file_link'] = Q(product__pk=pk)
         return limit
+
+    def __fields__(self, info):
+        fields = []
+        fields.append(('order', _("Order")))
+        fields.append(('public', _("Public")))
+        fields.append(('principal', _("Principal")))
+        fields.append(('image_path', _("Image"), None, None, 'image:width:66px'))
+        return fields
 
 
 class ProductImageDetails(GenProductImageUrl, GenDetail):
@@ -1285,6 +1297,17 @@ class ProductFinalImageSubList(GenProductFinalImageUrl, GenList):
         pk = info.kwargs.get('pk', None)
         limit['file_link'] = Q(product_final__pk=pk)
         return limit
+    annotations = {
+        'image_path': Concat(Value(settings.MEDIA_URL), 'image'),
+    }
+
+    def __fields__(self, info):
+        fields = []
+        fields.append(('order', _("Order")))
+        fields.append(('public', _("Public")))
+        fields.append(('principal', _("Principal")))
+        fields.append(('image_path', _("Image"), None, None, 'image:width:66px'))
+        return fields
 
 
 class ProductFinalImageDetails(GenProductFinalImageUrl, GenDetail):
