@@ -1069,7 +1069,7 @@ class {model}TextForm{lang}(GenModelForm):\n
         return [(_('Details'),12,"""
         if lang_code == settings.LANGUAGES_DATABASES[0]:
             query += """
-                ['description', 12, None, None, None, None, '{label}', ["ng-blur=refresh_lang_field('description', '{model}TextForm', [{languages}])"]],
+                ['description', 12, None, None, None, None, '{label}', ["ng-change=refresh_lang_field('description', '{model}TextForm', [{languages}])"]],
             )]\n"""
         else:
             query += """
