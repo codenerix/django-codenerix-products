@@ -55,6 +55,7 @@ from .views import ProductFinalOptionList, ProductFinalOptionCreate, ProductFina
 from .views import ProductFinalForeignSales, ProductFinalForeignPackSales, ProductFinalForeignAllSales
 from .views import ProductFinalForeignPurchases, ProductFinalForeignPackPurchases, ProductFinalForeignAllPurchases
 from .views import TypeTaxForeign
+from .views import ProductCreateCustom
 
 
 urlpatterns = [
@@ -138,6 +139,7 @@ urlpatterns = [
 
     url(r'^products$', ProductList.as_view(), name='CDNX_products_products_list'),
     url(r'^products/add$', ProductCreate.as_view(), name='CDNX_products_products_add'),
+    url(r'^products/custom/add$', ProductCreateCustom.as_view(), name='CDNX_products_products_addcustom'),
     url(r'^products/addmodal$', ProductCreateModal.as_view(), name='CDNX_products_products_addmodal'),
     url(r'^products/(?P<pk>\w+)$', ProductDetails.as_view(), name='CDNX_products_products_details'),
     url(r'^products/(?P<pk>\w+)/edit$', ProductUpdate.as_view(), name='CDNX_products_products_edit'),
@@ -178,6 +180,7 @@ urlpatterns = [
 
     url(r'^productfinals$', ProductFinalList.as_view(), name='CDNX_products_productfinals_list'),
     url(r'^productfinals/add$', ProductFinalCreate.as_view(), name='CDNX_products_productfinals_add'),
+    url(r'^productfinals/custom/add$', ProductCreateCustom.as_view(), name='CDNX_products_productfinals_addcustom'),
     url(r'^productfinals/addmodal$', ProductFinalCreateModal.as_view(), name='CDNX_products_productfinals_addmodal'),
     url(r'^productfinals/(?P<pk>\w+)$', ProductFinalDetails.as_view(), name='CDNX_products_productfinals_details'),
     url(r'^productfinals/(?P<pk>\w+)/edit$', ProductFinalUpdate.as_view(), name='CDNX_products_productfinals_edit'),

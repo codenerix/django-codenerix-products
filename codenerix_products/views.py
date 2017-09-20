@@ -25,7 +25,7 @@ import operator
 import time
 from functools import reduce
 
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Q, F
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -54,6 +54,7 @@ from .forms import ProductFinalAttributeForm, ProductFinalRelatedSubForm, BrandF
 from .forms import GroupValueFeatureForm, GroupValueAttributeForm, GroupValueFeatureSpecialForm, OptionValueFeatureForm, OptionValueAttributeForm, OptionValueFeatureSpecialForm
 from .forms import ProductFinalOption
 from .forms import ProductFinalOptionForm, ProductFinalOptionFormWithoutProduct
+from .forms import ProductFormCreateCustom
 
 
 # ###########################################
@@ -590,6 +591,9 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
         'menu': ['Product', 'people'],
         'bread': [_('Product'), _('People')]
     }
+    gentrans = {
+        'AddProductAndProductFinal': _("Add product & product final"),
+    }
 
     def __fields__(self, info):
         fields = []
@@ -616,6 +620,11 @@ class ProductCreate(GenProductUrl, MultiForm, GenCreate):
     form_class = ProductFormCreate
     show_details = True
     forms = formsfull['ProductText']
+
+    def get_initial(self):
+        super(ProductCreate, self).get_initial()
+        self.initial['tax'] = TypeTax.objects.filter(default=True).first()
+        return self.initial
 
 
 class ProductCreateModal(GenCreateModal, ProductCreate):
@@ -907,6 +916,9 @@ class ProductFinalList(GenProductFinalUrl, GenList):
         'menu': ['ProductFinal', 'people'],
         'bread': [_('ProductFinal'), _('People')]
     }
+    gentrans = {
+        'AddProductAndProductFinal': _("Add product & product final"),
+    }
 
 
 class ProductFinalCreate(GenProductFinalUrl, MultiForm, GenCreate):
@@ -933,12 +945,39 @@ class ProductFinalCreateModal(GenCreateModal, ProductFinalCreate):
         return super(ProductFinalCreateModal, self).form_valid(form, forms)
 
 
+class ProductCreateCustom(MultiForm, GenCreate):
+    model = Product
+    form_class = ProductFormCreateCustom
+    show_details = False
+    forms = formsfull['ProductText']
+
+    def get_initial(self):
+        super(ProductCreateCustom, self).get_initial()
+        self.initial['tax'] = TypeTax.objects.filter(default=True).first()
+        return self.initial
+
+    def form_valid(self, form, forms):
+        pass_to_final = form.cleaned_data.get('pass_to_final')
+        if pass_to_final:
+            try:
+                with transaction.atomic():
+                    result = super(ProductCreateCustom, self).form_valid(form, forms)
+                    self.object.pass_to_productfinal()
+            except IntegrityError as e:
+                errors = form._errors.setdefault("code", ErrorList())
+                errors.append(e)
+                temp_forms = [tform[0] for tform in forms]
+                return self.form_invalid(form, temp_forms, 1, 1)
+            return result
+        else:
+            return super(ProductCreateCustom, self).form_valid(form, forms)
+
+
 class ProductFinalUpdate(GenProductFinalUrl, MultiForm, GenUpdate):
     model = ProductFinal
     show_details = True
     form_class = ProductFinalForm
     forms = formsfull['ProductFinal']
-    # hide_foreignkey_button = True
 
 
 class ProductFinalUpdateModal(GenUpdateModal, ProductFinalUpdate):
@@ -1052,7 +1091,7 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
                 'type_tax': product.product.tax.pk,
                 'type_tax__pk': product.product.tax.pk,
                 'tax': product.product.tax.tax,
-                'label': product.__unicode__(),
+                'label': "{} ({})".format(product.__unicode__(), product.stock_real),
                 'id': product.pk,
                 'packs:__JSON_DATA__': json.dumps(pack),
             })

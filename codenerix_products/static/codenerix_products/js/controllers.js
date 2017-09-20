@@ -61,4 +61,25 @@ angular.module('codenerixPRODUCTSControllers', [])
             return result;
         }
     }
-]);
+])
+.controller('CDNXPRODUCTSFormProductAddProductFinalCtrl', ['$scope', '$rootScope', '$timeout', '$http', '$window', '$uibModal', '$state', '$stateParams', '$templateCache', 'Register',
+    function ($scope, $rootScope, $timeout, $http, $window, $uibModal, $state, $stateParams, $templateCache, Register) {
+        console.log("a");
+        
+        $scope.addnewandproductfinal = function () {
+            console.log("b");
+            var listid = 0;
+            if ($scope.data.meta.linkadd) {
+                $state.go('formcustom'+listid);
+            }
+        };
+    }
+])
+.controller('FormAddCtrlProductCustom', ['$scope', '$rootScope', '$timeout', '$http', '$window', '$uibModal', '$state', '$stateParams', '$templateCache', 'Register','hotkeys',
+    function ($scope, $rootScope, $timeout, $http, $window, $uibModal, $state, $stateParams, $templateCache, Register, hotkeys) {
+        if (ws_entry_point==undefined) { ws_entry_point=""; }
+        $scope.options = [];
+        multiadd($scope, $rootScope, $timeout, $http, $window, $uibModal, $state, $stateParams, $templateCache, Register, 0, "/"+ws_entry_point+"/custom", hotkeys);
+    }
+])
+;

@@ -346,6 +346,38 @@ class ProductFormCreate(GenModelForm):
         return g
 
 
+class ProductFormCreateCustom(ProductFormCreate):
+    pass_to_final = forms.BooleanField(label=_("Create product final"), required=False, initial=True)
+
+    def __groups__(self):
+        g = [
+            (
+                _('Details'), 12,
+                ['code', 4],
+                ['price_base', 2],
+                ['pass_to_final', 2],
+                ['public', 1],
+                ['of_sales', 1],
+                ['of_purchase', 1],
+                ['force_stock', 1],
+                ['model', 4],
+                ['brand', 4],
+                ['feature_special', 4],
+                ['family', 4],
+                ['category', 4],
+                ['subcategory', 4],
+                ['tax', 4],
+                ['url_video', 4],
+            ),
+            (
+                _('Packaging information'), 12,
+                ['packing_cost', 4],
+                ['weight', 4],
+            )
+        ]
+        return g
+
+
 class ProductForm(GenModelForm):
     class Meta:
         model = Product

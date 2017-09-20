@@ -699,8 +699,6 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         return text_filters
 
 
-
-
 # productos
 class Product(GenProduct):
 
@@ -720,7 +718,6 @@ class Product(GenProduct):
         else:
             return super(Product, self).lock_delete()
 
-
     def save(self, *args, **kwargs):
         if self.pk:
             obj = Product.objects.get(pk=self.pk)
@@ -733,6 +730,36 @@ class Product(GenProduct):
         else:
             result = super(Product, self).save(*args, **kwargs)
         return result
+
+    def pass_to_productfinal(self):
+        get_class = lambda x: globals()[x]
+
+        try:
+            with transaction.atomic():
+                pf = ProductFinal()
+                pf.product = self
+                pf.save()
+
+                for lang_code in settings.LANGUAGES_DATABASES:
+                    lang = getattr(self, lang_code.lower(), None)
+                    if lang:
+                        model_name = "{}Text{}".format('ProductFinal', lang_code)
+                        model = get_class(model_name)
+                        pft = model()
+                        pft.product = pf
+                        pft.meta_title = getattr(lang, 'meta_title', None)
+                        pft.meta_description = getattr(lang, 'meta_description', None)
+                        pft.description_short = getattr(lang, 'description_short', None)
+                        pft.description_long = getattr(lang, 'description_long', None)
+                        pft.slug = getattr(lang, 'slug', None)
+                        pft.name = getattr(lang, 'name', None)
+                        pft.public = getattr(lang, 'public', None)
+                        pft.save()
+        except IntegrityError as e:
+            raise IntegrityError(e)
+
+        
+
 
 
 # productos relacionados mas vendidos
