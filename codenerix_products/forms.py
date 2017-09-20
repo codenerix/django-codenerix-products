@@ -25,6 +25,7 @@ from django.conf import settings
 
 from codenerix.forms import GenModelForm
 from codenerix.widgets import MultiStaticSelect, DynamicSelect
+from codenerix_extensions.helpers import get_language_database
 
 from .models import TypeTax
 from .models import Feature, Attribute, FeatureSpecial, ProductFinalAttribute
@@ -416,9 +417,10 @@ class ProductForm(GenModelForm):
 
     @staticmethod
     def __groups_details__():
+        lang = get_language_database()
         g = [
             (
-                _('Details'), 12,
+                _('Details'), 6,
                 ['pk', 6],
                 ['model', 6],
                 ['brand', 6],
@@ -436,6 +438,14 @@ class ProductForm(GenModelForm):
                 ['feature_special', 6],
                 ['packing_cost', 6],
                 ['weight', 6],
+            ),
+            (
+                _('Information'), 6,
+                ["{}__name".format(lang), 6],
+                ["{}__slug".format(lang), 6],
+                ["{}__public".format(lang), 6],
+                ["{}__meta_title".format(lang), 6],
+                ["{}__meta_description".format(lang), 6],
             )
         ]
         return g
@@ -672,9 +682,10 @@ class ProductFinalForm(GenModelForm):
 
     @staticmethod
     def __groups_details__():
+        lang = get_language_database()
         g = [
             (
-                _('Details'), 12,
+                _('Details'), 6,
                 ['pk', 6],
                 ["product", 6],
                 ["offer", 3],
@@ -686,6 +697,14 @@ class ProductFinalForm(GenModelForm):
                 ["reviews_count", 6],
                 ["ean13", 6],
                 ["most_sold", 6],
+            ),
+            (
+                _('Information'), 6,
+                ["{}__name".format(lang), 6],
+                ["{}__slug".format(lang), 6],
+                ["{}__public".format(lang), 6],
+                ["{}__meta_title".format(lang), 6],
+                ["{}__meta_description".format(lang), 6],
             )
         ]
         return g
