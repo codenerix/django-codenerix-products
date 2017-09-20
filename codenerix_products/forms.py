@@ -347,8 +347,16 @@ class ProductFormCreate(GenModelForm):
         return g
 
 
-class ProductFormCreateCustom(ProductFormCreate):
+class ProductFormCreateCustom(GenModelForm):
     pass_to_final = forms.BooleanField(label=_("Create product final"), required=False, initial=True)
+
+    class Meta:
+        model = Product
+        exclude = []
+        autofill = {
+            'ProductFormCreateCustom_category': ['select', 3, 'CDNX_products_categorys_foreign', 'ProductFormCreateCustom_family', ],
+            'ProductFormCreateCustom_subcategory': ['select', 3, 'CDNX_products_subcategorys_foreign', 'ProductFormCreateCustom_category', ],
+        }
 
     def __groups__(self):
         g = [
