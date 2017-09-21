@@ -153,7 +153,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
         * incremento sobre el precio del producto
         * precio final
     """
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     type_value = models.CharField(_("Type value"), max_length=2, choices=TYPE_VALUES, blank=False, null=False, default='F')
@@ -183,7 +183,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
 
 # description del texto en diferentes idiomas
 class GenText(CodenerixModel):  # META: Abstract class
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     description = models.CharField(_("Description"), max_length=250, blank=False, null=False)
@@ -202,7 +202,7 @@ class GenText(CodenerixModel):  # META: Abstract class
 
 # description del texto en diferentes idiomas
 class GenTextSlug(CodenerixModel):  # META: Abstract class
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     slug = models.CharField(_("Slug"), max_length=250, blank=False, null=False, unique=True)
@@ -227,7 +227,7 @@ class GenTextSlug(CodenerixModel):  # META: Abstract class
 
 
 class GenTextTitle(CodenerixModel):  # META: Abstract class
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     title = models.CharField(_("Text alternavive image"), max_length=250, blank=False, null=False)
@@ -236,7 +236,7 @@ class GenTextTitle(CodenerixModel):  # META: Abstract class
 
 # texto de los product y productfinal
 class GenProductText(CodenerixModel):  # META: Abstract class
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     meta_title = models.CharField(_("Meta Title"), max_length=70, blank=True, null=True)
@@ -403,7 +403,7 @@ class Subcategory(CodenerixModel):
 
 # grupo de valores
 class GroupValues(CodenerixModel):  # META: Abstract class
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     name = models.CharField(_("Name"), max_length=250, blank=True, null=True, unique=True)
@@ -471,7 +471,7 @@ class GroupValueFeatureSpecial(GroupValues):
 
 # opciones de los grupos de valores
 class OptionValues(CodenerixModel):  # META: Abstract class
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     def __fields__(self, info):
@@ -635,7 +635,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     @warning: brand no debe permitir nulo. Recordar para la limpieza de la bbdd.
     """
     # se hace abstracta para que hereden product y productfinal
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         abstract = True
 
     model = models.CharField(_("Model"), max_length=250, blank=True, null=True)
@@ -768,7 +768,7 @@ class ProductRelationSold(CodenerixModel):
     related = models.ForeignKey(Product, blank=False, null=False, related_name='products_related_sold', verbose_name=_("Products related"))
     hits = models.SmallIntegerField(_("Hits"), blank=True, null=True)
 
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         unique_together = (('product', 'related'), )
 
     def __unicode__(self):
@@ -1314,7 +1314,7 @@ class ProductUnique(CodenerixModel):
     value = models.CharField(_("Value"), max_length=80, null=True, blank=True)
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0)
 
-    class Meta:
+    class Meta(CodenerixModel.Meta):
         unique_together = ('product_final', 'value')
 
     def __unicode__(self):
