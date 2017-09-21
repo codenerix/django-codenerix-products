@@ -247,7 +247,7 @@ class GenProductText(CodenerixModel):  # META: Abstract class
     slug = models.CharField(_("Slug"), max_length=250, blank=False, null=False, unique=True)
     name = models.CharField(_("Name"), max_length=250, blank=True, null=True)
     # faltan los campos para posicionamiento
-    public = models.BooleanField(_("Public"), blank=True, null=False, default=False)
+    public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
 
     def __unicode__(self):
         return u"{}".format(smart_text(self.description_short))

@@ -1295,15 +1295,15 @@ class ProductFinalImageDelete(GenProductFinalImageUrl, GenDelete):
 
 class ProductFinalImageSubList(GenProductFinalImageUrl, GenList):
     model = ProductFinalImage
+    annotations = {
+        'image_path': Concat(Value(settings.MEDIA_URL), 'image'),
+    }
 
     def __limitQ__(self, info):
         limit = {}
         pk = info.kwargs.get('pk', None)
         limit['file_link'] = Q(product_final__pk=pk)
         return limit
-    annotations = {
-        'image_path': Concat(Value(settings.MEDIA_URL), 'image'),
-    }
 
     def __fields__(self, info):
         fields = []
