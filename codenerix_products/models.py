@@ -992,11 +992,17 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
     def is_pack(self):
         return self.productfinals_option.exists()
+
+    @property
+    def ispack(self):
+        return self.is_pack()
         
     @classmethod
-    def get_recommended_products(cls, lang, category=None, subcategory=None):
+    def get_recommended_products(cls, lang, family=None, category=None, subcategory=None):
         products = []
         query = Q(most_sold=True) | Q(product__products_image__principal=True)
+        if family is not None:
+            query &= Q(product__family=category)
         if category is not None:
             query &= Q(product__category=category)
         if subcategory is not None:
@@ -1025,15 +1031,19 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return products
 
     @classmethod
-    def get_outstanding_products(cls, lang, category=None, subcategory=None):
+    def get_outstanding_products(cls, lang, family=None, category=None, subcategory=None, limit=16):
         products = []
-        query = Q(outstanding=True) | Q(product__products_image__principal=True)
+        query = Q(outstanding=True) & (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
+        if family is not None:
+            query &= Q(product__family=family)
         if category is not None:
             query &= Q(product__category=category)
         if subcategory is not None:
             query &= Q(product__subcategory=subcategory)
-        for product in cls.query_or(
-            query,
+        
+        qset = cls.objects.filter(
+            query
+        ).values(
             "{}__slug".format(lang),
             "offer",
             "created",
@@ -1045,17 +1055,25 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "product__category__{}__name".format(lang),
             "product__brand__{}__name".format(lang),
             "product__products_image__image",
-            "{}__meta_title".format(lang),
-            slug="{}__slug".format(lang),
-            meta_title="{}__meta_title".format(lang),
-            image="product__products_image__image",
-            name="product__{}__name".format(lang),
-            category_name="product__category__{}__name".format(lang),
-            pop_annotations=True
-        )[:16]:
+            "{}__meta_title".format(lang)
+        ).annotate(
+            slug=F("{}__slug".format(lang)),
+            meta_title=F("{}__meta_title".format(lang)),
+            image_product=F("product__products_image__image"),
+            image_productfinal=F("productfinals_image__image"),
+            name=F("product__{}__name".format(lang)),
+            category_name=F("product__category__{}__name".format(lang))
+        )[:limit]
+
+        for product in qset:
             prices = cls.objects.get(pk=product['pk']).calculate_price()
+            product['pop_annotations'] = True
             product['price'] = prices['price_total']
             product['new'] = 1 if (timezone.now() - product['created']).days <= settings.CDNX_PRODUCTS_NOVELTY_DAYS else 0
+            if product['image_productfinal']:
+                product['image'] = product['image_productfinal']
+            else:
+                product['image'] = product['image_product']
             products.append(product)
 
         return products

@@ -2252,6 +2252,8 @@ class ListProducts(GenList):
         fields.append(('slug:es__slug', _("Slug")))
         fields.append(('product__products_image__image', _("Image")))
         fields.append(('product__products_image__principal', _("Principal")))
+        fields.append(('productfinals_image__image', _("Image")))
+        fields.append(('productfinals_image__principal', _("Principal")))
         fields.append(('price', _("Price")))
         # fields.append(('price_old:price', _("Price")))
         fields.append(('offer', _("Offer")))
@@ -2274,7 +2276,6 @@ class ListProducts(GenList):
             lang = settings.LANGUAGES[0][0].lower()
 
         if pk and type_list:
-
             # aplicamos los filtros recibidos
             params = ast.literal_eval(info.request.GET.get("json"))
 
@@ -2386,7 +2387,7 @@ class ListProducts(GenList):
                     Q(product__force_stock=False)
                 ))
 
-        limits['image'] = Q(product__products_image__principal=True)
+        limits['image'] = (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
 
         return limits
 
@@ -2397,12 +2398,22 @@ class ListProducts(GenList):
         for product in answer['table']['body']:
             temp = product.copy()
             # image principal
-            pos_image_ppal = [i for i, x in enumerate(product['product__products_image__principal']) if x == 'True'][0]
-            image = temp['product__products_image__image'][pos_image_ppal]
+            pos_image_ppal = [i for i, x in enumerate(product['productfinals_image__principal']) if x == 'True']
+            if len(pos_image_ppal) == 0:
+                pos_image_ppal = [i for i, x in enumerate(product['product__products_image__principal']) if x == 'True']
+                image = temp['product__products_image__image'][pos_image_ppal[0]]
+            else:
+                image = temp['productfinals_image__image'][pos_image_ppal[0]]
             temp['image'] = image
             # is new?
-            created = datetime.datetime.strptime(temp['created'], "%Y-%m-%d %H:%M")
-            if (abs(int(time.time() - time.mktime(created.timetuple())))) / (3600 * 24) <= settings.CDNX_PRODUCTS_NOVELTY_DAYS:
+            created = None
+            for date_format in getattr(settings, 'DATETIME_INPUT_FORMATS', []):
+                try:
+                    created = datetime.datetime.strptime(temp['created'], date_format)
+                    break
+                except ValueError:
+                    pass
+            if created and (abs(int(time.time() - time.mktime(created.timetuple())))) / (3600 * 24) <= settings.CDNX_PRODUCTS_NOVELTY_DAYS:
                 temp['new'] = 1
             else:
                 temp['new'] = 0
