@@ -1055,7 +1055,7 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
     label = "{product}"
 
     def __filter_product__(self, search, conditional=None):
-        queryset = ProductFinal.objects.all()
+        queryset = ProductFinal.objects.filter(sample=False)
         if search != '*':
             qsobject = Q(product__code__icontains=search)
             qsobject |= Q(product__family__code__icontains=search)

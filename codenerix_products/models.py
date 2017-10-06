@@ -872,6 +872,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
     reviews_value = models.FloatField(_("Reviews"), null=False, blank=False, default=0, editable=False)
     reviews_count = models.IntegerField(_("Reviews count"), null=False, blank=False, default=0, editable=False)
+    sample = models.BooleanField(_("Sample"), blank=True, null=False, default=False, help_text=_('If this option is checked the product can not be sold'))
 
     def __unicode__(self):
         lang = get_language_database()
@@ -903,6 +904,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         fields.append(('stock_lock', _("Stock lock")))
         fields.append(('price', _("Price")))
         fields.append(('is_pack', _("Is pack")))
+        fields.append(('sample', _("Sample")))
         return fields
 
     def __searchQ__(self, info, text):

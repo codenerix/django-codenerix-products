@@ -635,10 +635,11 @@ class ProductFinalFormCreate(GenModelForm):
     def __groups__(self):
         g = [(
             _('Details'), 12,
-            ["product", 6],
+            ["product", 4],
             ["offer", 2],
             ["outstanding", 2],
             ['most_sold', 2],
+            ["sample", 2],
             ["related", 6],
             ["related_accesory", 6],
             ["ean13", 6],
@@ -657,9 +658,10 @@ class ProductFinalFormCreateModal(ProductFinalFormCreate):
     def __groups__(self):
         g = [(
             _('Details'), 12,
-            ["offer", 4],
-            ["outstanding", 4],
-            ['most_sold', 4],
+            ["offer", 3],
+            ["outstanding", 3],
+            ['most_sold', 3],
+            ["sample", 3],
             ["related", 6],
             ["related_accesory", 6],
             ["ean13", 6],
@@ -679,10 +681,11 @@ class ProductFinalForm(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                ["product", 6],
+                ["product", 4],
                 ["offer", 2],
                 ["outstanding", 2],
                 ['most_sold', 2],
+                ['sample', 2],
                 ["ean13", 6],
             )
         ]
@@ -705,6 +708,7 @@ class ProductFinalForm(GenModelForm):
                 ["reviews_count", 6],
                 ["ean13", 6],
                 ["most_sold", 6],
+                ["sample", 6],
             ),
             (
                 _('Information'), 6,
