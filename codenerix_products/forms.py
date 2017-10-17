@@ -618,7 +618,7 @@ class ProductFinalFormCreate(GenModelForm):
 
     related_accesory = forms.ModelMultipleChoiceField(
         queryset=ProductFinal.objects.all(),
-        label=_('Related products'),
+        label=_('Related accesory'),
         required=False,
         widget=MultiStaticSelect(
             attrs={'manytomany': True, }
@@ -640,9 +640,11 @@ class ProductFinalFormCreate(GenModelForm):
             ["outstanding", 2],
             ['most_sold', 2],
             ["sample", 2],
+            ["code", 4],
+            ["price_base_local", 4],
+            ["ean13", 4],
             ["related", 6],
             ["related_accesory", 6],
-            ["ean13", 6],
         )]
         return g
 
@@ -662,9 +664,11 @@ class ProductFinalFormCreateModal(ProductFinalFormCreate):
             ["outstanding", 3],
             ['most_sold', 3],
             ["sample", 3],
+            ["code", 4],
+            ["price_base_local", 4],
+            ["ean13", 4],
             ["related", 6],
             ["related_accesory", 6],
-            ["ean13", 6],
         )]
         return g
 
@@ -686,7 +690,9 @@ class ProductFinalForm(GenModelForm):
                 ["outstanding", 2],
                 ['most_sold', 2],
                 ['sample', 2],
-                ["ean13", 6],
+                ["code", 4],
+                ["price_base_local", 4],
+                ["ean13", 4],
             )
         ]
         return g
@@ -698,7 +704,9 @@ class ProductFinalForm(GenModelForm):
             (
                 _('Details'), 6,
                 ['pk', 6],
+                ["code", 4],
                 ["product", 6],
+                ["price_base_local", 4],
                 ["offer", 3],
                 ["outstanding", 3],
                 ["stock_real", 6],

@@ -700,7 +700,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
 
 
 # productos
-class Product(GenProduct):
+class Product(CustomQueryMixin, GenProduct):
 
     def lock_delete(self):
         if self.products_final.exists():
@@ -757,6 +757,73 @@ class Product(GenProduct):
                         pft.save()
         except IntegrityError as e:
             raise IntegrityError(e)
+
+    @classmethod
+    def find_product(cls, query, lang):
+        product = cls.query_or(
+            query,
+            "pk",
+            "price_base",
+            # "product__pk",
+            "model",
+            "code",
+            "url_video",
+            # "product__brand__{}__name".format(lang),
+            # "product__brand__{}__slug".format(lang),
+            # "product__brand__image",
+            # "product__brand__outstanding",
+            # "product__family",
+            # "product__family__code",
+            "family__{}__slug".format(lang),
+            # "product__family__image",
+            "family__{}__name".format(lang),
+            "family__{}__description".format(lang),
+            # "product__category",
+            # "product__category__code".format(lang),
+            # "product__category__image".format(lang),
+            "category__{}__slug".format(lang),
+            "category__{}__name".format(lang),
+            "category__{}__description".format(lang),
+            # "product__subcategory",
+            # "product__subcategory__code",
+            # "product__subcategory__image",
+            "subcategory__{}__slug".format(lang),
+            "subcategory__{}__name".format(lang),
+            "subcategory__{}__description".format(lang),
+            "tax__tax",
+            "{}__meta_title".format(lang),
+            "{}__meta_description".format(lang),
+            "{}__description_short".format(lang),
+            "{}__description_long".format(lang),
+            "{}__slug".format(lang),
+            "{}__name".format(lang),
+            family_name="family__{}__name".format(lang),
+            family_slug="family__{}__slug".format(lang),
+            family_description="family__{}__description".format(lang),
+            category_slug="category__{}__slug".format(lang),
+            category_name="category__{}__name".format(lang),
+            category_description="category__{}__description".format(lang),
+            subcategory_slug="subcategory__{}__slug".format(lang),
+            subcategory_name="subcategory__{}__name".format(lang),
+            subcategory_description="subcategory__{}__description".format(lang),
+            tax="tax__tax",
+            meta_title="{}__meta_title".format(lang),
+            meta_description="{}__meta_description".format(lang),
+            description_short="{}__description_short".format(lang),
+            description_long="{}__description_long".format(lang),
+            name="{}__name".format(lang),
+            slug="{}__slug".format(lang),
+            pop_annotations=True
+        ).first()
+
+        # if product:
+        #     product_final = cls.objects.get(pk=product['pk'])
+        #     prices = product_final.calculate_price()
+        #     product['price'] = prices['price_total']
+
+        return product
+
+
 
         
 
@@ -874,6 +941,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     reviews_count = models.IntegerField(_("Reviews count"), null=False, blank=False, default=0, editable=False)
     sample = models.BooleanField(_("Sample"), blank=True, null=False, default=False, help_text=_('If this option is checked the product can not be sold'))
 
+    code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True, help_text=_('If it is empty, code is equal to code product'))
+    price_base_local = models.FloatField(_("Price base"), blank=True, null=True, help_text=_('If it is empty, price base is equal to price base of product'))
+
     def __unicode__(self):
         lang = get_language_database()
         lang_model = getattr(self, '{}'.format(lang), None)
@@ -950,7 +1020,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             return super(ProductFinal, self).lock_delete()
 
     def calculate_price(self):
-        price = float(self.product.price_base)
+        if self.price_base_local is None:
+            price = float(self.product.price_base)
+        else:
+            price = self.price_base_local
         tax = float(self.product.tax.tax)
 
         # atributos
