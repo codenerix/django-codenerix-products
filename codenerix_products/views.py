@@ -2378,6 +2378,9 @@ class ListProducts(GenList):
                     except ValueError:
                         pass
 
+                if ('force_image' not in filters) or ('force_image' in filters and filters['force_image'] == 1):
+                    limits['image'] = (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
+
             if only_with_stock is None:
                 only_with_stock = settings.CDNX_PRODUCTS_SHOW_ONLY_STOCK
 
@@ -2386,9 +2389,7 @@ class ListProducts(GenList):
                     Q(product__force_stock=True, product_stocks__quantity__gt=0),
                     Q(product__force_stock=False)
                 ))
-
-        limits['image'] = (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
-
+        
         return limits
 
     def render_to_response(self, context, **response_kwargs):
@@ -2401,7 +2402,10 @@ class ListProducts(GenList):
             pos_image_ppal = [i for i, x in enumerate(product['productfinals_image__principal']) if x == 'True']
             if len(pos_image_ppal) == 0:
                 pos_image_ppal = [i for i, x in enumerate(product['product__products_image__principal']) if x == 'True']
-                image = temp['product__products_image__image'][pos_image_ppal[0]]
+                if pos_image_ppal:
+                    image = temp['product__products_image__image'][pos_image_ppal[0]]
+                else:
+                    image = None
             else:
                 image = temp['productfinals_image__image'][pos_image_ppal[0]]
             temp['image'] = image
