@@ -277,10 +277,12 @@ class GenProductText(CodenerixModel):  # META: Abstract class
 class Family(CodenerixModel, GenImageFileNull):
     code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
+    order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
 
     def __fields__(self, info):
         fields = []
+        fields.append(('order', _("Order")))
         fields.append(('{}__name'.format(settings.LANGUAGES_DATABASES[0].lower()), _("Name")))
         fields.append(('code', _("Code")))
         fields.append(('public', _("Public")))

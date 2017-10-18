@@ -182,7 +182,8 @@ class FamilyForm(GenModelForm):
         g = [
             (
                 _('Details'), 12,
-                ['code', 6],
+                ['order', 2],
+                ['code', 4],
                 ['public', 3],
                 ['show_menu', 3],
                 ['image', 6],
