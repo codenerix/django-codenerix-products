@@ -186,6 +186,7 @@ class FamilyForm(GenModelForm):
                 ['code', 4],
                 ['public', 3],
                 ['show_menu', 3],
+                ['icon', 6],
                 ['image', 6],
             )
         ]

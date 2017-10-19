@@ -279,6 +279,7 @@ class Family(CodenerixModel, GenImageFileNull):
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
+    icon = ImageAngularField(_("Icon"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
 
     def __fields__(self, info):
         fields = []
@@ -776,6 +777,7 @@ class Product(CustomQueryMixin, GenProduct):
             # "product__brand__outstanding",
             # "product__family",
             # "product__family__code",
+            "family__pk".format(lang),
             "family__{}__slug".format(lang),
             # "product__family__image",
             "family__{}__name".format(lang),
@@ -795,6 +797,7 @@ class Product(CustomQueryMixin, GenProduct):
             "subcategory__{}__name".format(lang),
             "subcategory__{}__description".format(lang),
             "family__image",
+            "family__icon",
             "category__image",
             "subcategory__image",
             "tax__tax",
@@ -1240,6 +1243,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "product__subcategory__{}__description".format(lang),
             "product__tax__tax",
             "product__family__image",
+            "product__family__icon",
             "product__category__image",
             "product__subcategory__image",
             "{}__meta_title".format(lang),
@@ -1262,6 +1266,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             subcategory_name="product__subcategory__{}__name".format(lang),
             subcategory_description="product__subcategory__{}__description".format(lang),
             family_image="product__family__image",
+            family_icon="product__family__icon",
             category_image="product__category__image",
             subcategory_image="product__subcategory__image",
             tax="product__tax__tax",
