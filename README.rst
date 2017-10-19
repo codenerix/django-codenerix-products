@@ -39,6 +39,8 @@ Quickstart
     CDNX_PRODUCTS_SHOW_ONLY_STOCK = False
     # number of the days for one products to be considered new
     CDNX_PRODUCTS_NOVELTY_DAYS = 5
+    # No force stock by default
+    CDNX_PRODUCTS_FORCE_STOCK = False
 
 4. Since Codenerix Products is a library, you only need to import its parts into your project and use them.
 

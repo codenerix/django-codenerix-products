@@ -629,6 +629,7 @@ class ProductCreate(GenProductUrl, MultiForm, GenCreate):
     def get_initial(self):
         super(ProductCreate, self).get_initial()
         self.initial['tax'] = TypeTax.objects.filter(default=True).first()
+        self.initial['force_stock'] = getattr(settings, 'CDNX_PRODUCTS_FORCE_STOCK', True)
         return self.initial
 
 
@@ -970,6 +971,7 @@ class ProductCreateCustom(MultiForm, GenCreate):
     def get_initial(self):
         super(ProductCreateCustom, self).get_initial()
         self.initial['tax'] = TypeTax.objects.filter(default=True).first()
+        self.initial['force_stock'] = getattr(settings, 'CDNX_PRODUCTS_FORCE_STOCK', True)
         return self.initial
 
     def form_valid(self, form, forms):
