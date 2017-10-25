@@ -957,7 +957,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True, help_text=_('If it is empty, code is equal to code product'))
     price_base_local = models.FloatField(_("Price base"), blank=True, null=True, help_text=_('If it is empty, price base is equal to price base of product'))
 
-    def __unicode__(self):
+    def __str__(self):
         lang = get_language_database()
         lang_model = getattr(self, '{}'.format(lang), None)
         if lang_model:
@@ -971,8 +971,8 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             name = u"{}".format(smart_text(name))
         return name
 
-    def __str__(self):
-        return self.__unicode__()
+    def __unicode__(self):
+        return self.__str__()
 
     def __fields__(self, info):
         lang = get_language_database()
