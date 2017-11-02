@@ -2456,6 +2456,244 @@ class ListProducts(GenList):
         return context
 
 
+class ListProductsBase(GenList):
+    public = True
+    model = Product
+    gentrans = {
+        'buy': _("Buy"),
+        'new': _("New"),
+        'wishlist': _("Wish list"),
+        'shoppingcart': _("Shopping cart"),
+    }
+
+    def __fields__(self, info):
+        lang = get_language_database()
+
+        fields = []
+        fields.append(('name:{}__name'.format(lang), _("Name")))
+        fields.append(('slug:{}__slug'.format(lang), _("Slug")))
+        fields.append(('products_image__image', _("Image")))
+        fields.append(('products_image__principal', _("Principal")))
+        # fields.append(('productfinals_image__image', _("Image")))
+        # fields.append(('productfinals_image__principal', _("Principal")))
+        # fields.append(('price', _("Price")))
+        # fields.append(('price_old:price', _("Price")))
+        # fields.append(('offer', _("Offer")))
+        fields.append(('created', _("Created")))
+        # fields.append(('reviews_value', _("reviews_value")))
+        # fields.append(('reviews_count', _("reviews_count")))
+        return fields
+
+    def __limitQ__(self, info):
+        limits = {}
+        pk = self.kwargs.get('pk', None)
+        type_list = self.kwargs.get('type', None)
+        # get language
+        lang = get_language_database()
+
+        if pk and type_list:
+            # aplicamos los filtros recibidos
+            params = ast.literal_eval(info.request.GET.get("json"))
+
+            slug_subcategory = None
+            if "subcategory" in params and params["subcategory"]:
+                if params["subcategory"] != '*':
+                    slug_subcategory = params["subcategory"]
+
+            slug_type = None
+            if "brand" in params and params["brand"]:
+                if params["brand"] != '*':
+                    slug_type = params["brand"]
+
+            slug_family = None
+            if "family" in params and params["family"]:
+                if params["family"] != '*':
+                    slug_family = params["family"]
+
+            only_with_stock = None
+            # filtramos dependiendo de la url original que estemos visitando
+            if type_list == 'SUB':
+                only_with_stock = Category.objects.filter(subcategory__pk=pk, show_only_product_stock=True).exists()
+                limits['type_list'] = Q(subcategory__pk=pk)
+
+            elif type_list == 'CAT':
+                limits['type_list'] = Q(category__pk=pk)
+
+            elif type_list == 'BRAND':
+                limits['type_list'] = Q(brand__pk=pk)
+
+            elif type_list == 'SEARCH':
+                only_with_stock = settings.CDNX_PRODUCTS_SHOW_ONLY_STOCK
+
+            else:
+                raise Exception("Pendiente de definir")
+
+            if slug_subcategory:
+                limits['by_sucategory'] = Q(**{"subcategory__{}__slug".format(lang): slug_subcategory})
+
+            if slug_type:
+                limits['by_brand'] = Q(**{"brand__{}__slug".format(lang): slug_type})
+
+            if slug_family:
+                limits['by_family'] = Q(**{"family__{}__slug".format(lang): slug_type})
+
+            # aplicamos los filtros recibidos
+            params = ast.literal_eval(info.request.GET.get("json"))
+            if "filters" in params and params["filters"]:
+                filters = params["filters"]
+                if 'brand' in filters and filters['brand']:
+                    limits["product__brand"] = Q(brand__in=filters['brand'])
+                if 'feature' in filters and filters['feature']:
+                    for feature in filters['feature']:
+                        if feature and filters['feature'][feature]:
+                            limits['product_features__feature'] = Q(product_features__feature__pk=feature, product_features__value__in=filters['feature'][feature])
+                """
+                if 'attribute' in filters and filters['attribute']:
+                    for attribute in filters['attribute']:
+                        if attribute and filters['attribute'][attribute]:
+                            limits['products_final_attr__attribute'] = Q(
+                                products_final_attr__attribute__pk=attribute,
+                                products_final_attr__value__in=filters['attribute'][attribute]
+                            )
+                """
+                if 'subcategory' in filters and filters['subcategory']:
+                    for subcategory in filters['subcategory']:
+                        limits['product__subcategory'] = Q(
+                            subcategory__pk__in=[int(x) for x in filters['subcategory']]
+                        )
+
+                if 'query' in filters and filters['query']:
+                    filters_txt = [
+                        "{}__name__icontains".format(lang),
+                        "{}__slug__icontains".format(lang),
+                        "code__icontains",
+                        # "product__code__icontains",
+                        # "product__model__icontains",
+                        # "product__{}__name__icontains".format(lang),
+                        # "product__{}__slug__icontains".format(lang),
+                        "brand__{}__name__icontains".format(lang),
+                        "brand__{}__slug__icontains".format(lang),
+                        "category__{}__name__icontains".format(lang),
+                        "category__{}__slug__icontains".format(lang),
+                        "subcategory__{}__name__icontains".format(lang),
+                        "subcategory__{}__slug__icontains".format(lang),
+                    ]
+                    queryset_custom = None
+                    for filter_txt in filters_txt:
+                        queryset_custom_and = None
+                        for word in filters['query'].split():
+                            if queryset_custom_and:
+                                queryset_custom_and &= Q(**{filter_txt: word})
+                            else:
+                                queryset_custom_and = Q(**{filter_txt: word})
+                        if queryset_custom:
+                            queryset_custom |= queryset_custom_and
+                        else:
+                            queryset_custom = queryset_custom_and
+
+                    limits['query'] = queryset_custom
+
+                """
+                if 'price_from' in filters and filters['price_from']:
+                    try:
+                        price_from = filters['price_from']
+                        if price_from is not None:
+                            limits['products_final__price_from'] = Q(price__gte=float(price_from))
+                    except ValueError:
+                        pass
+
+                if 'price_to' in filters and filters['price_to']:
+                    try:
+                        price_to = filters['price_to']
+                        if price_to is not None:
+                            limits['products_final__price_to'] = Q(price__lte=float(price_to))
+                    except ValueError:
+                        pass
+                """
+                if ('force_image' not in filters) or ('force_image' in filters and filters['force_image'] == 1):
+                    limits['image'] = Q(products_image__principal=True)
+
+            if only_with_stock is None:
+                only_with_stock = settings.CDNX_PRODUCTS_SHOW_ONLY_STOCK
+
+            """
+            if only_with_stock and hasattr(self.model, 'product_stocks'):
+                limits['force_stock'] = reduce(operator.or_, (
+                    Q(product__force_stock=True, product_stocks__quantity__gt=0),
+                    Q(product__force_stock=False)
+                ))
+            """
+        
+        return limits
+
+    def render_to_response(self, context, **response_kwargs):
+        context = super(ListProductsBase, self).render_to_response(context, **response_kwargs)
+        answer = json.loads(context._container[0])
+        products = []
+        for product in answer['table']['body']:
+            temp = product.copy()
+            # image principal
+            pos_image_ppal = [i for i, x in enumerate(product['products_image__principal']) if x == 'True']
+            
+            if len(pos_image_ppal) == 0:
+                image = None
+            else:
+                image = temp['products_image__image'][pos_image_ppal[0]]
+            temp['image'] = image
+            # is new?
+            created = None
+            for date_format in getattr(settings, 'DATETIME_INPUT_FORMATS', []):
+                try:
+                    created = datetime.datetime.strptime(temp['created'], date_format)
+                    break
+                except ValueError:
+                    pass
+            if created and (abs(int(time.time() - time.mktime(created.timetuple())))) / (3600 * 24) <= settings.CDNX_PRODUCTS_NOVELTY_DAYS:
+                temp['new'] = 1
+            else:
+                temp['new'] = 0
+
+
+            attrs = {}
+            for pfa in ProductFinalAttribute.objects.filter(product__product__pk=product['pk']).order_by(
+                'attribute__order'
+            ):
+                if pfa.product not in attrs:
+                    attrs[pfa.product.pk] = []
+
+                if pfa.attribute.type_value == TYPE_VALUE_BOOLEAN:
+                    value = bool(pfa.value) and _('True') or _('False')
+                elif pfa.attribute.type_value == TYPE_VALUE_FREE:
+                    value = pfa.value
+                elif pfa.attribute.type_value == TYPE_VALUE_LIST:
+                    lang = get_language_database()
+                    field = '{}__description'.format(lang)
+                    ov = OptionValueAttribute.objects.filter(
+                        group=pfa.attribute.list_value,
+                        pk=int(pfa.value)
+                    ).values(
+                        field
+                    ).first()
+                    if ov:
+                        value = ov[field]
+                    else:
+                        value = None
+                if value:
+                    attrs[pfa.product.pk].append(value)
+            
+            temp['attrs'] = attrs
+            # clean info
+            temp.pop('products_image__image')
+            temp.pop('products_image__principal')
+            temp.pop('created')
+
+            products.append(temp)
+
+        answer['table']['body'] = products
+        context._container[0] = json.dumps(answer)
+        return context
+
+
 # ###########################################
 class GenProductFinalOptionUrl(object):
     ws_entry_point = '{}/ProductFinalOptions'.format(settings.CDNX_PRODUCTS_URL)

@@ -43,7 +43,7 @@ from .views import SubcategorySubList, SubcategoryDetailModal
 from .views import BrandList, BrandCreate, BrandCreateModal, BrandUpdate, BrandUpdateModal, BrandDelete
 from .views import FlagshipProductList, FlagshipProductCreate, FlagshipProductCreateModal, FlagshipProductUpdate, FlagshipProductUpdateModal, FlagshipProductDelete
 from .views import CategorySubListPro, CategoryDetailModalPro, CategoryUpdateModalPro
-from .views import ListProducts, TypeTaxDetails
+from .views import ListProducts, ListProductsBase, TypeTaxDetails
 from .views import ProductFinalSubList, ProductFinalDetailsModal
 from .views import GroupValueFeatureList, GroupValueFeatureCreate, GroupValueFeatureCreateModal, GroupValueFeatureDetails, GroupValueFeatureUpdate, GroupValueFeatureUpdateModal, GroupValueFeatureDelete
 from .views import GroupValueAttributeList, GroupValueAttributeCreate, GroupValueAttributeCreateModal, GroupValueAttributeDetails, GroupValueAttributeUpdate, GroupValueAttributeUpdateModal, GroupValueAttributeDelete
@@ -273,6 +273,7 @@ urlpatterns = [
     url(r'^flagshipproducts/(?P<pk>\w+)/delete$', FlagshipProductDelete.as_view(), name='CDNX_products_flagshipproducts_delete'),
 
     url(r'^listproducts/(?P<type>\w+)/(?P<pk>[0-9]+)$', ListProducts.as_view(), name='CDNX_products_list_products'),
+    url(r'^listproductsbase/(?P<type>\w+)/(?P<pk>[0-9]+)$', ListProductsBase.as_view(), name='CDNX_products_list_products_base'),
 
     url(r'^groupvaluefeatures$', GroupValueFeatureList.as_view(), name='CDNX_products_GroupValueFeatures_list'),
     url(r'^groupvaluefeatures/add$', GroupValueFeatureCreate.as_view(), name='CDNX_products_GroupValueFeatures_add'),
