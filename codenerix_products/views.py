@@ -2348,21 +2348,35 @@ class ListProducts(GenList):
                         )
 
                 if 'query' in filters and filters['query']:
-                    query = (
-                        Q(**{"{}__name__icontains".format(lang): filters['query']}),
-                        Q(**{"{}__slug__icontains".format(lang): filters['query']}),
-                        Q(**{"product__code__icontains": filters['query']}),
-                        Q(**{"product__model__icontains": filters['query']}),
-                        Q(**{"product__{}__name__icontains".format(lang): filters['query']}),
-                        Q(**{"product__{}__slug__icontains".format(lang): filters['query']}),
-                        Q(**{"product__brand__{}__name__icontains".format(lang): filters['query']}),
-                        Q(**{"product__brand__{}__slug__icontains".format(lang): filters['query']}),
-                        Q(**{"product__category__{}__name__icontains".format(lang): filters['query']}),
-                        Q(**{"product__category__{}__slug__icontains".format(lang): filters['query']}),
-                        Q(**{"product__subcategory__{}__name__icontains".format(lang): filters['query']}),
-                        Q(**{"product__subcategory__{}__slug__icontains".format(lang): filters['query']})
-                    )
-                    limits['query'] = reduce(operator.or_, query)
+                    filters_txt = [
+                        "{}__name__icontains".format(lang),
+                        "{}__slug__icontains".format(lang),
+                        "code__icontains",
+                        "product__code__icontains",
+                        "product__model__icontains",
+                        "product__{}__name__icontains".format(lang),
+                        "product__{}__slug__icontains".format(lang),
+                        "product__brand__{}__name__icontains".format(lang),
+                        "product__brand__{}__slug__icontains".format(lang),
+                        "product__category__{}__name__icontains".format(lang),
+                        "product__category__{}__slug__icontains".format(lang),
+                        "product__subcategory__{}__name__icontains".format(lang),
+                        "product__subcategory__{}__slug__icontains".format(lang),
+                    ]
+                    queryset_custom = None
+                    for filter_txt in filters_txt:
+                        queryset_custom_and = None
+                        for word in filters['query'].split():
+                            if queryset_custom_and:
+                                queryset_custom_and &= Q(**{filter_txt: word})
+                            else:
+                                queryset_custom_and = Q(**{filter_txt: word})
+                        if queryset_custom:
+                            queryset_custom |= queryset_custom_and
+                        else:
+                            queryset_custom = queryset_custom_and
+
+                    limits['query'] = queryset_custom
 
                 if 'price_from' in filters and filters['price_from']:
                     try:

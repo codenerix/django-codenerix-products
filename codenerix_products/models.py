@@ -977,7 +977,8 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     def __fields__(self, info):
         lang = get_language_database()
         fields = []
-        fields.append(('pk', _("Identifier")))
+        fields.append(('code', _("Code")))
+        fields.append(('product__code', _("Product Code")))
         fields.append(('{}__name'.format(lang), _("Product")))
         fields.append(('product__family__{}__name'.format(lang), _("Family")))
         fields.append(('product__category__{}__name'.format(lang), _("Category")))
@@ -1213,6 +1214,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "offer",
             "outstanding",
             "price",
+            "sample",
             "reviews_value",
             "reviews_count",
             "product__pk",
