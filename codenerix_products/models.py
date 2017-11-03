@@ -206,7 +206,7 @@ class GenTextSlug(CodenerixModel):  # META: Abstract class
         abstract = True
 
     slug = models.CharField(_("Slug"), max_length=250, blank=False, null=False, unique=True)
-    name = models.CharField(_("Name"), max_length=250, blank=False, null=False, unique=True)
+    name = models.CharField(_("Name"), max_length=250, blank=False, null=False)
     description = WysiwygAngularField(_("Description"), blank=False, null=False)
 
     def __fields__(self, info):
