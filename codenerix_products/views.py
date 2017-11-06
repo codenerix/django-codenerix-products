@@ -2573,6 +2573,8 @@ class ListProductsBase(GenList):
                         # "product__{}__slug__icontains".format(lang),
                         "brand__{}__name__icontains".format(lang),
                         "brand__{}__slug__icontains".format(lang),
+                        "family__{}__name__icontains".format(lang),
+                        "family__{}__slug__icontains".format(lang),
                         "category__{}__name__icontains".format(lang),
                         "category__{}__slug__icontains".format(lang),
                         "subcategory__{}__name__icontains".format(lang),
@@ -2623,6 +2625,7 @@ class ListProductsBase(GenList):
                     Q(product__force_stock=False)
                 ))
             """
+            limits['distinct'] = True
         
         return limits
 
