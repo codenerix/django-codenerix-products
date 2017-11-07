@@ -647,6 +647,10 @@ class ProductFinalFormCreate(GenModelForm):
             ["ean13", 4],
             ["related", 6],
             ["related_accesory", 6],
+        ), (
+            _('Packaging information'), 12,
+            ['packing_cost', 4],
+            ['weight', 4],
         )]
         return g
 
@@ -671,6 +675,10 @@ class ProductFinalFormCreateModal(ProductFinalFormCreate):
             ["ean13", 4],
             ["related", 6],
             ["related_accesory", 6],
+        ), (
+            _('Packaging information'), 12,
+            ['packing_cost', 4],
+            ['weight', 4],
         )]
         return g
 
@@ -695,6 +703,10 @@ class ProductFinalForm(GenModelForm):
                 ["code", 4],
                 ["price_base_local", 4],
                 ["ean13", 4],
+            ), (
+                _('Packaging information'), 12,
+                ['packing_cost', 4],
+                ['weight', 4],
             )
         ]
         return g
@@ -719,6 +731,8 @@ class ProductFinalForm(GenModelForm):
                 ["ean13", 6],
                 ["most_sold", 6],
                 ["sample", 6],
+                ['packing_cost', 4],
+                ['weight', 4],
             ),
             (
                 _('Information'), 6,

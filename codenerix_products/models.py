@@ -957,6 +957,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True, help_text=_('If it is empty, code is equal to code product'))
     price_base_local = models.FloatField(_("Price base"), blank=True, null=True, help_text=_('If it is empty, price base is equal to price base of product'))
 
+    packing_cost = models.FloatField(_("Packing cost"), blank=True, null=True, help_text=_('If it is empty, packing cost is equal to packing cost of product'))
+    weight = models.FloatField(_("Weight"), blank=True, null=True, help_text=_('If it is empty, weight is equal to weight of product'))
+
     def __str__(self):
         lang = get_language_database()
         lang_model = getattr(self, '{}'.format(lang), None)
