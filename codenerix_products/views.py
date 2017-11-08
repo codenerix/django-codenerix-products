@@ -2410,7 +2410,7 @@ class ListProducts(GenList):
 
     def render_to_response(self, context, **response_kwargs):
         context = super(ListProducts, self).render_to_response(context, **response_kwargs)
-        answer = json.loads(context._container[0])
+        answer = json.loads(str(context._container[0]))
         products = []
         for product in answer['table']['body']:
             temp = product.copy()
@@ -2631,7 +2631,7 @@ class ListProductsBase(GenList):
 
     def render_to_response(self, context, **response_kwargs):
         context = super(ListProductsBase, self).render_to_response(context, **response_kwargs)
-        answer = json.loads(context._container[0])
+        answer = json.loads(str(context._container[0]))
         products = []
         for product in answer['table']['body']:
             temp = product.copy()
