@@ -1152,20 +1152,24 @@ class {model}TextForm{lang}(GenModelForm):\n
                 ['name', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('name', '{model}TextForm', [{languages}])"]],
                 ['slug', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('slug', '{model}TextForm', [{languages}])"]],
                 ['public', 4],
-                ['meta_title', 6, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_title', '{model}TextForm', [{languages}])"]],
-                ['meta_description', 6, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_description', '{model}TextForm', [{languages}])"]],
                 ['description_short', 6, None, None, None, None, None, ["ng-blur=refresh_lang_field('description_short', '{model}TextForm', [{languages}])"]],
                 ['description_long', 6, None, None, None, None, None, ["ng-blur=refresh_lang_field('description_long', '{model}TextForm', [{languages}])"]],
+            ), (_('SEO'),12,
+                ['meta_title', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_title', '{model}TextForm', [{languages}])"]],
+                ['meta_description', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_description', '{model}TextForm', [{languages}])"]],
+                ['meta_keywords', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_keywords', '{model}TextForm', [{languages}])"]],
             )]\n"""
         else:
             query += """
                 ['name', 4],
                 ['slug', 4],
                 ['public', 4],
-                ['meta_title', 6],
-                ['meta_description', 6],
                 ['description_short', 6],
                 ['description_long', 6],
+            ), (_('SEO'),12,
+                ['meta_title', 4],
+                ['meta_description', 4],
+                ['meta_keywords', 4],
             )]\n"""
         exec(query.format(model=model, lang=lang_code, languages="'{}'".format("','".join(settings.LANGUAGES_DATABASES))))
 
@@ -1218,12 +1222,20 @@ class {model}TextForm{lang}(GenModelForm):\n
                 ['name', 12, None, None, None, None, None, ["ng-blur=refresh_lang_field('name', '{model}TextForm', [{languages}])"]],
                 ['slug', 12, None, None, None, None, None, ["ng-blur=refresh_lang_field('slug', '{model}TextForm', [{languages}])"]],
                 ['description', 12, None, None, None, None, None, ["ng-blur=refresh_lang_field('description', '{model}TextForm', [{languages}])"]],
+            ), (_('SEO'),12,
+                ['meta_title', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_title', '{model}TextForm', [{languages}])"]],
+                ['meta_description', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_description', '{model}TextForm', [{languages}])"]],
+                ['meta_keywords', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_keywords', '{model}TextForm', [{languages}])"]],
             )]\n"""
         else:
             query += """
                 ['name', 12],
                 ['slug', 12],
                 ['description', 12],
+            ), (_('SEO'),12,
+                ['meta_title', 4],
+                ['meta_description', 4],
+                ['meta_keywords', 4],
             )]\n"""
 
         exec(query.format(model=model, lang=lang_code, languages="'{}'".format("','".join(settings.LANGUAGES_DATABASES))))

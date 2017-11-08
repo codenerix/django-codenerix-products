@@ -200,8 +200,18 @@ class GenText(CodenerixModel):  # META: Abstract class
         return self.__unicode__()
 
 
+# texto de posicionamiento
+class GenSEOText(CodenerixModel):  # META: Abstract class
+    class Meta(CodenerixModel.Meta):
+        abstract = True
+
+    meta_title = models.CharField(_("Meta Title"), max_length=70, blank=True, null=True)
+    meta_description = models.CharField(_("Meta Description"), max_length=70, blank=True, null=True)
+    meta_keywords = models.CharField(_("Meta Keywords"), max_length=160, blank=True, null=True)
+
+
 # description del texto en diferentes idiomas
-class GenTextSlug(CodenerixModel):  # META: Abstract class
+class GenTextSlug(GenSEOText):  # META: Abstract class
     class Meta(CodenerixModel.Meta):
         abstract = True
 
@@ -235,18 +245,15 @@ class GenTextTitle(CodenerixModel):  # META: Abstract class
 
 
 # texto de los product y productfinal
-class GenProductText(CodenerixModel):  # META: Abstract class
+class GenProductText(GenSEOText):  # META: Abstract class
     class Meta(CodenerixModel.Meta):
         abstract = True
 
-    meta_title = models.CharField(_("Meta Title"), max_length=70, blank=True, null=True)
-    meta_description = models.CharField(_("Meta Description"), max_length=70, blank=True, null=True)
     description_short = WysiwygAngularField(_("Description short"), blank=True, null=True)
     description_long = WysiwygAngularField(_("Description long"), blank=True, null=True)
     # url amigable
     slug = models.CharField(_("Slug"), max_length=250, blank=False, null=False, unique=True)
     name = models.CharField(_("Name"), max_length=250, blank=True, null=True)
-    # faltan los campos para posicionamiento
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
 
     def __unicode__(self):
