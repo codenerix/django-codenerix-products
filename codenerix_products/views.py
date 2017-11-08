@@ -2410,7 +2410,11 @@ class ListProducts(GenList):
 
     def render_to_response(self, context, **response_kwargs):
         context = super(ListProducts, self).render_to_response(context, **response_kwargs)
-        answer = json.loads(context._container[0].decode('utf-8'))
+
+        datas = context._container[0]
+        if type(datas) == bytes:
+            datas = datas.decode('utf-8')
+        answer = json.loads(datas)
         products = []
         for product in answer['table']['body']:
             temp = product.copy()
@@ -2452,7 +2456,7 @@ class ListProducts(GenList):
             products.append(temp)
 
         answer['table']['body'] = products
-        context._container[0] = json.dumps(answer)
+        context._container[0] = json.dumps(answer).encode()
         return context
 
 
@@ -2631,7 +2635,10 @@ class ListProductsBase(GenList):
 
     def render_to_response(self, context, **response_kwargs):
         context = super(ListProductsBase, self).render_to_response(context, **response_kwargs)
-        answer = json.loads(context._container[0].decode('utf-8'))
+        datas = context._container[0]
+        if type(datas) == bytes:
+            datas = datas.decode('utf-8')
+        answer = json.loads(datas)
         products = []
         for product in answer['table']['body']:
             temp = product.copy()
@@ -2655,7 +2662,6 @@ class ListProductsBase(GenList):
                 temp['new'] = 1
             else:
                 temp['new'] = 0
-
 
             attrs = {}
             for pfa in ProductFinalAttribute.objects.filter(product__product__pk=product['pk']).order_by(
@@ -2693,7 +2699,7 @@ class ListProductsBase(GenList):
             products.append(temp)
 
         answer['table']['body'] = products
-        context._container[0] = json.dumps(answer)
+        context._container[0] = json.dumps(answer).encode()
         return context
 
 
