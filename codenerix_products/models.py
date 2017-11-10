@@ -244,7 +244,7 @@ class GenTextTitle(CodenerixModel):  # META: Abstract class
     description = WysiwygAngularField(_("Description"), blank=True, null=True)
 
 
-# texto de los product y productfinal
+# texto de los product y brands
 class GenProductText(GenSEOText):  # META: Abstract class
     class Meta(CodenerixModel.Meta):
         abstract = True
@@ -276,6 +276,13 @@ class GenProductText(GenSEOText):  # META: Abstract class
         self.slug = nameunify(self.slug, True)
         return super(GenProductText, self).save(*args, **kwards)
 
+
+# texto de productfinal
+class GenProductFinalText(GenProductText):  # META: Abstract class
+    class Meta(CodenerixModel.Meta):
+        abstract = True
+
+    description_sample = WysiwygAngularField(_("Sample description"), blank=True, null=True)
 
 # #####################################
 
@@ -1604,7 +1611,6 @@ for info in MODELS:
 
 MODELS_PRODUCTS = [
     ('product', 'ProductText', 'Product'),
-    ('product', 'ProductFinal', 'ProductFinal'),
     ('brand', 'Brand', 'Brand'),
 ]
 
@@ -1614,6 +1620,19 @@ for info in MODELS_PRODUCTS:
     model_relate = info[2]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenProductText):\n".format(model_source, lang_code)
+        query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
+        exec(query)
+
+MODELS_PRODUCTS_FINAL = [
+    ('product', 'ProductFinal', 'ProductFinal'),
+]
+
+for info in MODELS_PRODUCTS_FINAL:
+    field = info[0]
+    model_source = info[1]
+    model_relate = info[2]
+    for lang_code in settings.LANGUAGES_DATABASES:
+        query = "class {}Text{}(GenProductFinalText):\n".format(model_source, lang_code)
         query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
         exec(query)
 

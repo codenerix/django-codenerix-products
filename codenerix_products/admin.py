@@ -25,7 +25,7 @@ from .models import TypeTax
 from .models import Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductDocument, ProductFinal, ProductFeature, ProductUnique, Brand
 from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial
 from .models import OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
-from .models import MODELS, MODELS_PRODUCTS, MODELS_SLUG, MODELS_SLIDERS
+from .models import MODELS, MODELS_PRODUCTS, MODELS_SLUG, MODELS_SLIDERS, MODELS_PRODUCTS_FINAL
 from .models import ProductFinalOption
 
 admin.site.register(TypeTax)
@@ -51,7 +51,7 @@ admin.site.register(OptionValueAttribute)
 admin.site.register(OptionValueFeatureSpecial)
 admin.site.register(ProductFinalOption)
 
-for info in MODELS + MODELS_PRODUCTS + MODELS_SLIDERS + MODELS_SLUG:
+for info in MODELS + MODELS_PRODUCTS + MODELS_SLIDERS + MODELS_SLUG + MODELS_PRODUCTS_FINAL:
     model = info[1]
     for lang in settings.LANGUAGES:
         lang_code = lang[0]
