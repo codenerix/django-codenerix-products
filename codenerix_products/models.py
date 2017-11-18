@@ -126,7 +126,7 @@ class TypeTax(CodenerixModel):
             else:
                 if not TypeTax.objects.exclude(pk=self.pk).filter(default=True).exists():
                     self.default = True
-        
+
         if self.pk:
             obj = TypeTax.objects.get(pk=self.pk)
             if obj.tax != self.tax:
@@ -338,7 +338,7 @@ class Category(CodenerixModel):
     image = ImageAngularField(_("Image"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja un tamaño comprendido entre 1200px y 2000px'))
     icon = ImageAngularField(_("Icon"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
-    
+
     def __str__(self):
         if self.code:
             return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
@@ -776,7 +776,7 @@ class Product(CustomQueryMixin, GenProduct):
             raise IntegrityError(e)
 
     @classmethod
-    def find_product(cls, query, lang):
+    def find_product(cls, query, lang, onlypublic=False):
         product = cls.query_or(
             query,
             "pk",
@@ -843,7 +843,10 @@ class Product(CustomQueryMixin, GenProduct):
             name="{}__name".format(lang),
             slug="{}__slug".format(lang),
             pop_annotations=True
-        ).first()
+        )
+        if onlypublic:
+            product = product.exclude(public=False)
+        product = product.first()
 
         # if product:
         #     product_final = cls.objects.get(pk=product['pk'])
@@ -851,11 +854,6 @@ class Product(CustomQueryMixin, GenProduct):
         #     product['price'] = prices['price_total']
 
         return product
-
-
-
-        
-
 
 
 # productos relacionados mas vendidos
@@ -983,7 +981,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             name = lang_model.name
         else:
             name = self.product
-            
+
         if self.ean13:
             name = u"{} ({})".format(smart_text(name), self.ean13)
         else:
@@ -1104,7 +1102,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     @property
     def ispack(self):
         return self.is_pack()
-        
+
     @classmethod
     def get_recommended_products(cls, lang, family=None, category=None, subcategory=None):
         products = []
@@ -1148,7 +1146,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             query &= Q(product__category=category)
         if subcategory is not None:
             query &= Q(product__subcategory=subcategory)
-        
+
         qset = cls.objects.filter(
             query
         ).values(
@@ -1226,7 +1224,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return products
 
     @classmethod
-    def find_product(cls, query, lang):
+    def find_product(cls, query, lang, onlypublic=False):
         product = cls.query_or(
             query,
             "pk",
@@ -1307,7 +1305,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             product_description_long="product__{}__description_long".format(lang),
             stars="reviews_value",
             pop_annotations=True
-        ).first()
+        )
+        if onlypublic:
+            product = product.exclude(product__model=False)
+        product = product.first()
 
         if product:
             product_final = cls.objects.get(pk=product['pk'])
@@ -1373,7 +1374,7 @@ class ProductFinalAttribute(CodenerixModel):
     attribute = models.ForeignKey(Attribute, blank=False, null=True, related_name='products_final_attr', verbose_name=_('Attributes'))
 
     value = models.CharField(_("Value"), max_length=80)
-    
+
     def __unicode__(self, show_attribute=True):
         value = ''
         if self.attribute.type_value == TYPE_VALUE_BOOLEAN:
@@ -1419,7 +1420,7 @@ class ProductFinalAttribute(CodenerixModel):
             msg = None
 
         return msg
-        
+
     def save(self, *args, **kwargs):
         msg = ProductFinalAttribute.validate(self.pk, self.product.pk, self.attribute.pk)
         if msg:
@@ -1563,7 +1564,7 @@ class ProductFinalOption(CodenerixModel):
 
     def __str__(self):
         return self.__unicode__()
-    
+
     def __fields__(self, info):
         lang = get_language_database()
         fields = []

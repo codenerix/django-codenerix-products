@@ -2405,7 +2405,7 @@ class ListProducts(GenList):
                     Q(product__force_stock=True, product_stocks__quantity__gt=0),
                     Q(product__force_stock=False)
                 ))
-        
+
         return limits
 
     def render_to_response(self, context, **response_kwargs):
@@ -2629,8 +2629,9 @@ class ListProductsBase(GenList):
                     Q(product__force_stock=False)
                 ))
             """
+            limits['public'] = Q(public=True)
             limits['distinct'] = True
-        
+
         return limits
 
     def render_to_response(self, context, **response_kwargs):
@@ -2644,7 +2645,7 @@ class ListProductsBase(GenList):
             temp = product.copy()
             # image principal
             pos_image_ppal = [i for i, x in enumerate(product['products_image__principal']) if x == 'True']
-            
+
             if len(pos_image_ppal) == 0:
                 image = None
             else:
@@ -2689,7 +2690,7 @@ class ListProductsBase(GenList):
                         value = None
                 if value:
                     attrs[pfa.product.pk].append(value)
-            
+
             temp['attrs'] = attrs
             # clean info
             temp.pop('products_image__image')
