@@ -619,6 +619,14 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
 
         return fields
 
+    def __searchF__(self, info):
+        lang = get_language_database()
+
+        fields = {}
+        fields['category'] = (_('Category'), lambda x, lang=lang: Q(**{'category__{}__name__icontains'.format(lang): x}), 'input')
+        fields['subcategory'] = (_('Subcategory'), lambda x, lang=lang: Q(**{'subcategory__{}__name__icontains'.format(lang): x}), 'input')
+        return fields
+
 
 class ProductCreate(GenProductUrl, MultiForm, GenCreate):
     model = Product

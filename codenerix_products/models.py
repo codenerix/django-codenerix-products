@@ -1008,6 +1008,15 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         fields.append(('sample', _("Sample")))
         return fields
 
+    def __searchF__(self, info):
+        lang = get_language_database()
+
+        fields = {}
+        fields['product__family__{}__name'.format(lang)] = (_('Family'), lambda x, lang=lang: Q(**{'product__family__{}__name__icontains'.format(lang): x}), 'input')
+        fields['product__category__{}__name'.format(lang)] = (_('Category'), lambda x, lang=lang: Q(**{'product__category__{}__name__icontains'.format(lang): x}), 'input')
+        fields['product__subcategory__{}__name'.format(lang)] = (_('Subcategory'), lambda x, lang=lang: Q(**{'product__subcategory__{}__name__icontains'.format(lang): x}), 'input')
+        return fields
+
     def __searchQ__(self, info, text):
         lang = get_language_database()
 
