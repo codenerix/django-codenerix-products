@@ -1563,7 +1563,7 @@ class FlagshipProduct(CustomQueryMixin, CodenerixModel, GenImageFile):
 
 class ProductFinalOption(CodenerixModel):
     product_final = models.ForeignKey(ProductFinal, related_name='productfinals_option', verbose_name=_("Product Final"))
-    products_pack = models.ManyToManyField(ProductFinal, related_name='productfinals_optionpack', symmetrical=False, blank=False, null=False)
+    products_pack = models.ManyToManyField(ProductFinal, related_name='productfinals_optionpack', symmetrical=False, blank=False)
     active = models.BooleanField(_("Active"), blank=False, null=False, default=True)
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
 
