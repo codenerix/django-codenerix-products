@@ -609,8 +609,8 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
         fields.append(('tax', _("Tax")))
         fields.append(('code', _("Code")))
         fields.append(('price_base', _("Price base")))
-        fields.append(('of_sales', _("Sales")))
-        fields.append(('of_purchase', _("Pruchase")))
+        fields.append(('of_sales', _("Of sales")))
+        fields.append(('of_purchase', _("Of purchase")))
         fields.append(('force_stock', _("Force stock")))
         fields.append(('url_video', _("Url Video")))
         fields.append(('feature_special', _("Feature special")))
@@ -2268,8 +2268,8 @@ class ListProducts(GenList):
         # fields.append(('price_old:price', _("Price")))
         fields.append(('offer', _("Offer")))
         fields.append(('created', _("Created")))
-        fields.append(('reviews_value', _("reviews_value")))
-        fields.append(('reviews_count', _("reviews_count")))
+        fields.append(('reviews_value', _("Reviews")))
+        fields.append(('reviews_count', _("Reviews count")))
         return fields
 
     def __limitQ__(self, info):
