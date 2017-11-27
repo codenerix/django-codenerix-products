@@ -64,10 +64,8 @@ angular.module('codenerixPRODUCTSControllers', [])
 ])
 .controller('CDNXPRODUCTSFormProductAddProductFinalCtrl', ['$scope', '$rootScope', '$timeout', '$http', '$window', '$uibModal', '$state', '$stateParams', '$templateCache', 'Register',
     function ($scope, $rootScope, $timeout, $http, $window, $uibModal, $state, $stateParams, $templateCache, Register) {
-        console.log("a");
         
         $scope.addnewandproductfinal = function () {
-            console.log("b");
             var listid = 0;
             if ($scope.data.meta.linkadd) {
                 $state.go('formcustom'+listid);
