@@ -208,7 +208,15 @@ class FeatureForeign(GenFeatureUrl, GenForeignKey):
         product_pk = filters.get('product_pk', None)
 
         if product_pk:
-            qs = qs.filter(Q(category__products__pk=product_pk) | Q(category__products__pk=None), Q(family__products__pk=product_pk) | Q(family__products__pk=None))
+            qs = qs.filter(
+                Q(category__products__pk=product_pk),
+                Q(family__products__pk=product_pk)
+            )
+        
+        qsobject = Q(**{"family__isnull": True})
+        qsobject |= Q(**{"category__isnull": True})
+        qs = queryset.filter(qsobject)
+
         return qs[:settings.LIMIT_FOREIGNKEY]
 
 
@@ -274,7 +282,14 @@ class AttributeForeign(GenAttributeUrl, GenForeignKey):
         product_pk = filters.get('product_pk', None)
 
         if product_pk:
-            qs = qs.filter(category__products__products_final__pk=product_pk, family__products__products_final__pk=product_pk)
+            qs = qs.filter(
+                category__products__products_final__pk=product_pk,
+                family__products__products_final__pk=product_pk
+            )
+        qsobject = Q(**{"family__isnull": True})
+        qsobject |= Q(**{"category__isnull": True})
+        qs = queryset.filter(qsobject)
+        
         return qs[:settings.LIMIT_FOREIGNKEY]
 
 
@@ -334,7 +349,14 @@ class FeatureSpecialForeign(GenFeatureSpecialUrl, GenForeignKey):
         product_pk = filters.get('product_pk', None)
 
         if product_pk:
-            qs = qs.filter(category__products__products_final__pk=product_pk, family__products__products_final__pk=product_pk)
+            qs = qs.filter(
+                category__products__products_final__pk=product_pk,
+                family__products__products_final__pk=product_pk
+            )
+
+        qsobject = Q(**{"family__isnull": True})
+        qsobject |= Q(**{"category__isnull": True})
+        qs = queryset.filter(qsobject)
 
         return qs[:settings.LIMIT_FOREIGNKEY]
 
@@ -602,27 +624,24 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
 
     def __fields__(self, info):
         fields = []
-        fields.append(('name:{}__name'.format(self.lang), _("Name")))
         fields.append(('category', _("Category")))
         fields.append(('subcategory', _("Subcategory")))
+        fields.append(('code', _("Code")))
+        fields.append(('{}__name'.format(self.lang), _("Name")))
         fields.append(('public', _("Public")))
         fields.append(('tax', _("Tax")))
-        fields.append(('code', _("Code")))
         fields.append(('price_base', _("Price base")))
         fields.append(('of_sales', _("Of sales")))
         fields.append(('of_purchase', _("Of purchase")))
         fields.append(('force_stock', _("Force stock")))
-        fields.append(('url_video', _("Url Video")))
         fields.append(('feature_special', _("Feature special")))
-        fields.append(('packing_cost', _("Packing cost")))
-        fields.append(('weight', _("Weight")))
-
         return fields
 
     def __searchF__(self, info):
         lang = get_language_database()
 
         fields = {}
+        fields['{}__name'.format(lang)] = (_('Name'), lambda x, lang=lang: Q(**{'{}__name__icontains'.format(lang): x}), 'input')
         fields['category'] = (_('Category'), lambda x, lang=lang: Q(**{'category__{}__name__icontains'.format(lang): x}), 'input')
         fields['subcategory'] = (_('Subcategory'), lambda x, lang=lang: Q(**{'subcategory__{}__name__icontains'.format(lang): x}), 'input')
         return fields
@@ -944,6 +963,23 @@ class ProductFinalList(GenProductFinalUrl, GenList):
     gentrans = {
         'AddProductAndProductFinal': _("Add product & product final"),
     }
+
+    def __fields__(self, info):
+        lang = get_language_database()
+        fields = []
+        fields.append(('product__family__{}__name'.format(lang), _("Family")))
+        fields.append(('product__category__{}__name'.format(lang), _("Category")))
+        fields.append(('product__subcategory__{}__name'.format(lang), _("Subcategory")))
+        fields.append(('code', _("Code")))
+        fields.append(('product__code', _("Product Code")))
+        fields.append(('{}__name'.format(lang), _("Product")))
+        fields.append(('{}__public'.format(lang), _("Public")))
+        fields.append(('stock_real', _("Stock real")))
+        fields.append(('stock_lock', _("Stock lock")))
+        fields.append(('price', _("Price")))
+        fields.append(('is_pack', _("Is pack")))
+        fields.append(('sample', _("Sample")))
+        return fields
 
 
 class ProductFinalCreate(GenProductFinalUrl, MultiForm, GenCreate):
