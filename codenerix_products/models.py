@@ -331,7 +331,7 @@ class Family(CodenerixModel, GenImageFileNull):
 # categorias
 class Category(CodenerixModel):
     code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True)
-    family = models.ForeignKey(Family, related_name='categories', verbose_name=_("Family"))
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='categories', verbose_name=_("Family"))
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
     show_only_product_stock = models.BooleanField(_("Show only products in stock"), blank=True, null=False, default=True)
@@ -378,7 +378,7 @@ class Category(CodenerixModel):
 # subcategorias
 class Subcategory(CodenerixModel):
     code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True)
-    category = models.ForeignKey(Category, related_name='subcategory', verbose_name=_("Category"))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategory', verbose_name=_("Category"))
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
     show_brand = models.BooleanField(_("Show brand (for menu)"), blank=True, null=False, default=True)
@@ -510,24 +510,24 @@ class OptionValues(CodenerixModel):  # META: Abstract class
 
 # opciones de los grupos de valores para features
 class OptionValueFeature(OptionValues):
-    group = models.ForeignKey(GroupValueFeature, related_name='options_value_feature', verbose_name=_("Options value"))
+    group = models.ForeignKey(GroupValueFeature, on_delete=models.CASCADE, related_name='options_value_feature', verbose_name=_("Options value"))
 
 
 # opciones de los grupos de valores para attributes
 class OptionValueAttribute(OptionValues):
-    group = models.ForeignKey(GroupValueAttribute, related_name='options_value_attribute', verbose_name=_("Options value"))
+    group = models.ForeignKey(GroupValueAttribute, on_delete=models.CASCADE, related_name='options_value_attribute', verbose_name=_("Options value"))
 
 
 # opciones de los grupos de valores features special
 class OptionValueFeatureSpecial(OptionValues):
-    group = models.ForeignKey(GroupValueFeatureSpecial, related_name='options_value_feature_special', verbose_name=_("Options value"))
+    group = models.ForeignKey(GroupValueFeatureSpecial, on_delete=models.CASCADE, related_name='options_value_feature_special', verbose_name=_("Options value"))
 
 
 # caracteristicas (comunes a todos los productos (resolución, RAM))
 class Feature(GenAttr):
-    family = models.ForeignKey(Family, related_name='features', verbose_name=_("Family"), blank=True, null=True)
-    category = models.ForeignKey(Category, related_name='features', verbose_name=_("Category"), blank=True, null=True)
-    list_value = models.ForeignKey(GroupValueFeature, related_name='features', verbose_name=_("List value"), blank=True, null=True)
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='features', verbose_name=_("Family"), blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='features', verbose_name=_("Category"), blank=True, null=True)
+    list_value = models.ForeignKey(GroupValueFeature, on_delete=models.CASCADE, related_name='features', verbose_name=_("List value"), blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.pk:
@@ -555,10 +555,10 @@ class Attribute(GenAttr):
     los atributos están relacionados entre ellos
     el order indica el orden en el que aparcerán
     """
-    family = models.ForeignKey(Family, related_name='attributes', verbose_name=_("Family"), blank=True, null=True)
-    category = models.ForeignKey(Category, related_name='attributes', verbose_name=_("Category"), blank=True, null=True)
-    attribute = models.ForeignKey("self", related_name='attributes', verbose_name=_("Attribute"), blank=True, null=True)
-    list_value = models.ForeignKey(GroupValueAttribute, related_name='attributes', verbose_name=_("List value"), blank=True, null=True)
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='attributes', verbose_name=_("Family"), blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='attributes', verbose_name=_("Category"), blank=True, null=True)
+    attribute = models.ForeignKey("self", on_delete=models.CASCADE, related_name='attributes', verbose_name=_("Attribute"), blank=True, null=True)
+    list_value = models.ForeignKey(GroupValueAttribute, on_delete=models.CASCADE, related_name='attributes', verbose_name=_("List value"), blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.pk:
@@ -582,9 +582,9 @@ class Attribute(GenAttr):
 
 # caracteristicas especiales (unico por producto (imei, fecha caducidad))
 class FeatureSpecial(GenAttr):
-    family = models.ForeignKey(Family, related_name='feature_specials', verbose_name=_("Family"), blank=True, null=True)
-    category = models.ForeignKey(Category, related_name='feature_specials', verbose_name=_("Category"), blank=True, null=True)
-    list_value = models.ForeignKey(GroupValueFeatureSpecial, related_name='feature_specials', verbose_name=_("List value"), blank=True, null=True)
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='feature_specials', verbose_name=_("Family"), blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='feature_specials', verbose_name=_("Category"), blank=True, null=True)
+    list_value = models.ForeignKey(GroupValueFeatureSpecial, on_delete=models.CASCADE, related_name='feature_specials', verbose_name=_("List value"), blank=True, null=True)
     unique = models.BooleanField(_("The value must unique"), blank=True, null=False, default=True)
 
     def __fields__(self, info):
@@ -656,11 +656,11 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         abstract = True
 
     model = models.CharField(_("Model"), max_length=250, blank=True, null=True)
-    brand = models.ForeignKey(Brand, related_name='products', verbose_name=_("Brand"), blank=True, null=True)
-    tax = models.ForeignKey(TypeTax, related_name='products', verbose_name=_("Tax (%)"), null=True)
-    family = models.ForeignKey(Family, related_name='products', verbose_name=_("Family"))
-    category = models.ForeignKey(Category, related_name='products', verbose_name=_("Category"))
-    subcategory = models.ForeignKey(Subcategory, related_name='products', verbose_name=_("Subcategory"))
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products', verbose_name=_("Brand"), blank=True, null=True)
+    tax = models.ForeignKey(TypeTax, on_delete=models.CASCADE, related_name='products', verbose_name=_("Tax (%)"), null=True)
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='products', verbose_name=_("Family"))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name=_("Category"))
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='products', verbose_name=_("Subcategory"))
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     code = models.CharField(_("Code"), max_length=250, blank=False, null=False, unique=True)
     price_base = models.FloatField(_("Price base"), blank=False, null=False, default=0)
@@ -672,7 +672,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     force_stock = models.BooleanField(_("Force stock"), blank=True, null=False, default=True)
     url_video = models.CharField(_("Url Video"), max_length=250, blank=True, null=True)
     # indica si es necesario tener una caracteristica especial obligatoriamente
-    feature_special = models.ForeignKey(FeatureSpecial, related_name='products', verbose_name=_("Feature special"), blank=True, null=True)
+    feature_special = models.ForeignKey(FeatureSpecial, on_delete=models.CASCADE, related_name='products', verbose_name=_("Feature special"), blank=True, null=True)
     packing_cost = models.FloatField(_("Packing cost"), blank=False, null=False, default=0)
     weight = models.FloatField(_("Weight"), blank=False, null=False, default=0)
 
@@ -858,8 +858,8 @@ class Product(CustomQueryMixin, GenProduct):
 
 # productos relacionados mas vendidos
 class ProductRelationSold(CodenerixModel):
-    product = models.ForeignKey(Product, blank=False, null=False, related_name='products_related', verbose_name=_("Product"))
-    related = models.ForeignKey(Product, blank=False, null=False, related_name='products_related_sold', verbose_name=_("Products related"))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False, null=False, related_name='products_related', verbose_name=_("Product"))
+    related = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False, null=False, related_name='products_related_sold', verbose_name=_("Products related"))
     hits = models.SmallIntegerField(_("Hits"), blank=True, null=True)
 
     class Meta(CodenerixModel.Meta):
@@ -881,7 +881,7 @@ class ProductRelationSold(CodenerixModel):
 
 # imagenes de productos
 class ProductImage(CodenerixModel, GenImageFile):
-    product = models.ForeignKey(Product, related_name='products_image', verbose_name=_("Product"))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products_image', verbose_name=_("Product"))
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     principal = models.BooleanField(_("Principal"), blank=False, null=False, default=False)
@@ -927,7 +927,7 @@ class ProductImage(CodenerixModel, GenImageFile):
 
 # documentos de productos
 class ProductDocument(CodenerixModel, GenDocumentFile):
-    product = models.ForeignKey(Product, related_name='products_document', verbose_name=_("Product"))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products_document', verbose_name=_("Product"))
     public = models.BooleanField(_("Public"), blank=False, null=False, default=False)
 
     def __unicode__(self):
@@ -949,7 +949,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     el stock se relaciona con esta clase
     definición de productos individuales
     """
-    product = models.ForeignKey(Product, blank=False, null=False, related_name='products_final', verbose_name=_('Product'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False, null=False, related_name='products_final', verbose_name=_('Product'))
     # productos relacionados
     related = models.ManyToManyField("ProductFinal", blank=True, related_name='productsrelated', symmetrical=False)
     related_accesory = models.ManyToManyField("ProductFinal", blank=True, related_name='productsrelatedaccesory', symmetrical=False)
@@ -1329,7 +1329,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
 # imagenes de productos
 class ProductFinalImage(CodenerixModel, GenImageFile):
-    product_final = models.ForeignKey(ProductFinal, related_name='productfinals_image', verbose_name=_("Product Final"))
+    product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, related_name='productfinals_image', verbose_name=_("Product Final"))
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     principal = models.BooleanField(_("Principal"), blank=False, null=False, default=False)
@@ -1379,8 +1379,8 @@ class ProductFinalAttribute(CodenerixModel):
     el stock se relaciona con esta clase
     definición de productos individuales
     """
-    product = models.ForeignKey(ProductFinal, blank=False, null=False, related_name='products_final_attr', verbose_name=_('Product'))
-    attribute = models.ForeignKey(Attribute, blank=False, null=True, related_name='products_final_attr', verbose_name=_('Attributes'))
+    product = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='products_final_attr', verbose_name=_('Product'))
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, blank=False, null=True, related_name='products_final_attr', verbose_name=_('Attributes'))
 
     value = models.CharField(_("Value"), max_length=80)
 
@@ -1439,8 +1439,8 @@ class ProductFinalAttribute(CodenerixModel):
 
 # valor de las caracteristicas del producto (talla, color)
 class ProductFeature(CodenerixModel):
-    product = models.ForeignKey(Product, blank=False, null=False, verbose_name=_('Product'), related_name='product_features')
-    feature = models.ForeignKey(Feature, blank=False, null=False, verbose_name=_('Feature'), related_name='product_features')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False, null=False, verbose_name=_('Product'), related_name='product_features')
+    feature = models.ForeignKey(Feature, on_delete=models.CASCADE, blank=False, null=False, verbose_name=_('Feature'), related_name='product_features')
     value = models.CharField(_("Value"), max_length=80)
 
     def __unicode__(self):
@@ -1459,7 +1459,7 @@ class ProductFeature(CodenerixModel):
 
 # valor de las caracteristicas especiales del producto final (imei, fecha caducidad)
 class ProductUnique(CodenerixModel):
-    product_final = models.ForeignKey(ProductFinal, blank=False, null=False, related_name='products_unique', verbose_name=_('Product final'))
+    product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Product final'))
     value = models.CharField(_("Value"), max_length=80, null=True, blank=True)
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0)
 
@@ -1503,7 +1503,7 @@ class ProductUnique(CodenerixModel):
 
 # producto estrella (solo un registro publico)
 class FlagshipProduct(CustomQueryMixin, CodenerixModel, GenImageFile):
-    product_final = models.ForeignKey(ProductFinal, blank=False, null=False, related_name='flagship_products', verbose_name=_('Flagship product'))
+    product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='flagship_products', verbose_name=_('Flagship product'))
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     view_video = models.BooleanField(_("View video"), blank=True, null=False, default=False)
     orientazion = models.CharField(_("Orientazion"), max_length=2, choices=TYPE_ORIENTAZION, blank=False, null=False, default='R')
@@ -1562,7 +1562,7 @@ class FlagshipProduct(CustomQueryMixin, CodenerixModel, GenImageFile):
 
 
 class ProductFinalOption(CodenerixModel):
-    product_final = models.ForeignKey(ProductFinal, related_name='productfinals_option', verbose_name=_("Product Final"))
+    product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, related_name='productfinals_option', verbose_name=_("Product Final"))
     products_pack = models.ManyToManyField(ProductFinal, related_name='productfinals_optionpack', symmetrical=False, blank=False)
     active = models.BooleanField(_("Active"), blank=False, null=False, default=True)
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
@@ -1597,7 +1597,7 @@ for info in MODELS_SLUG:
     model = info[1]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenTextSlug):\n".format(model, lang_code)
-        query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model, lang_code.lower())
+        query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model, lang_code.lower())
         exec(query)
 
 MODELS = [
@@ -1617,7 +1617,7 @@ for info in MODELS:
     model = info[1]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenText):\n".format(model, lang_code)
-        query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model, lang_code.lower())
+        query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model, lang_code.lower())
         exec(query)
 
 
@@ -1632,7 +1632,7 @@ for info in MODELS_PRODUCTS:
     model_relate = info[2]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenProductText):\n".format(model_source, lang_code)
-        query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
+        query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
         exec(query)
 
 MODELS_PRODUCTS_FINAL = [
@@ -1645,7 +1645,7 @@ for info in MODELS_PRODUCTS_FINAL:
     model_relate = info[2]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenProductFinalText):\n".format(model_source, lang_code)
-        query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
+        query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
         exec(query)
 
 MODELS_SLIDERS = [
@@ -1657,5 +1657,5 @@ for info in MODELS_SLIDERS:
     model = info[1]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenTextTitle):\n".format(model, lang_code)
-        query += "  {} = models.OneToOneField({}, blank=False, null=False, related_name='{}')\n".format(field, model, lang_code.lower())
+        query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model, lang_code.lower())
         exec(query)
