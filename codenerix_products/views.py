@@ -30,7 +30,7 @@ from django.db.models import Q, F, Value
 from django.db.models.functions import Concat
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -212,7 +212,7 @@ class FeatureForeign(GenFeatureUrl, GenForeignKey):
                 Q(category__products__pk=product_pk),
                 Q(family__products__pk=product_pk)
             )
-        
+
         qsobject = Q(**{"family__isnull": True})
         qsobject |= Q(**{"category__isnull": True})
         qs = queryset.filter(qsobject)
@@ -289,7 +289,7 @@ class AttributeForeign(GenAttributeUrl, GenForeignKey):
         qsobject = Q(**{"family__isnull": True})
         qsobject |= Q(**{"category__isnull": True})
         qs = queryset.filter(qsobject)
-        
+
         return qs[:settings.LIMIT_FOREIGNKEY]
 
 
