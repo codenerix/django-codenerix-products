@@ -864,7 +864,7 @@ class ProductImageSubList(GenProductImageUrl, GenList):
         fields.append(('order', _("Order")))
         fields.append(('public', _("Public")))
         fields.append(('principal', _("Principal")))
-        fields.append(('image_path', _("Image"), None, None, 'image:width:66px'))
+        fields.append(('image', _("Image"), None, None, 'image:width:66px'))
         return fields
 
 
@@ -1080,7 +1080,7 @@ class ProductFinalSubList(GenProductFinalUrl, GenList):
 
     def __fields__(self, info):
         fields = []
-        fields.append(('pk', _("Identifier")))
+        fields.append(('id', _("Identifier")))
         fields.append(('products_final_attr', _("Attributes")))
         fields.append(('stock_real', _("Stock real")))
         fields.append(('stock_lock', _("Stock lock")))
@@ -1356,7 +1356,7 @@ class ProductFinalImageSubList(GenProductFinalImageUrl, GenList):
         fields.append(('order', _("Order")))
         fields.append(('public', _("Public")))
         fields.append(('principal', _("Principal")))
-        fields.append(('image_path', _("Image"), None, None, 'image:width:66px'))
+        fields.append(('image', _("Image"), None, None, 'image:width:66px'))
         return fields
 
 
@@ -2349,6 +2349,9 @@ class ListProducts(GenList):
             elif type_list == 'CAT':
                 limits['type_list'] = Q(product__category__pk=pk)
 
+            elif type_list == 'FAM':
+                limits['type_list'] = Q(product__family__pk=pk)
+
             elif type_list == 'BRAND':
                 limits['type_list'] = Q(product__brand__pk=pk)
 
@@ -2365,7 +2368,7 @@ class ListProducts(GenList):
                 limits['by_brand'] = Q(**{"product__brand__{}__slug".format(lang): slug_type})
 
             if slug_family:
-                limits['by_family'] = Q(**{"product__family__{}__slug".format(lang): slug_type})
+                limits['by_family'] = Q(**{"product__family__{}__slug".format(lang): slug_family})
 
             # aplicamos los filtros recibidos
             params = ast.literal_eval(info.request.GET.get("json"))
@@ -2438,7 +2441,9 @@ class ListProducts(GenList):
                     except ValueError:
                         pass
 
-                if ('force_image' not in filters) or ('force_image' in filters and filters['force_image'] == 1):
+                if ('force_image' not in filters):
+                    limits['image'] = (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
+                elif ('force_image' in filters and filters['force_image'] == 1):
                     limits['image'] = (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
 
             if only_with_stock is None:
@@ -2567,6 +2572,9 @@ class ListProductsBase(GenList):
             elif type_list == 'CAT':
                 limits['type_list'] = Q(category__pk=pk)
 
+            elif type_list == 'FAM':
+                limits['type_list'] = Q(family__pk=pk)
+
             elif type_list == 'BRAND':
                 limits['type_list'] = Q(brand__pk=pk)
 
@@ -2660,7 +2668,9 @@ class ListProductsBase(GenList):
                     except ValueError:
                         pass
                 """
-                if ('force_image' not in filters) or ('force_image' in filters and filters['force_image'] == 1):
+                if ('force_image' not in filters):
+                    limits['image'] = Q(products_image__principal=True)
+                elif ('force_image' in filters and filters['force_image'] == 1):
                     limits['image'] = Q(products_image__principal=True)
 
             if only_with_stock is None:

@@ -32,7 +32,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from codenerix.fields import ImageAngularField
-from codenerix.helpers import nameunify
+from codenerix.helpers import nameunify, qobject_builder_string_search
 from codenerix.lib.helpers import upload_path
 from codenerix.models import CodenerixModel
 from codenerix.fields import WysiwygAngularField
@@ -256,11 +256,11 @@ class GenProductText(GenSEOText):  # META: Abstract class
     name = models.CharField(_("Name"), max_length=250, blank=True, null=True)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"{}".format(smart_text(self.description_short))
 
-    def __str__(self):
-        return self.__unicode__()
+    def __unicode__(self):
+        return self.__str__()
 
     def __fields__(self, info):
         fields = []
@@ -822,6 +822,7 @@ class Product(CustomQueryMixin, GenProduct):
             "{}__description_long".format(lang),
             "{}__slug".format(lang),
             "{}__name".format(lang),
+            "weight",
             family_image="family__image".format(lang),
             family_name="family__{}__name".format(lang),
             family_slug="family__{}__slug".format(lang),
@@ -985,7 +986,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         if self.ean13:
             name = u"{} ({})".format(smart_text(name), self.ean13)
         else:
-            name = u"{}".format(smart_text(name))
+            name = u"{}".format(name)
         return name
 
     def __unicode__(self):
@@ -1015,18 +1016,25 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         fields['product__family__{}__name'.format(lang)] = (_('Family'), lambda x, lang=lang: Q(**{'product__family__{}__name__icontains'.format(lang): x}), 'input')
         fields['product__category__{}__name'.format(lang)] = (_('Category'), lambda x, lang=lang: Q(**{'product__category__{}__name__icontains'.format(lang): x}), 'input')
         fields['product__subcategory__{}__name'.format(lang)] = (_('Subcategory'), lambda x, lang=lang: Q(**{'product__subcategory__{}__name__icontains'.format(lang): x}), 'input')
+        fields['{}__name'.format(lang)] = (_('Product'), lambda x, lang=lang: Q(**{'{}__name__icontains'.format(lang): x}), 'input')
+        fields['product__code'] = (_('Product Code'), lambda x, lang=lang: Q(**{'product__code__icontains': x}), 'input')
         return fields
 
     def __searchQ__(self, info, text):
         lang = get_language_database()
 
+        qobject = qobject_builder_string_search(
+            [
+                "{}__name".format(lang),
+                "{}__slug".format(lang),
+            ],
+            text
+        )
+        # return qobject
+
         text_filters = {}
-        text_filters['product_slug'] = Q(**{"{}__slug__icontains".format(lang): text})
-        text_filters['product_name'] = Q(**{"{}__name__icontains".format(lang): text})
-        try:
-            text_filters['identifier'] = Q(pk=int(text))
-        except ValueError:
-            pass
+        text_filters['product_name'] = qobject
+
         return text_filters
 
     def save(self, *args, **kwards):
@@ -1286,6 +1294,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "product__{}__meta_description".format(lang),
             "product__{}__description_short".format(lang),
             "product__{}__description_long".format(lang),
+            "weight",
+            "product__weight",
+            "code",
             family_name="product__family__{}__name".format(lang),
             family_slug="product__family__{}__slug".format(lang),
             family_description="product__family__{}__description".format(lang),
