@@ -1172,6 +1172,8 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             "created",
             "offer",
             "pk",
+            "sample",
+            "code",
             "product__tax__tax",
             "product__{}__name".format(lang),
             "product__model",
