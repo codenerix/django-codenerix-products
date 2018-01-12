@@ -48,7 +48,7 @@ from codenerix_extensions.helpers import get_language_database
 from .models import TypeTax, Feature, Attribute, FeatureSpecial, Family, Category, Subcategory, Product, ProductRelationSold, ProductImage, ProductFinalImage
 from .models import ProductDocument, ProductFinal, ProductFeature, ProductUnique, ProductFinalAttribute, Brand, FlagshipProduct
 from .models import GroupValueFeature, GroupValueAttribute, GroupValueFeatureSpecial, OptionValueFeature, OptionValueAttribute, OptionValueFeatureSpecial
-from .models import MODELS, MODELS_SLUG, MODELS_PRODUCTS, MODELS_PRODUCTS_FINAL, MODELS_SLIDERS, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
+from .models import MODELS, MODELS_SLUG, MODELS_BRANDS, MODELS_PRODUCTS, MODELS_PRODUCTS_FINAL, MODELS_SLIDERS, TYPE_VALUE_LIST, TYPE_VALUE_BOOLEAN, TYPE_VALUE_FREE
 from .forms import TypeTaxForm, FeatureForm, AttributeForm, FeatureSpecialForm, FamilyForm, CategoryForm, SubcategoryForm, SubcategoryOwnForm, ProductFormCreate
 from .forms import ProductForm, ProductRelationSoldForm, ProductImageForm, ProductFinalImageForm, ProductDocumentForm, ProductFinalFormCreate, ProductFinalFormCreateModal, ProductFinalForm, ProductFeatureForm, ProductUniqueForm
 from .forms import ProductFinalAttributeForm, ProductFinalRelatedSubForm, BrandForm, FlagshipProductForm
@@ -64,7 +64,7 @@ query = ""
 # forms for multiforms
 formsfull = {}
 
-for info in MODELS + MODELS_PRODUCTS + MODELS_SLIDERS + MODELS_SLUG + MODELS_PRODUCTS_FINAL:
+for info in MODELS + MODELS_BRANDS + MODELS_PRODUCTS + MODELS_SLIDERS + MODELS_SLUG + MODELS_PRODUCTS_FINAL:
     field = info[0]
     model = info[1]
     formsfull[model] = [(None, None, None)]
