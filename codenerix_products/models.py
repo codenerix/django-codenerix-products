@@ -274,7 +274,7 @@ class GenProductBrandText(GenSEOText):  # META: Abstract class
 
     def save(self, *args, **kwards):
         self.slug = nameunify(self.slug, True)
-        return super(GenProductText, self).save(*args, **kwards)
+        return super(GenProductBrandText, self).save(*args, **kwards)
 
 
 class GenProductText(GenProductBrandText):  # META: Abstract class
