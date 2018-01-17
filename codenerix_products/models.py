@@ -245,7 +245,7 @@ class GenTextTitle(CodenerixModel):  # META: Abstract class
 
 
 # texto de los product y brands
-class GenProductText(GenSEOText):  # META: Abstract class
+class GenProductBrandText(GenSEOText):  # META: Abstract class
     class Meta(CodenerixModel.Meta):
         abstract = True
 
@@ -274,7 +274,19 @@ class GenProductText(GenSEOText):  # META: Abstract class
 
     def save(self, *args, **kwards):
         self.slug = nameunify(self.slug, True)
-        return super(GenProductText, self).save(*args, **kwards)
+        return super(GenProductBrandText, self).save(*args, **kwards)
+
+
+class GenProductText(GenProductBrandText):  # META: Abstract class
+    class Meta(CodenerixModel.Meta):
+        abstract = True
+
+    tags = models.TextField(_("TAGs"), blank=True, null=True)
+
+
+class GenBrandText(GenProductBrandText):  # META: Abstract class
+    class Meta(CodenerixModel.Meta):
+        abstract = True
 
 
 # texto de productfinal
@@ -1638,7 +1650,6 @@ for info in MODELS:
 
 MODELS_PRODUCTS = [
     ('product', 'ProductText', 'Product'),
-    ('brand', 'Brand', 'Brand'),
 ]
 
 for info in MODELS_PRODUCTS:
@@ -1647,6 +1658,19 @@ for info in MODELS_PRODUCTS:
     model_relate = info[2]
     for lang_code in settings.LANGUAGES_DATABASES:
         query = "class {}Text{}(GenProductText):\n".format(model_source, lang_code)
+        query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
+        exec(query)
+
+MODELS_BRANDS = [
+    ('brand', 'Brand', 'Brand'),
+]
+
+for info in MODELS_BRANDS:
+    field = info[0]
+    model_source = info[1]
+    model_relate = info[2]
+    for lang_code in settings.LANGUAGES_DATABASES:
+        query = "class {}Text{}(GenBrandText):\n".format(model_source, lang_code)
         query += "  {} = models.OneToOneField({}, on_delete=models.CASCADE, blank=False, null=False, related_name='{}')\n".format(field, model_relate, lang_code.lower())
         exec(query)
 
