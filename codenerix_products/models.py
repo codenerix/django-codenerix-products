@@ -21,6 +21,7 @@
 from operator import or_
 from collections import Iterable
 from functools import reduce
+from decimal import Decimal
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -39,6 +40,9 @@ from codenerix.fields import WysiwygAngularField
 from codenerix_extensions.helpers import get_language_database
 from codenerix_extensions.files.models import GenImageFile, GenDocumentFile, GenImageFileNull
 from codenerix_storages.models import StorageBox
+
+CURRENCY_MAX_DIGITS = getattr(settings, 'CDNX_INVOICING_CURRENCY_MAX_DIGITS', 10)
+CURRENCY_DECIMAL_PLACES = getattr(settings, 'CDNX_INVOICING_CURRENCY_DECIMAL_PLACES', 2)
 
 TYPE_PRICE_PERCENTAGE = 'P'
 TYPE_PRICE_INCREASE = 'I'
@@ -157,7 +161,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
         abstract = True
 
     type_value = models.CharField(_("Type value"), max_length=2, choices=TYPE_VALUES, blank=False, null=False, default='F')
-    price = models.FloatField(_("Price"), blank=False, null=False, default=0)
+    price = models.DecimalField(_("Price"), blank=False, null=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0)
     type_price = models.CharField(_("Type price"), max_length=2, choices=TYPE_PRICES, blank=False, null=False, default=TYPE_PRICE_PERCENTAGE)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
@@ -675,7 +679,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='products', verbose_name=_("Subcategory"))
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     code = models.CharField(_("Code"), max_length=250, blank=False, null=False, unique=True)
-    price_base = models.FloatField(_("Price base"), blank=False, null=False, default=0)
+    price_base = models.DecimalField(_("Price base"), blank=False, null=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0)
     # producto para la venta
     of_sales = models.BooleanField(_("Sales"), blank=True, null=False, default=True)
     # producto para la compra
@@ -685,7 +689,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     url_video = models.CharField(_("Url Video"), max_length=250, blank=True, null=True)
     # indica si es necesario tener una caracteristica especial obligatoriamente
     feature_special = models.ForeignKey(FeatureSpecial, on_delete=models.CASCADE, related_name='products', verbose_name=_("Feature special"), blank=True, null=True)
-    packing_cost = models.FloatField(_("Packing cost"), blank=False, null=False, default=0)
+    packing_cost = models.DecimalField(_("Packing cost"), blank=False, null=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0)
     weight = models.FloatField(_("Weight"), blank=False, null=False, default=0)
 
     def __unicode__(self):
@@ -972,9 +976,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
     stock_lock = models.FloatField(_("Stock lock"), null=False, blank=False, default=0, editable=False)
     # price without tax
-    price_base = models.FloatField(_("Price base"), null=False, blank=False, default=0, editable=False)
+    price_base = models.DecimalField(_("Price base"), null=False, blank=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0, editable=False)
     # price with tax
-    price = models.FloatField(_("Price"), null=False, blank=False, default=0, editable=False)
+    price = models.DecimalField(_("Price"), null=False, blank=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0, editable=False)
     ean13 = models.CharField(_("EAN-13"), null=True, blank=True, max_length=13)
 
     reviews_value = models.FloatField(_("Reviews"), null=False, blank=False, default=0, editable=False)
@@ -982,9 +986,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     sample = models.BooleanField(_("Sample"), blank=True, null=False, default=False, help_text=_('If this option is checked the product can not be sold'))
 
     code = models.CharField(_("Code"), max_length=250, blank=True, null=True, unique=True, help_text=_('If it is empty, code is equal to code product'))
-    price_base_local = models.FloatField(_("Price base"), blank=True, null=True, help_text=_('If it is empty, price base is equal to price base of product'))
+    price_base_local = models.DecimalField(_("Price base"), blank=True, null=True, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, help_text=_('If it is empty, price base is equal to price base of product'))
 
-    packing_cost = models.FloatField(_("Packing cost"), blank=True, null=True, help_text=_('If it is empty, packing cost is equal to packing cost of product'))
+    packing_cost = models.DecimalField(_("Packing cost"), blank=True, null=True, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, help_text=_('If it is empty, packing cost is equal to packing cost of product'))
     weight = models.FloatField(_("Weight"), blank=True, null=True, help_text=_('If it is empty, weight is equal to weight of product'))
 
     def __str__(self):
@@ -1081,7 +1085,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
     def calculate_price(self):
         if self.price_base_local is None:
-            price = float(self.product.price_base)
+            price = Decimal(self.product.price_base)
         else:
             price = self.price_base_local
         tax = float(self.product.tax.tax)
@@ -1091,38 +1095,38 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         for attr in self.products_final_attr.all().order_by('-updated'):
             if update:
                 if attr.attribute.type_price == TYPE_PRICE_FINAL:
-                    price = float(attr.attribute.price)
+                    price = Decimal(attr.attribute.price)
                     update = False
                 elif attr.attribute.type_price == TYPE_PRICE_INCREASE:
-                    price += float(attr.attribute.price)
+                    price += Decimal(attr.attribute.price)
                 elif attr.attribute.type_price == TYPE_PRICE_PERCENTAGE:
-                    price += (float(self.product.price_base) * float(attr.attribute.price) / 100)
+                    price += (Decimal(self.product.price_base) * Decimal(attr.attribute.price) / 100)
 
         # caracteristicas
         if update:
             for feature in self.product.product_features.all().order_by('-updated'):
                 if update:
                     if feature.feature.type_price == TYPE_PRICE_FINAL:
-                        price = float(feature.feature.price)
+                        price = Decimal(feature.feature.price)
                         update = False
                     elif feature.feature.type_price == TYPE_PRICE_INCREASE:
-                        price += float(feature.feature.price)
+                        price += Decimal(feature.feature.price)
                     elif feature.feature.type_price == TYPE_PRICE_PERCENTAGE:
-                        price += (float(self.product.price_base) * float(feature.feature.price) / 100)
+                        price += (Decimal(self.product.price_base) * Decimal(feature.feature.price) / 100)
 
         # caracteristicas especiales
         if update and self.product.feature_special:
             if self.product.feature_special.type_price == TYPE_PRICE_FINAL:
-                price = float(self.product.feature_special.price)
+                price = Decimal(self.product.feature_special.price)
             elif self.product.feature_special.type_price == TYPE_PRICE_INCREASE:
-                price += float(self.product.feature_special.price)
+                price += Decimal(self.product.feature_special.price)
             elif self.product.feature_special.type_price == TYPE_PRICE_PERCENTAGE:
-                price += float(self.product.price_base) * float(self.product.feature_special.price) / 100
+                price += Decimal(self.product.price_base) * Decimal(self.product.feature_special.price) / 100
 
         result = {}
-        result['price_base'] = float(price)
-        result['tax'] = (float(price) * float(tax)) / 100.0
-        result['price_total'] = float(price) + float(result['tax'])
+        result['price_base'] = Decimal(price)
+        result['tax'] = (Decimal(price) * Decimal(tax)) / 100
+        result['price_total'] = Decimal(price) + Decimal(result['tax'])
         return result
 
     def is_pack(self):
