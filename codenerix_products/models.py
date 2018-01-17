@@ -38,7 +38,7 @@ from codenerix.models import CodenerixModel
 from codenerix.fields import WysiwygAngularField
 from codenerix_extensions.helpers import get_language_database
 from codenerix_extensions.files.models import GenImageFile, GenDocumentFile, GenImageFileNull
-
+from codenerix_storages.models import StorageBox
 
 TYPE_PRICE_PERCENTAGE = 'P'
 TYPE_PRICE_INCREASE = 'I'
@@ -1473,6 +1473,7 @@ class ProductFeature(CodenerixModel):
 # valor de las caracteristicas especiales del producto final (imei, fecha caducidad)
 class ProductUnique(CodenerixModel):
     product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Product final'))
+    box = models.ForeignKey(StorageBox, on_delete=models.CASCADE, blank=True, null=True, related_name='products_unique', verbose_name=_('Box'))
     value = models.CharField(_("Value"), max_length=80, null=True, blank=True)
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0)
 
@@ -1490,6 +1491,7 @@ class ProductUnique(CodenerixModel):
         fields.append(('product_final', _("Product")))
         fields.append(('product_final__product__feature_special', _("Feature special")))
         fields.append(('value', _("Value")))
+        fields.append(('box', _("Box")))
         fields.append(('stock_real', _("Stock real")))
         return fields
 
