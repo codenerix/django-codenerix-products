@@ -8,6 +8,12 @@ Codenerix Products is a module that enables `CODENERIX.com <http://www.codenerix
     :target: http://www.codenerix.com
     :alt: Try our demo with Centrologic Cloud
 
+*********
+Changelog
+*********
+
+2018-01-17 - Codenerix Products v1.x is incompatible with v2.x, `what has changed and how to migrate to v2.x? <https://github.com/centrologic/django-codenerix-products/wiki/Codenerix-Products-version-1.x-is-icompatible-with-2.x>`_.
+
 ****
 Demo
 ****
