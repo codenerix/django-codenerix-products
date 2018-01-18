@@ -1147,8 +1147,8 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
                         'products': list(option.products_pack.all().values('pk').annotate(name=F('{}__name'.format(lang))))
                     })
             answer['rows'].append({
-                'price': product.price,
-                'price_base': product.product.price_base,
+                'price': str(product.price),
+                'price_base': str(product.product.price_base),
                 'description': product.__unicode__(),
                 'type_tax': product.product.tax.pk,
                 'type_tax__pk': product.product.tax.pk,
