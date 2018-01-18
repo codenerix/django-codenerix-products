@@ -161,7 +161,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
         abstract = True
 
     type_value = models.CharField(_("Type value"), max_length=2, choices=TYPE_VALUES, blank=False, null=False, default='F')
-    price = models.DecimalField(_("Price"), blank=False, null=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0)
+    price = models.FloatField(_("Price"), blank=False, null=False, default=0)
     type_price = models.CharField(_("Type price"), max_length=2, choices=TYPE_PRICES, blank=False, null=False, default=TYPE_PRICE_PERCENTAGE)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
@@ -1085,10 +1085,11 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
     def calculate_price(self):
         if self.price_base_local is None:
-            price = Decimal(self.product.price_base)
+            price = self.product.price_base
         else:
             price = self.price_base_local
-        tax = float(self.product.tax.tax)
+        tax = self.product.tax.tax
+        price_base = price
 
         # atributos
         update = True
@@ -1100,7 +1101,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
                 elif attr.attribute.type_price == TYPE_PRICE_INCREASE:
                     price += Decimal(attr.attribute.price)
                 elif attr.attribute.type_price == TYPE_PRICE_PERCENTAGE:
-                    price += (Decimal(self.product.price_base) * Decimal(attr.attribute.price) / 100)
+                    price += price_base * Decimal(attr.attribute.price / 100.0)
 
         # caracteristicas
         if update:
@@ -1112,7 +1113,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
                     elif feature.feature.type_price == TYPE_PRICE_INCREASE:
                         price += Decimal(feature.feature.price)
                     elif feature.feature.type_price == TYPE_PRICE_PERCENTAGE:
-                        price += (Decimal(self.product.price_base) * Decimal(feature.feature.price) / 100)
+                        price += price_base * Decimal(feature.feature.price / 100.0)
 
         # caracteristicas especiales
         if update and self.product.feature_special:
@@ -1121,12 +1122,12 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             elif self.product.feature_special.type_price == TYPE_PRICE_INCREASE:
                 price += Decimal(self.product.feature_special.price)
             elif self.product.feature_special.type_price == TYPE_PRICE_PERCENTAGE:
-                price += Decimal(self.product.price_base) * Decimal(self.product.feature_special.price) / 100
+                price += price_base * Decimal(self.product.feature_special.price / 100.0)
 
         result = {}
-        result['price_base'] = Decimal(price)
-        result['tax'] = (Decimal(price) * Decimal(tax)) / 100
-        result['price_total'] = Decimal(price) + Decimal(result['tax'])
+        result['price_base'] = price
+        result['tax'] = price * Decimal(tax) / 100
+        result['price_total'] = price + result['tax']
         return result
 
     def is_pack(self):
