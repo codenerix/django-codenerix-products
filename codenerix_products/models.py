@@ -257,7 +257,7 @@ class GenProductBrandText(GenSEOText):  # META: Abstract class
     description_long = WysiwygAngularField(_("Description long"), blank=True, null=True)
     # url amigable
     slug = models.CharField(_("Slug"), max_length=250, blank=False, null=False, unique=True)
-    name = models.CharField(_("Name"), max_length=250, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=250, blank=False, null=False)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
 
     def __str__(self):
