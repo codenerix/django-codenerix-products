@@ -32,7 +32,7 @@ from .views import ProductFinalDetails, CategoryDetails
 from .views import ProductFinalImageList, ProductFinalImageCreateModal, ProductFinalImageUpdate, ProductFinalImageUpdateModal, ProductFinalImageDelete, ProductFinalImageSubList, ProductFinalImageDetails, ProductFinalImageDetailsModal
 from .views import ProductFinalAttributeList, ProductFinalAttributeSubList, ProductFinalAttributeCreateModal, ProductFinalAttributeDetailsModal, ProductFinalAttributeUpdateModal, ProductFinalAttributeDelete
 from .views import ProductImageSubList, ProductImageDetailsModal
-from .views import ProductUniqueSubList, ProductUniqueDetailsModal
+from .views import ProductUniqueSubList, ProductUniqueDetailsModal, ProductUniqueForeign
 from .views import CategoryForeign, SubcategoryForeign, FeatureForeign
 from .views import ProductFinalRelatedSubList, ProductFinalRelatedSubUpdateModal, ProductFinalRelatedSubDelete
 from .views import ProductFinalAccesorySubList, ProductFinalAccesorySubUpdateModal, ProductFinalAccesorySubDelete
@@ -190,7 +190,7 @@ urlpatterns = [
     url(r'^productfinals/foreignsales/(?P<search>[\w\W]+|\*)$', ProductFinalForeignSales.as_view(), name='CDNX_products_productfinals_foreign_sales'),
     url(r'^productfinals/foreignsalespack/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPackSales.as_view(), name='CDNX_products_productfinals_foreign_sales_pack'),
     url(r'^productfinals/foreignsalesall/(?P<search>[\w\W]+|\*)$', ProductFinalForeignAllSales.as_view(), name='CDNX_products_productfinals_foreign_sales_all'),
-    
+
     url(r'^productfinals/foreignpurchases/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPurchases.as_view(), name='CDNX_products_productfinals_foreign_purchases'),
     url(r'^productfinals/foreignpurchasespack/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPackPurchases.as_view(), name='CDNX_products_productfinals_foreign_purchases_pack'),
     url(r'^productfinals/foreignpurchasesall/(?P<search>[\w\W]+|\*)$', ProductFinalForeignAllPurchases.as_view(), name='CDNX_products_productfinals_foreign_purchases_all'),
@@ -253,6 +253,7 @@ urlpatterns = [
     url(r'^productfeatures/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', ProductFeatureDelete.as_view(), name='CDNX_products_productfeatures_sublist_delete'),
 
     url(r'^productuniques$', ProductUniqueList.as_view(), name='CDNX_products_productuniques_list'),
+    url(r'^productuniques/(?P<search>[\w\W]+|\*)$', ProductUniqueForeign.as_view(), name='CDNX_products_productuniques_foreign'),
     url(r'^productuniques/(?P<pk>\w+)/edit$', ProductUniqueUpdate.as_view(), name='CDNX_products_productuniques_edit'),
     url(r'^productuniques/(?P<pk>\w+)/editmodal$', ProductUniqueUpdateModal.as_view(), name='CDNX_products_productuniques_editmodal'),
     url(r'^productuniques/(?P<pk>\w+)/delete$', ProductUniqueDelete.as_view(), name='CDNX_products_productuniques_delete'),

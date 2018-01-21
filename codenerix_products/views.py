@@ -1770,6 +1770,10 @@ class ProductUniqueDetailsModal(GenDetailModal, ProductUniqueDetails):
     pass
 
 
+class ProductUniqueForeign(GenForeignKey):
+    model = ProductUnique
+
+
 # ############################################
 class GenGroupValueFeatureUrl(object):
     ws_entry_point = '{}/groupvaluefeatures'.format(settings.CDNX_PRODUCTS_URL)
