@@ -351,6 +351,7 @@ class ProductFormCreate(GenModelForm):
 
 class ProductFormCreateCustom(GenModelForm):
     pass_to_final = forms.BooleanField(label=_("Create product final"), required=False, initial=True)
+    ean13 = forms.CharField(label=_("EAN-13"), max_length=13, required=False)
 
     class Meta:
         model = Product
@@ -379,6 +380,7 @@ class ProductFormCreateCustom(GenModelForm):
                 ['subcategory', 4],
                 ['tax', 4],
                 ['url_video', 4],
+                ['ean13', 4],
             ),
             (
                 _('Packaging information'), 12,
@@ -1202,7 +1204,7 @@ class {model}TextForm{lang}(GenModelForm):\n
                 ['meta_title', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_title', '{model}TextForm', [{languages}])"]],
                 ['meta_description', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_description', '{model}TextForm', [{languages}])"]],
                 ['meta_keywords', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_keywords', '{model}TextForm', [{languages}])"]],
-                ['tags', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('meta_keywords', '{model}TextForm', [{languages}])"]],
+                ['tags', 4, None, None, None, None, None, ["ng-blur=refresh_lang_field('tags', '{model}TextForm', [{languages}])"]],
             )]\n"""
         else:
             query += """
