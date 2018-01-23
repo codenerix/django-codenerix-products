@@ -1020,11 +1020,12 @@ class ProductCreateCustom(MultiForm, GenCreate):
 
     def form_valid(self, form, forms):
         pass_to_final = form.cleaned_data.get('pass_to_final')
+        ean13 = form.cleaned_data.get('ean13')
         if pass_to_final:
             try:
                 with transaction.atomic():
                     result = super(ProductCreateCustom, self).form_valid(form, forms)
-                    self.object.pass_to_productfinal()
+                    self.object.pass_to_productfinal(ean13=ean13)
             except IntegrityError as e:
                 errors = form._errors.setdefault("code", ErrorList())
                 errors.append(e)

@@ -764,13 +764,17 @@ class Product(CustomQueryMixin, GenProduct):
             result = super(Product, self).save(*args, **kwargs)
         return result
 
-    def pass_to_productfinal(self):
+    def pass_to_productfinal(self, ean13=None):
         get_class = lambda x: globals()[x]
 
         try:
             with transaction.atomic():
                 pf = ProductFinal()
                 pf.product = self
+                pf.code = self.code
+                pf.price_base_local = self.price_base
+                if ean13:
+                    pf.ean13 = ean13
                 pf.save()
 
                 for lang_code in settings.LANGUAGES_DATABASES:
@@ -787,6 +791,10 @@ class Product(CustomQueryMixin, GenProduct):
                         pft.slug = getattr(lang, 'slug', None)
                         pft.name = getattr(lang, 'name', None)
                         pft.public = getattr(lang, 'public', None)
+                        pft.meta_title = getattr(lang, 'meta_title', None)
+                        pft.meta_description = getattr(lang, 'meta_description', None)
+                        pft.meta_keywords = getattr(lang, 'meta_keywords', None)
+                        pft.tags = getattr(lang, 'tags', None)
                         pft.save()
         except IntegrityError as e:
             raise IntegrityError(e)
