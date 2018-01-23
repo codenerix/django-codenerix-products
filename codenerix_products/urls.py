@@ -32,7 +32,7 @@ from .views import ProductFinalDetails, CategoryDetails
 from .views import ProductFinalImageList, ProductFinalImageCreateModal, ProductFinalImageUpdate, ProductFinalImageUpdateModal, ProductFinalImageDelete, ProductFinalImageSubList, ProductFinalImageDetails, ProductFinalImageDetailsModal
 from .views import ProductFinalAttributeList, ProductFinalAttributeSubList, ProductFinalAttributeCreateModal, ProductFinalAttributeDetailsModal, ProductFinalAttributeUpdateModal, ProductFinalAttributeDelete
 from .views import ProductImageSubList, ProductImageDetailsModal
-from .views import ProductUniqueSubList, ProductUniqueDetailsModal, ProductUniqueForeign
+from .views import ProductUniqueSubList, ProductUniqueDetailsModal, ProductUniqueCodeForeign
 from .views import CategoryForeign, SubcategoryForeign, FeatureForeign
 from .views import ProductFinalRelatedSubList, ProductFinalRelatedSubUpdateModal, ProductFinalRelatedSubDelete
 from .views import ProductFinalAccesorySubList, ProductFinalAccesorySubUpdateModal, ProductFinalAccesorySubDelete
@@ -52,6 +52,7 @@ from .views import OptionValueFeatureList, OptionValueFeatureUpdate, OptionValue
 from .views import OptionValueAttributeList, OptionValueAttributeUpdate, OptionValueAttributeUpdateModal, OptionValueAttributeDelete, OptionValueAttributeSubList, OptionValueAttributeSubListModal, OptionValueAttributeCreateModal, OptionValueAttributeDetailsModal, OptionValueAttributeForeign
 from .views import OptionValueFeatureSpecialList, OptionValueFeatureSpecialUpdate, OptionValueFeatureSpecialUpdateModal, OptionValueFeatureSpecialDelete, OptionValueFeatureSpecialSubList, OptionValueFeatureSpecialSubListModal, OptionValueFeatureSpecialCreateModal, OptionValueFeatureSpecialDetailsModal, OptionValueFeatureSpecialForeign
 from .views import ProductFinalOptionList, ProductFinalOptionCreate, ProductFinalOptionCreateModal, ProductFinalOptionUpdate, ProductFinalOptionUpdateModal, ProductFinalOptionDelete, ProductFinalOptionSubList, ProductFinalOptionDetails, ProductFinalOptionDetailModal
+from .views import ProductFinalEAN13Foreign
 from .views import ProductFinalForeignSales, ProductFinalForeignPackSales, ProductFinalForeignAllSales
 from .views import ProductFinalForeignPurchases, ProductFinalForeignPackPurchases, ProductFinalForeignAllPurchases
 from .views import TypeTaxForeign
@@ -187,6 +188,8 @@ urlpatterns = [
     url(r'^productfinals/(?P<pk>\w+)/editmodal$', ProductFinalUpdateModal.as_view(), name='CDNX_products_productfinals_editmodal'),
     url(r'^productfinals/(?P<pk>\w+)/delete$', ProductFinalDelete.as_view(), name='CDNX_products_productfinals_delete'),
 
+    url(r'^productfinals/foreignean13/(?P<search>[\w\W]+|\*)$', ProductFinalEAN13Foreign.as_view(), name='CDNX_products_productfinalsean13_foreign'),
+
     url(r'^productfinals/foreignsales/(?P<search>[\w\W]+|\*)$', ProductFinalForeignSales.as_view(), name='CDNX_products_productfinals_foreign_sales'),
     url(r'^productfinals/foreignsalespack/(?P<search>[\w\W]+|\*)$', ProductFinalForeignPackSales.as_view(), name='CDNX_products_productfinals_foreign_sales_pack'),
     url(r'^productfinals/foreignsalesall/(?P<search>[\w\W]+|\*)$', ProductFinalForeignAllSales.as_view(), name='CDNX_products_productfinals_foreign_sales_all'),
@@ -253,7 +256,7 @@ urlpatterns = [
     url(r'^productfeatures/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', ProductFeatureDelete.as_view(), name='CDNX_products_productfeatures_sublist_delete'),
 
     url(r'^productuniques$', ProductUniqueList.as_view(), name='CDNX_products_productuniques_list'),
-    url(r'^productuniques/(?P<search>[\w\W]+|\*)$', ProductUniqueForeign.as_view(), name='CDNX_products_productuniques_foreign'),
+    url(r'^productuniques/code/(?P<search>[\w\W]+|\*)$', ProductUniqueCodeForeign.as_view(), name='CDNX_products_productuniquescode_foreign'),
     url(r'^productuniques/(?P<pk>\w+)/edit$', ProductUniqueUpdate.as_view(), name='CDNX_products_productuniques_edit'),
     url(r'^productuniques/(?P<pk>\w+)/editmodal$', ProductUniqueUpdateModal.as_view(), name='CDNX_products_productuniques_editmodal'),
     url(r'^productuniques/(?P<pk>\w+)/delete$', ProductUniqueDelete.as_view(), name='CDNX_products_productuniques_delete'),

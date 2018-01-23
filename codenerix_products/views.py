@@ -1097,6 +1097,15 @@ class ProductFinalSubList(GenProductFinalUrl, GenList):
         return answer
 
 
+class ProductFinalEAN13Foreign(GenForeignKey):
+    model = ProductFinal
+    label = "{ean13} - {code} - {product__code}"
+
+    def get_foreign(self, queryset, search, filters):
+        qs = queryset.filter(Q(ean13__icontains=search) | Q(code__icontains=search | Q(product__code__icontains=search))).all()
+        return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
+
+
 class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
     model = ProductFinal
     label = "{product}"
@@ -1123,21 +1132,18 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
         answer['rows'] = []
         answer['clear'] = ['price', 'type_tax']
         answer['readonly'] = ['price', 'type_tax']
-        answer['rows'].append({
-            'price': 0,
-            'price_base': 0,
-            'description': '',
-            'type_tax': '0',
-            'tax': 0,
-            'label': "---------",
-            'id': None,
-            # 'options': None,
-        })
+        if self.request.GET.get('def', "0") == "1":
+            answer['rows'].append({
+                'price': 0,
+                'price_base': 0,
+                'description': '',
+                'type_tax': '0',
+                'tax': 0,
+                'label': "---------",
+                'id': None,
+                # 'options': None,
+            })
         for product in qs.distinct():
-            if product.product.tax:
-                tax = product.product.tax.pk
-            else:
-                tax = 0
             pack = []
             lang = get_language_database()
             if product.productfinals_option.filter(active=True).exists():
@@ -1771,8 +1777,14 @@ class ProductUniqueDetailsModal(GenDetailModal, ProductUniqueDetails):
     pass
 
 
-class ProductUniqueForeign(GenForeignKey):
+class ProductUniqueCodeForeign(GenForeignKey):
     model = ProductUnique
+    label = "{value}"
+
+    def get_foreign(self, queryset, search, filters):
+        product_final = "1"
+        qs = queryset.filter(product_final__pk=product_final, value__icontains=search).all()
+        return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
 
 
 # ############################################
