@@ -1364,6 +1364,16 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
 
         return product
 
+    def get_value_product_unique(self, pos):
+        """
+        Return all products unique relationship with POS's Storage (only salable zones)
+        """
+        qs = ProductUnique.objects.filter(
+            box__box_structure__zone__storage__in=pos.storage_stock.filter(storage_zones__salable=True),
+            product_final=self
+        )
+        return qs
+
 
 # imagenes de productos
 class ProductFinalImage(CodenerixModel, GenImageFile):
