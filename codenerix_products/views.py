@@ -30,7 +30,7 @@ from django.db.models import Q, F, Value
 from django.db.models.functions import Concat
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -1070,6 +1070,14 @@ class ProductFinalDetailsModal(GenProductDocumentUrl, GenDetailModal, ProductFin
     pass
 
 
+class ProductFinalFullinfo(GenProductFinalUrl, GenDetail):
+    model = ProductFinal
+    groups = ProductFinalForm.__groups_details__()
+    template_model = "codenerix_products/productfinal_details.html"
+    exclude_fields = ['related', 'related_accesory']
+    json = True
+
+
 class ProductFinalSubList(GenProductFinalUrl, GenList):
     model = ProductFinal
 
@@ -1102,7 +1110,7 @@ class ProductFinalEAN13Foreign(GenForeignKey):
     label = "{ean13} - {code} - {product__code}"
 
     def get_foreign(self, queryset, search, filters):
-        qs = queryset.filter(Q(ean13__icontains=search) | Q(code__icontains=search | Q(product__code__icontains=search))).all()
+        qs = queryset.filter(Q(ean13__icontains=search) | Q(code__icontains=search) | Q(product__code__icontains=search)).all()
         return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
 
 
@@ -1743,7 +1751,7 @@ class ProductUniqueUpdate(GenProductUniqueUrl, GenUpdate):
         except ValidationError as e:
             errors = form._errors.setdefault("value", ErrorList())
             errors.append(e)
-            return super(ProductUniqueCreate, self).form_invalid(form)
+            return super(ProductUniqueUpdate, self).form_invalid(form)
         except IntegrityError:
             errors = form._errors.setdefault("value", ErrorList())
             errors.append(_("Value existing"))

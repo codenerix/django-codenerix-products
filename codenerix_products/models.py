@@ -44,6 +44,8 @@ from codenerix_storages.models import StorageBox
 CURRENCY_MAX_DIGITS = getattr(settings, 'CDNX_INVOICING_CURRENCY_MAX_DIGITS', 10)
 CURRENCY_DECIMAL_PLACES = getattr(settings, 'CDNX_INVOICING_CURRENCY_DECIMAL_PLACES', 2)
 
+PRODUCT_UNIQUE_VALUE_LENGTH = 80
+
 TYPE_PRICE_PERCENTAGE = 'P'
 TYPE_PRICE_INCREASE = 'I'
 TYPE_PRICE_FINAL = 'F'
@@ -691,6 +693,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     feature_special = models.ForeignKey(FeatureSpecial, on_delete=models.CASCADE, related_name='products', verbose_name=_("Feature special"), blank=True, null=True)
     packing_cost = models.DecimalField(_("Packing cost"), blank=False, null=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0)
     weight = models.FloatField(_("Weight"), blank=False, null=False, default=0)
+    caducable = models.BooleanField(_("Caducable"), blank=True, null=False, default=False)
 
     def __unicode__(self):
         return u"{}".format(smart_text(self.code))
@@ -716,6 +719,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
         fields.append(('feature_special', _("Feature special")))
         fields.append(('packing_cost', _("Packing cost")))
         fields.append(('weight', _("Weight")))
+        fields.append(('caducable', _("Caducable")))
 
         return fields
 
@@ -1509,7 +1513,7 @@ class ProductFeature(CodenerixModel):
 class ProductUnique(CodenerixModel):
     product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Product final'))
     box = models.ForeignKey(StorageBox, on_delete=models.CASCADE, blank=True, null=True, related_name='products_unique', verbose_name=_('Box'))
-    value = models.CharField(_("Value"), max_length=80, null=True, blank=True)
+    value = models.CharField(_("Value"), max_length=PRODUCT_UNIQUE_VALUE_LENGTH, null=True, blank=True)
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0)
 
     class Meta(CodenerixModel.Meta):
