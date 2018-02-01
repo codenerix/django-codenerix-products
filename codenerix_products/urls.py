@@ -27,7 +27,7 @@ from .views import FeatureUpdateModal, AttributeUpdateModal, FeatureSpecialUpdat
 from .views import FeatureDelete, AttributeDelete, FeatureSpecialDelete, FamilyDelete, CategoryDelete, SubcategoryDelete, ProductDelete, ProductRelationSoldDelete, ProductImageDelete, ProductDocumentDelete, ProductFinalDelete, ProductFeatureDelete, ProductUniqueDelete
 from .views import ProductDetails, ProductFeatureSubList, ProductFeatureDetailsModal
 from .views import ProductDocumentSubList, ProductDocumentDetailsModal
-from .views import ProductFinalDetails, CategoryDetails
+from .views import ProductFinalDetails, CategoryDetails, ProductFinalFullinfo
 # ProductFinalImageCreate,
 from .views import ProductFinalImageList, ProductFinalImageCreateModal, ProductFinalImageUpdate, ProductFinalImageUpdateModal, ProductFinalImageDelete, ProductFinalImageSubList, ProductFinalImageDetails, ProductFinalImageDetailsModal
 from .views import ProductFinalAttributeList, ProductFinalAttributeSubList, ProductFinalAttributeCreateModal, ProductFinalAttributeDetailsModal, ProductFinalAttributeUpdateModal, ProductFinalAttributeDelete
@@ -185,6 +185,7 @@ urlpatterns = [
     url(r'^productfinals/custom/add$', ProductCreateCustom.as_view(), name='CDNX_products_productfinals_addcustom'),
     url(r'^productfinals/addmodal$', ProductFinalCreateModal.as_view(), name='CDNX_products_productfinals_addmodal'),
     url(r'^productfinals/(?P<pk>\w+)$', ProductFinalDetails.as_view(), name='CDNX_products_productfinals_details'),
+    url(r'^productfinals/(?P<pk>\w+)/fullinfo$', ProductFinalFullinfo.as_view(), name='CDNX_products_productfinals_fullinfo'),
     url(r'^productfinals/(?P<pk>\w+)/edit$', ProductFinalUpdate.as_view(), name='CDNX_products_productfinals_edit'),
     url(r'^productfinals/(?P<pk>\w+)/editmodal$', ProductFinalUpdateModal.as_view(), name='CDNX_products_productfinals_editmodal'),
     url(r'^productfinals/(?P<pk>\w+)/delete$', ProductFinalDelete.as_view(), name='CDNX_products_productfinals_delete'),
