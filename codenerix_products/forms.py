@@ -907,7 +907,7 @@ class ProductUniqueForm(GenModelForm):
             (
                 _('Details'), 12,
                 ['value', 6],
-                ['stock_real', 6],
+                ['stock_original', 6],
                 ['box', 6],
             )
         ]
@@ -921,7 +921,9 @@ class ProductUniqueForm(GenModelForm):
                 ['product_final', 6],
                 ['product_final__product__feature_special', 6],
                 ['value', 6],
+                ['stock_original', 6],
                 ['stock_real', 6],
+                ['stock_locked', 6],
             )
         ]
         return g

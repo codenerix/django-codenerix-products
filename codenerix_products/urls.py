@@ -57,6 +57,7 @@ from .views import ProductFinalForeignSales, ProductFinalForeignPackSales, Produ
 from .views import ProductFinalForeignPurchases, ProductFinalForeignPackPurchases, ProductFinalForeignAllPurchases
 from .views import TypeTaxForeign
 from .views import ProductCreateCustom
+from .views import ProductUniqueForeign
 
 
 urlpatterns = [
@@ -67,7 +68,7 @@ urlpatterns = [
     url(r'^typetaxs/(?P<pk>\w+)/edit$', TypeTaxUpdate.as_view(), name='CDNX_products_typetaxs_edit'),
     url(r'^typetaxs/(?P<pk>\w+)/editmodal$', TypeTaxUpdateModal.as_view(), name='CDNX_products_typetaxs_editmodal'),
     url(r'^typetaxs/(?P<pk>\w+)/delete$', TypeTaxDelete.as_view(), name='CDNX_products_typetaxs_delete'),
-    url(r'^typetaxs/foreign/(?P<search>[\w\W]+|\*)$', TypeTaxForeign.as_view(), name='CDNX_products_typetaxs_foreing'),
+    url(r'^typetaxs/foreign/(?P<search>[\w\W]+|\*)$', TypeTaxForeign.as_view(), name='CDNX_products_typetaxs_foreign'),
 
     url(r'^features$', FeatureList.as_view(), name='CDNX_products_features_list'),
     url(r'^features/add$', FeatureCreate.as_view(), name='CDNX_products_features_add'),
@@ -267,6 +268,7 @@ urlpatterns = [
     url(r'^productuniques/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/edit$', ProductUniqueUpdateModal.as_view(), name='CDNX_products_productuniques_sublist_edit'),
     url(r'^productuniques/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/editmodal$', ProductUniqueUpdateModal.as_view(), name='CDNX_products_productuniques_sublist_editmodal'),
     url(r'^productuniques/(?P<cpk>\w+)/sublist/(?P<pk>\w+)/delete$', ProductUniqueDelete.as_view(), name='CDNX_products_productuniques_sublist_delete'),
+    url(r'^productuniques/foreign/(?P<search>[\w\W]+|\*)$', ProductUniqueForeign.as_view(), name='CDNX_products_productunique_foreign'),
 
 
     url(r'^flagshipproducts$', FlagshipProductList.as_view(), name='CDNX_products_flagshipproducts_list'),

@@ -974,8 +974,8 @@ class ProductFinalList(GenProductFinalUrl, GenList):
         fields.append(('product__code', _("Product Code")))
         fields.append(('{}__name'.format(lang), _("Product")))
         fields.append(('{}__public'.format(lang), _("Public")))
-        fields.append(('stock_real', _("Stock real")))
-        fields.append(('stock_lock', _("Stock lock")))
+        # fields.append(('stock_real', _("Stock real")))
+        # fields.append(('stock_lock', _("Stock lock")))
         fields.append(('price', _("Price")))
         fields.append(('is_pack', _("Is pack")))
         fields.append(('sample', _("Sample")))
@@ -1785,6 +1785,36 @@ class ProductUniqueCodeForeign(GenForeignKey):
         product_final = "1"
         qs = queryset.filter(product_final__pk=product_final, value__icontains=search).all()
         return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
+
+
+class ProductUniqueForeign(GenForeignKey):
+    model = ProductUnique
+    label = "{value}"
+
+    def get_foreign(self, queryset, search, filters):
+        # Filter with search string
+
+        queryset = queryset.all()
+        product_final = filters.get('product', None)
+
+        if product_final:
+            pf = ProductFinal.objects.filter(pk=product_final).first()
+            if pf:
+                if pf.product.feature_special:
+                    if pf.product.feature_special.type_value == TYPE_VALUE_FREE:
+                        queryset = queryset.filter(Q(value__icontains=search))
+                    elif pf.product.feature_special.type_value == TYPE_VALUE_LIST:
+                        for lang_code in settings.LANGUAGES_DATABASES:
+                            queryset = queryset.filter(
+                                Q(**{
+                                    'pf__product__feature_special__list_value__options_value_feature_special__{}__option_value__icontains'.format(lang_code.lower()): search
+                                })
+                            )
+
+            queryset = queryset.filter(
+                Q(product_final__pk=product_final)
+            )
+        return queryset
 
 
 # ############################################

@@ -160,7 +160,7 @@ class GenAttr(CodenerixModel, GenImageFileNull):  # META: Abstract class
     class Meta(CodenerixModel.Meta):
         abstract = True
 
-    type_value = models.CharField(_("Type value"), max_length=2, choices=TYPE_VALUES, blank=False, null=False, default='F')
+    type_value = models.CharField(_("Type value"), max_length=2, choices=TYPE_VALUES, blank=False, null=False, default=TYPE_VALUE_FREE)
     price = models.FloatField(_("Price"), blank=False, null=False, default=0)
     type_price = models.CharField(_("Type price"), max_length=2, choices=TYPE_PRICES, blank=False, null=False, default=TYPE_PRICE_PERCENTAGE)
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
@@ -981,8 +981,6 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     offer = models.BooleanField(_("Offer"), blank=True, null=False, default=False)
     outstanding = models.BooleanField(_("Outstanding"), blank=True, null=False, default=False)
     most_sold = models.BooleanField(_("Most sold"), blank=True, null=False, default=False)
-    stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
-    stock_lock = models.FloatField(_("Stock lock"), null=False, blank=False, default=0, editable=False)
     # price without tax
     price_base = models.DecimalField(_("Price base"), null=False, blank=False, max_digits=CURRENCY_MAX_DIGITS, decimal_places=CURRENCY_DECIMAL_PLACES, default=0, editable=False)
     # price with tax
@@ -1026,8 +1024,6 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         fields.append(('product__category__{}__name'.format(lang), _("Category")))
         fields.append(('product__subcategory__{}__name'.format(lang), _("Subcategory")))
         fields.append(('{}__public'.format(lang), _("Public")))
-        fields.append(('stock_real', _("Stock real")))
-        fields.append(('stock_lock', _("Stock lock")))
         fields.append(('price', _("Price")))
         fields.append(('is_pack', _("Is pack")))
         fields.append(('sample', _("Sample")))
@@ -1054,7 +1050,6 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             ],
             text
         )
-        # return qobject
 
         text_filters = {}
         text_filters['product_name'] = qobject
@@ -1062,14 +1057,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return text_filters
 
     def save(self, *args, **kwards):
+        if self.stock_locked > self.stock_real:
+            raise IntegrityError(_('You can not block more stock from the available'))
         self.recalculate(commit=False)
         return super(ProductFinal, self).save(*args, **kwards)
-
-    def update_stock(self, commit=True):
-        self.stock_real = ProductUnique.objects.filter(product_final=self).aggregate(stock=Sum('stock_real'))['stock']
-        if commit:
-            self.save()
-        return self.stock_real
 
     def recalculate(self, commit=True):
         prices = self.calculate_price()
@@ -1508,9 +1499,11 @@ class ProductFeature(CodenerixModel):
 # valor de las caracteristicas especiales del producto final (imei, fecha caducidad)
 class ProductUnique(CodenerixModel):
     product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Product final'))
-    box = models.ForeignKey(StorageBox, on_delete=models.CASCADE, blank=True, null=True, related_name='products_unique', verbose_name=_('Box'))
+    box = models.ForeignKey(StorageBox, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Box'))
     value = models.CharField(_("Value"), max_length=80, null=True, blank=True)
-    stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0)
+    stock_original = models.FloatField(_("Stock original"), null=False, blank=False, default=0)
+    stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
+    stock_locked = models.FloatField(_("Stock locked"), null=False, blank=False, default=0, editable=False)
 
     class Meta(CodenerixModel.Meta):
         unique_together = ('product_final', 'value')
@@ -1528,7 +1521,12 @@ class ProductUnique(CodenerixModel):
         fields.append(('value', _("Value")))
         fields.append(('box', _("Box")))
         fields.append(('stock_real', _("Stock real")))
+        fields.append(('stock_locked', _("Stock locked")))
         return fields
+
+    def locked_stock(self, quantity):
+        self.stock_locked += quantity
+        self.save()
 
     def save(self, *args, **kwargs):
         product_final = ProductFinal.objects.filter(pk=self.product_final_id).first()
@@ -1543,12 +1541,11 @@ class ProductUnique(CodenerixModel):
         else:
             raise ValidationError(_("Product don't seleted"))
 
-        # save and update stock of product final
-        with transaction.atomic():
-            r = super(ProductUnique, self).save(*args, **kwargs)
-            product_final.stock_real = ProductUnique.objects.filter(product_final=product_final).aggregate(stock=Sum('stock_real'))['stock']
-            product_final.save()
-            return r
+        if self.pk is None:
+            self.stock_real = self.stock_original
+            self.stock_locked = 0
+
+        return super(ProductUnique, self).save(*args, **kwargs)
 
 
 # producto estrella (solo un registro publico)
