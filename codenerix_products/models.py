@@ -1509,14 +1509,15 @@ class ProductUnique(CodenerixModel):
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
     stock_locked = models.FloatField(_("Stock locked"), null=False, blank=False, default=0, editable=False)
 
-    class Meta(CodenerixModel.Meta):
-        unique_together = ('product_final', 'value')
+    def __str__(self):
+        if self.value:
+            result = self.value
+        else:
+            result = self.product_final
+        return u"{} ({})".format(smart_text(result), self.box)
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.product_final))
-
-    def __str__(self):
-        return self.__unicode__()
+        return self.__str__()
 
     def __fields__(self, info):
         fields = []
@@ -1524,6 +1525,7 @@ class ProductUnique(CodenerixModel):
         fields.append(('product_final__product__feature_special', _("Feature special")))
         fields.append(('value', _("Value")))
         fields.append(('box', _("Box")))
+        fields.append(('stock_original', _("Stock original")))
         fields.append(('stock_real', _("Stock real")))
         fields.append(('stock_locked', _("Stock locked")))
         return fields
@@ -1531,6 +1533,19 @@ class ProductUnique(CodenerixModel):
     def locked_stock(self, quantity):
         self.stock_locked += quantity
         self.save()
+
+    def duplicate(self, quantity):
+        with transaction.atomic():
+            new_line = self
+            new_line.pk = None
+            new_line.stock_original = self.stock_original - quantity
+            new_line.stock_real = self.stock_original - quantity
+            new_line.save()
+            self.stock_original = quantity
+            self.stock_real = quantity
+            self.save()
+            # raise Exception(new_line.stock_original, self.stock_original)
+            return new_line
 
     def save(self, *args, **kwargs):
         product_final = ProductFinal.objects.filter(pk=self.product_final_id).first()
@@ -1540,8 +1555,13 @@ class ProductUnique(CodenerixModel):
                 if ProductUnique.objects.filter(
                     value=self.value,
                     product_final__product=product_final.product
+                ).exclude(
+                    pk=self.pk
                 ).exists():
                     raise ValidationError(_('Ya existe un producto final con el valor de la caracteristicas especial'))
+                elif self.stock_original > 1:
+                    raise ValidationError(_('El valor de la caracteristicas especial debe ser unico'))
+
         else:
             raise ValidationError(_("Product don't seleted"))
 
