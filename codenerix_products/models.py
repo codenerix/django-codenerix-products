@@ -1061,8 +1061,6 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return text_filters
 
     def save(self, *args, **kwards):
-        if self.stock_locked > self.stock_real:
-            raise IntegrityError(_('You can not block more stock from the available'))
         self.recalculate(commit=False)
         return super(ProductFinal, self).save(*args, **kwards)
 
