@@ -1091,8 +1091,6 @@ class ProductFinalSubList(GenProductFinalUrl, GenList):
         fields = []
         fields.append(('id', _("Identifier")))
         fields.append(('products_final_attr', _("Attributes")))
-        fields.append(('stock_real', _("Stock real")))
-        fields.append(('stock_lock', _("Stock lock")))
         fields.append(('outstanding', _("Outstanding")))
         fields.append(('most_sold', _("Most sold")))
         for lang in settings.LANGUAGES_DATABASES:
