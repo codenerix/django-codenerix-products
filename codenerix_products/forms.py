@@ -729,8 +729,6 @@ class ProductFinalForm(GenModelForm):
                 ["price_base_local", 4],
                 ["offer", 3],
                 ["outstanding", 3],
-                ["stock_real", 6],
-                ["stock_lock", 6],
                 ["price", 6],
                 ["reviews_value", 6],
                 ["reviews_count", 6],

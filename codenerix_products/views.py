@@ -974,8 +974,6 @@ class ProductFinalList(GenProductFinalUrl, GenList):
         fields.append(('product__code', _("Product Code")))
         fields.append(('{}__name'.format(lang), _("Product")))
         fields.append(('{}__public'.format(lang), _("Public")))
-        # fields.append(('stock_real', _("Stock real")))
-        # fields.append(('stock_lock', _("Stock lock")))
         fields.append(('price', _("Price")))
         fields.append(('is_pack', _("Is pack")))
         fields.append(('sample', _("Sample")))
@@ -1091,8 +1089,6 @@ class ProductFinalSubList(GenProductFinalUrl, GenList):
         fields = []
         fields.append(('id', _("Identifier")))
         fields.append(('products_final_attr', _("Attributes")))
-        fields.append(('stock_real', _("Stock real")))
-        fields.append(('stock_lock', _("Stock lock")))
         fields.append(('outstanding', _("Outstanding")))
         fields.append(('most_sold', _("Most sold")))
         for lang in settings.LANGUAGES_DATABASES:
@@ -1168,7 +1164,7 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
                 'type_tax': product.product.tax.pk,
                 'type_tax__pk': product.product.tax.pk,
                 'tax': product.product.tax.tax,
-                'label': u"{} ({})".format(product.__unicode__(), product.stock_real),
+                'label': u"{}".format(product.__unicode__()),
                 'id': product.pk,
                 'packs:__JSON_DATA__': json.dumps(pack),
             })
