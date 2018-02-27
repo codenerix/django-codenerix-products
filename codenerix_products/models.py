@@ -18,6 +18,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
+
 from operator import or_
 from collections import Iterable
 from functools import reduce
@@ -40,6 +42,9 @@ from codenerix.fields import WysiwygAngularField
 from codenerix_extensions.helpers import get_language_database
 from codenerix_extensions.files.models import GenImageFile, GenDocumentFile, GenImageFileNull
 from codenerix_storages.models import StorageBox
+
+from codenerix_products.exceptions import ProductUniqueAlreadyExists, ProductUniqueQuantityExceeded, ProductUniqueNotProductFinal, ProductFinalAttributeOnlyOne
+
 
 CURRENCY_MAX_DIGITS = getattr(settings, 'CDNX_INVOICING_CURRENCY_MAX_DIGITS', 10)
 CURRENCY_DECIMAL_PLACES = getattr(settings, 'CDNX_INVOICING_CURRENCY_DECIMAL_PLACES', 2)
@@ -1474,7 +1479,7 @@ class ProductFinalAttribute(CodenerixModel):
     def save(self, *args, **kwargs):
         msg = ProductFinalAttribute.validate(self.pk, self.product.pk, self.attribute.pk)
         if msg:
-            raise IntegrityError(msg)
+            raise ProductFinalAttributeOnlyOne(msg)
         return super(ProductFinalAttribute, self).save(*args, **kwargs)
 
 
@@ -1534,7 +1539,7 @@ class ProductUnique(CodenerixModel):
 
     def duplicate(self, quantity):
         with transaction.atomic():
-            new_line = self
+            new_line = copy.copy(self)
             new_line.pk = None
             new_line.stock_original = self.stock_original - quantity
             new_line.stock_real = self.stock_original - quantity
@@ -1542,7 +1547,6 @@ class ProductUnique(CodenerixModel):
             self.stock_original = quantity
             self.stock_real = quantity
             self.save()
-            # raise Exception(new_line.stock_original, self.stock_original)
             return new_line
 
     def save(self, *args, **kwargs):
@@ -1556,12 +1560,12 @@ class ProductUnique(CodenerixModel):
                 ).exclude(
                     pk=self.pk
                 ).exists():
-                    raise ValidationError(_('Ya existe un producto final con el valor de la caracteristicas especial'))
+                    raise ProductUniqueAlreadyExists(_('Ya existe un producto unico con el valor de la caracteristicas especial'))
                 elif self.stock_original > 1:
-                    raise ValidationError(_('El valor de la caracteristicas especial debe ser unico'))
+                    raise ProductUniqueQuantityExceeded(_('Este producto unico solo se puede cargar en cantidades de uno, porque la caracteristica especian indica que debe el valor no se puede repetir'))
 
         else:
-            raise ValidationError(_("Product don't seleted"))
+            raise ProductUniqueNotProductFinal(_("Product final not seleted"))
 
         if self.pk is None:
             self.stock_real = self.stock_original
