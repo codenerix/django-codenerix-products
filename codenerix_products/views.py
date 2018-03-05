@@ -1105,6 +1105,11 @@ class ProductFinalEAN13Foreign(GenForeignKey):
     model = ProductFinal
     label = "{ean13} - {code} - {product__code}"
 
+    def custom_choice(self, obj, info):
+        info['price'] = float(obj.price)
+        info['tax'] = float(obj.product.tax.tax)
+        return info
+
     def get_foreign(self, queryset, search, filters):
         qs = queryset.filter(Q(ean13__icontains=search) | Q(code__icontains=search) | Q(product__code__icontains=search)).all()
         return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
