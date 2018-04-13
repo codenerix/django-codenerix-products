@@ -26,11 +26,11 @@ import time
 from functools import reduce
 
 from django.db import IntegrityError, transaction
-from django.db.models import Q, F, Value
+from django.db.models import Q, F, Value, Sum
 from django.db.models.functions import Concat
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -621,6 +621,11 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
     gentrans = {
         'AddProductAndProductFinal': _("Add product & product final"),
     }
+    annotations = {
+        'stock_original': Sum("products_final__products_unique__stock_original"),
+        'stock_real': Sum("products_final__products_unique__stock_real"),
+        'stock_locked': Sum("products_final__products_unique__stock_locked"),
+    }
 
     def __fields__(self, info):
         fields = []
@@ -635,6 +640,9 @@ class ProductList(TranslatedMixin, GenProductUrl, GenList):
         fields.append(('of_purchase', _("Of purchase")))
         fields.append(('force_stock', _("Force stock")))
         fields.append(('feature_special', _("Feature special")))
+        fields.append(('stock_original', _("Stock Original")))
+        fields.append(('stock_real', _("Stock Real")))
+        fields.append(('stock_locked', _("Stock Locked")))
         return fields
 
     def __searchF__(self, info):
@@ -963,6 +971,11 @@ class ProductFinalList(GenProductFinalUrl, GenList):
     gentrans = {
         'AddProductAndProductFinal': _("Add product & product final"),
     }
+    annotations = {
+        'stock_original': Sum("products_unique__stock_original"),
+        'stock_real': Sum("products_unique__stock_real"),
+        'stock_locked': Sum("products_unique__stock_locked"),
+    }
 
     def __fields__(self, info):
         lang = get_language_database()
@@ -977,6 +990,9 @@ class ProductFinalList(GenProductFinalUrl, GenList):
         fields.append(('price', _("Price")))
         fields.append(('is_pack', _("Is pack")))
         fields.append(('sample', _("Sample")))
+        fields.append(('stock_original', _("Stock Original")))
+        fields.append(('stock_real', _("Stock Real")))
+        fields.append(('stock_locked', _("Stock Locked")))
         return fields
 
 
