@@ -25,10 +25,9 @@ from collections import Iterable
 from functools import reduce
 from decimal import Decimal
 
-from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models, transaction, IntegrityError
-from django.db.models import Sum, F, Q
+from django.db.models import F, Q
 from django.utils import timezone
 from django.utils.encoding import smart_text
 from django.utils.translation import ugettext_lazy as _
@@ -1518,9 +1517,6 @@ class ProductUnique(CodenerixModel):
         else:
             result = self.product_final
         return u"{} ({})".format(smart_text(result), self.box)
-
-    def __unicode__(self):
-        return self.__str__()
 
     def __fields__(self, info):
         fields = []
