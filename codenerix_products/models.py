@@ -1507,6 +1507,7 @@ class ProductUnique(CodenerixModel):
     product_final = models.ForeignKey(ProductFinal, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Product final'))
     box = models.ForeignKey(StorageBox, on_delete=models.CASCADE, blank=False, null=False, related_name='products_unique', verbose_name=_('Box'))
     value = models.CharField(_("Value"), max_length=80, null=True, blank=True)
+    caducity = models.DateField(_("Caducity"), blank=True, null=True, default=None)
     stock_original = models.FloatField(_("Stock original"), null=False, blank=False, default=0)
     stock_real = models.FloatField(_("Stock real"), null=False, blank=False, default=0, editable=False)
     stock_locked = models.FloatField(_("Stock locked"), null=False, blank=False, default=0, editable=False)
