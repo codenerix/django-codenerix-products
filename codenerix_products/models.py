@@ -1553,9 +1553,10 @@ class ProductUnique(CodenerixModel):
                 else:
                     raise IOError("Not enought free products to split")
 
-            # Are we splitting locked stock?
+            # Make a copy from the actual ProductUnique
             new_line = copy.copy(self)
             new_line.pk = None
+            # Complete stocks as calculated
             new_line.stock_original = quantity
             new_line.stock_real = quantity
             new_line.stock_lock = newlock
@@ -1564,6 +1565,13 @@ class ProductUnique(CodenerixModel):
             self.stock_real -= quantity
             self.stock_lock -= newlock
             self.save()
+
+            # Check PurchaseAlbaran and link them to the new product
+            for pal in self.line_albaran_purchases.all():
+                pal.product_unique.add(new_line)
+                pal.save()
+
+            # Return new ProductUnique
             return new_line
         elif self.stock_real == quantity:
             raise IOError("No need to split, you are taking all units from here")
