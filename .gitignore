@@ -50,6 +50,7 @@ coverage.xml
 
 # Django stuff:
 *.log
+*.swp
 local_settings.py
 
 # Flask stuff:

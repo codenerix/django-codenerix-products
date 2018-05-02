@@ -1534,17 +1534,41 @@ class ProductUnique(CodenerixModel):
         self.stock_locked += quantity
         self.save()
 
-    def duplicate(self, quantity):
-        with transaction.atomic():
+    @transaction.atomic
+    def duplicate(self, quantity, locked=False):
+        # Do we have enought stock?
+        if self.stock_real > quantity:
+            if locked:
+                # Do we have enought locked stock?
+                if self.stock_lock>=quantity:
+                    newlock = quantity
+                else:
+                    raise IOError("Not enought locked products to split")
+            else:
+                # Find available stock here
+                available = self.stock_real-self.stock_lock
+                # Do you have enought free stock?
+                if available>=quantity:
+                    newlock = 0
+                else:
+                    raise IOError("Not enought free products to split")
+
+            # Are we splitting locked stock?
             new_line = copy.copy(self)
             new_line.pk = None
-            new_line.stock_original = self.stock_original - quantity
-            new_line.stock_real = self.stock_original - quantity
+            new_line.stock_original = quantity
+            new_line.stock_real = quantity
+            new_line.stock_lock = newlock
             new_line.save()
-            self.stock_original = quantity
-            self.stock_real = quantity
+            self.stock_original -= quantity
+            self.stock_real -= quantity
+            self.stock_lock -= newlock
             self.save()
             return new_line
+        elif self.stock_real == quantity:
+            raise IOError("No need to split, you are taking all units from here")
+        else:
+            raise IOError("Not enought products to split")
 
     def save(self, *args, **kwargs):
         product_final = ProductFinal.objects.filter(pk=self.product_final_id).first()
