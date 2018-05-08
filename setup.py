@@ -18,7 +18,7 @@ setup(
     license='Apache License Version 2.0',
     description='Codenerix Products is a module that enables CODENERIX to set products on serveral platforms in a general manner.',
     long_description=README,
-    url='https://github.com/centrologic/django-codenerix-products',
+    url='https://github.com/codenerix/django-codenerix-products',
     author=", ".join(codenerix_products.__authors__),
     keywords=['django', 'codenerix', 'management', 'erp', 'crm', 'products'],
     platforms=['OS Independent'],
