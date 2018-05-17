@@ -2398,6 +2398,7 @@ class ListProducts(GenList):
                     filters_txt = [
                         "{}__name__icontains".format(lang),
                         "{}__slug__icontains".format(lang),
+                        "{}__tags__icontains".format(lang),
                         "code__icontains",
                         "product__code__icontains",
                         "product__model__icontains",
@@ -2622,6 +2623,7 @@ class ListProductsBase(GenList):
                     filters_txt = [
                         "{}__name__icontains".format(lang),
                         "{}__slug__icontains".format(lang),
+                        "{}__tags__icontains".format(lang),
                         "code__icontains",
                         # "product__code__icontains",
                         # "product__model__icontains",
