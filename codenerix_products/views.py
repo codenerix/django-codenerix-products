@@ -1127,7 +1127,11 @@ class ProductFinalEAN13Foreign(GenForeignKey):
         return info
 
     def get_foreign(self, queryset, search, filters):
-        qs = queryset.filter(Q(ean13__icontains=search) | Q(code__icontains=search) | Q(product__code__icontains=search)).all()
+        qs = queryset.filter(
+            products_unique__isnull=False
+        ).filter(
+            Q(ean13__icontains=search) | Q(code__icontains=search) | Q(product__code__icontains=search)
+        ).all()
         return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
 
 
