@@ -1022,6 +1022,15 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
     def __unicode__(self):
         return self.__str__()
 
+    def get_name(self):
+        lang = get_language_database()
+        lang_model = getattr(self, '{}'.format(lang), None)
+        if lang_model:
+            name = lang_model.name
+        else:
+            name = self.product
+        return name
+
     def __fields__(self, info):
         lang = get_language_database()
         fields = []
