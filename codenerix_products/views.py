@@ -1128,10 +1128,11 @@ class ProductFinalEAN13Foreign(GenForeignKey):
 
     def get_foreign(self, queryset, search, filters):
         qs = queryset.filter(
-            products_unique__isnull=False
-        ).filter(
             Q(ean13__icontains=search) | Q(code__icontains=search) | Q(product__code__icontains=search)
         ).all()
+        box = filters.get('box', None)
+        if box:
+            qs = qs.filter(products_unique__box__pk=box)
         return qs.distinct()[:settings.LIMIT_FOREIGNKEY]
 
 
@@ -1172,7 +1173,7 @@ class ProductFinalForeign(GenProductFinalUrl, GenForeignKey):
                 'id': None,
                 # 'options': None,
             })
-        for product in qs.distinct():
+        for product in qs.distinct()[:settings.LIMIT_FOREIGNKEY]:
             pack = []
             lang = get_language_database()
             if product.productfinals_option.filter(active=True).exists():
