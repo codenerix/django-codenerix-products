@@ -2604,15 +2604,6 @@ class ListProductsBase(GenList):
                     for feature in filters['feature']:
                         if feature and filters['feature'][feature]:
                             limits['product_features__feature'] = Q(product_features__feature__pk=feature, product_features__value__in=filters['feature'][feature])
-                """
-                if 'attribute' in filters and filters['attribute']:
-                    for attribute in filters['attribute']:
-                        if attribute and filters['attribute'][attribute]:
-                            limits['products_final_attr__attribute'] = Q(
-                                products_final_attr__attribute__pk=attribute,
-                                products_final_attr__value__in=filters['attribute'][attribute]
-                            )
-                """
                 if 'subcategory' in filters and filters['subcategory']:
                     for subcategory in filters['subcategory']:
                         limits['product__subcategory'] = Q(
@@ -2653,23 +2644,6 @@ class ListProductsBase(GenList):
 
                     limits['query'] = queryset_custom
 
-                """
-                if 'price_from' in filters and filters['price_from']:
-                    try:
-                        price_from = filters['price_from']
-                        if price_from is not None:
-                            limits['products_final__price_from'] = Q(price__gte=float(price_from))
-                    except ValueError:
-                        pass
-
-                if 'price_to' in filters and filters['price_to']:
-                    try:
-                        price_to = filters['price_to']
-                        if price_to is not None:
-                            limits['products_final__price_to'] = Q(price__lte=float(price_to))
-                    except ValueError:
-                        pass
-                """
                 if ('force_image' not in filters):
                     limits['image'] = Q(products_image__principal=True)
                 elif ('force_image' in filters and filters['force_image'] == 1):
@@ -2678,13 +2652,6 @@ class ListProductsBase(GenList):
             if only_with_stock is None:
                 only_with_stock = settings.CDNX_PRODUCTS_SHOW_ONLY_STOCK
 
-            """
-            if only_with_stock and hasattr(self.model, 'product_stocks'):
-                limits['force_stock'] = reduce(operator.or_, (
-                    Q(product__force_stock=True, product_stocks__quantity__gt=0),
-                    Q(product__force_stock=False)
-                ))
-            """
             limits['public'] = Q(public=True)
             limits['distinct'] = True
 

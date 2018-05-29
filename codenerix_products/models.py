@@ -1341,7 +1341,10 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             pop_annotations=True
         )
         if onlypublic:
-            product = product.exclude(product__model=False)
+            product = product.filter(**{
+                'product__public': True,
+                '{}__public'.format(lang): True
+            })
         product = product.first()
 
         if product:
