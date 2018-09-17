@@ -306,6 +306,7 @@ class Family(CodenerixModel, GenImageFileNull):
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
     icon = ImageAngularField(_("Icon"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
+    url_external = models.CharField(_("Url external"), max_length=250, blank=True, null=True)
 
     def __fields__(self, info):
         fields = []

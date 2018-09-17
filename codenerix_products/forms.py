@@ -188,6 +188,7 @@ class FamilyForm(GenModelForm):
                 ['show_menu', 3],
                 ['icon', 6],
                 ['image', 6],
+                ['url_external', 6],
             )
         ]
         return g
