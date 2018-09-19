@@ -306,6 +306,7 @@ class Family(CodenerixModel, GenImageFileNull):
     order = models.SmallIntegerField(_("Order"), blank=True, null=True)
     show_menu = models.BooleanField(_("Show menu"), blank=True, null=False, default=True)
     icon = ImageAngularField(_("Icon"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
+    image_extra = ImageAngularField(_("Extra image"), upload_to=upload_path, max_length=200, blank=True, null=True, help_text=_(u'Se aconseja que sea una imagen superior a 200px transparente y en formato png o svg'))
     url_external = models.CharField(_("Url external"), max_length=250, blank=True, null=True)
 
     def __fields__(self, info):
@@ -1167,7 +1168,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
         return products
 
     @classmethod
-    def get_outstanding_products(cls, lang, family=None, category=None, subcategory=None, limit=16):
+    def get_outstanding_products(cls, lang, family=None, category=None, subcategory=None, limit=16, order=""):
         products = []
         query = Q(outstanding=True) & (Q(product__products_image__principal=True) | Q(productfinals_image__principal=True))
         if family is not None:
@@ -1176,6 +1177,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             query &= Q(product__category=category)
         if subcategory is not None:
             query &= Q(product__subcategory=subcategory)
+
+        if not order:
+            order = "{}__name".format(lang)
 
         qset = cls.objects.filter(
             query
@@ -1199,9 +1203,9 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             meta_title=F("{}__meta_title".format(lang)),
             image_product=F("product__products_image__image"),
             image_productfinal=F("productfinals_image__image"),
-            name=F("product__{}__name".format(lang)),
+            name=F("{}__name".format(lang)),
             category_name=F("product__category__{}__name".format(lang))
-        )[:limit]
+        ).order_by(order)[:limit]
 
         for product in qset:
             prices = cls.objects.get(pk=product['pk']).calculate_price()
