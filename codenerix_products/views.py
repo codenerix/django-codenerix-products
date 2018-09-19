@@ -979,6 +979,7 @@ class ProductFinalList(GenProductFinalUrl, GenList):
         fields.append(('price', _("Price")))
         fields.append(('is_pack', _("Is pack")))
         fields.append(('sample', _("Sample")))
+        fields.append(('outstanding', _("Outstanding")))
         return fields
 
 
