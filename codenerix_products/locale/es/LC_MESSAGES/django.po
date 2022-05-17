@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 10:52+0100\n"
+"POT-Creation-Date: 2022-05-17 15:46+0200\n"
 "PO-Revision-Date: 2017-11-23 09:27-0015\n"
 "Last-Translator: b'nombe apellidos <soleronline@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,314 +18,314 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.7.13\n"
 
-#: codenerix_products_MOD/forms.py:48 codenerix_products_MOD/forms.py:62
-#: codenerix_products_MOD/forms.py:83 codenerix_products_MOD/forms.py:117
-#: codenerix_products_MOD/forms.py:152 codenerix_products_MOD/forms.py:184
-#: codenerix_products_MOD/forms.py:204 codenerix_products_MOD/forms.py:221
-#: codenerix_products_MOD/forms.py:243 codenerix_products_MOD/forms.py:261
-#: codenerix_products_MOD/forms.py:279 codenerix_products_MOD/forms.py:302
-#: codenerix_products_MOD/forms.py:327 codenerix_products_MOD/forms.py:367
-#: codenerix_products_MOD/forms.py:406 codenerix_products_MOD/forms.py:435
-#: codenerix_products_MOD/forms.py:486 codenerix_products_MOD/forms.py:501
-#: codenerix_products_MOD/forms.py:518 codenerix_products_MOD/forms.py:533
-#: codenerix_products_MOD/forms.py:555 codenerix_products_MOD/forms.py:570
-#: codenerix_products_MOD/forms.py:592 codenerix_products_MOD/forms.py:603
-#: codenerix_products_MOD/forms.py:641 codenerix_products_MOD/forms.py:670
-#: codenerix_products_MOD/forms.py:699 codenerix_products_MOD/forms.py:721
-#: codenerix_products_MOD/forms.py:765 codenerix_products_MOD/forms.py:809
-#: codenerix_products_MOD/forms.py:822 codenerix_products_MOD/forms.py:868
-#: codenerix_products_MOD/forms.py:881 codenerix_products_MOD/forms.py:908
-#: codenerix_products_MOD/forms.py:920 codenerix_products_MOD/forms.py:936
-#: codenerix_products_MOD/forms.py:946 codenerix_products_MOD/forms.py:980
-#: codenerix_products_MOD/forms.py:1013 codenerix_products_MOD/forms.py:1027
-#: codenerix_products_MOD/forms.py:1061 codenerix_products_MOD/forms.py:1074
-#: codenerix_products_MOD/forms.py:1101
+#: codenerix_products/forms.py:48 codenerix_products/forms.py:62
+#: codenerix_products/forms.py:83 codenerix_products/forms.py:117
+#: codenerix_products/forms.py:152 codenerix_products/forms.py:184
+#: codenerix_products/forms.py:204 codenerix_products/forms.py:221
+#: codenerix_products/forms.py:243 codenerix_products/forms.py:261
+#: codenerix_products/forms.py:279 codenerix_products/forms.py:302
+#: codenerix_products/forms.py:327 codenerix_products/forms.py:368
+#: codenerix_products/forms.py:408 codenerix_products/forms.py:438
+#: codenerix_products/forms.py:490 codenerix_products/forms.py:505
+#: codenerix_products/forms.py:522 codenerix_products/forms.py:537
+#: codenerix_products/forms.py:559 codenerix_products/forms.py:574
+#: codenerix_products/forms.py:596 codenerix_products/forms.py:607
+#: codenerix_products/forms.py:645 codenerix_products/forms.py:674
+#: codenerix_products/forms.py:703 codenerix_products/forms.py:725
+#: codenerix_products/forms.py:767 codenerix_products/forms.py:811
+#: codenerix_products/forms.py:824 codenerix_products/forms.py:870
+#: codenerix_products/forms.py:883 codenerix_products/forms.py:910
+#: codenerix_products/forms.py:922 codenerix_products/forms.py:938
+#: codenerix_products/forms.py:948 codenerix_products/forms.py:982
+#: codenerix_products/forms.py:1015 codenerix_products/forms.py:1029
+#: codenerix_products/forms.py:1063 codenerix_products/forms.py:1076
+#: codenerix_products/forms.py:1103
 msgid "Details"
 msgstr "Detalles"
 
-#: codenerix_products_MOD/forms.py:103 codenerix_products_MOD/forms.py:138
-#: codenerix_products_MOD/forms.py:173
+#: codenerix_products/forms.py:103 codenerix_products/forms.py:138
+#: codenerix_products/forms.py:173
 msgid "Debe elegir un lista de valores"
 msgstr "Debe elegir un lista de valores"
 
-#: codenerix_products_MOD/forms.py:344 codenerix_products_MOD/forms.py:386
-#: codenerix_products_MOD/forms.py:423 codenerix_products_MOD/forms.py:653
-#: codenerix_products_MOD/forms.py:681 codenerix_products_MOD/forms.py:709
+#: codenerix_products/forms.py:345 codenerix_products/forms.py:388
+#: codenerix_products/forms.py:426 codenerix_products/forms.py:657
+#: codenerix_products/forms.py:685 codenerix_products/forms.py:713
 msgid "Packaging information"
 msgstr "Información de paquete"
 
-#: codenerix_products_MOD/forms.py:353
+#: codenerix_products/forms.py:354
 msgid "Create product final"
 msgstr "Crear producto final"
 
-#: codenerix_products_MOD/forms.py:354 codenerix_products_MOD/models.py:988
+#: codenerix_products/forms.py:355 codenerix_products/models.py:996
 msgid "EAN-13"
 msgstr "EAN-13"
 
-#: codenerix_products_MOD/forms.py:455 codenerix_products_MOD/forms.py:740
+#: codenerix_products/forms.py:459 codenerix_products/forms.py:742
 msgid "Information"
 msgstr "Información"
 
-#: codenerix_products_MOD/forms.py:467 codenerix_products_MOD/forms.py:752
-#: codenerix_products_MOD/models.py:886 codenerix_products_MOD/models.py:901
-#: codenerix_products_MOD/models.py:909 codenerix_products_MOD/models.py:924
-#: codenerix_products_MOD/models.py:955 codenerix_products_MOD/models.py:966
-#: codenerix_products_MOD/models.py:977 codenerix_products_MOD/models.py:1022
-#: codenerix_products_MOD/models.py:1039 codenerix_products_MOD/models.py:1386
-#: codenerix_products_MOD/models.py:1421 codenerix_products_MOD/models.py:1456
-#: codenerix_products_MOD/models.py:1481 codenerix_products_MOD/models.py:1493
-#: codenerix_products_MOD/models.py:1519 codenerix_products_MOD/models.py:1566
-#: codenerix_products_MOD/templates/codenerix_products/productfeaturespecial_sublist.html:30
-#: codenerix_products_MOD/views.py:374 codenerix_products_MOD/views.py:619
-#: codenerix_products_MOD/views.py:725 codenerix_products_MOD/views.py:975
+#: codenerix_products/forms.py:471 codenerix_products/forms.py:754
+#: codenerix_products/models.py:894 codenerix_products/models.py:909
+#: codenerix_products/models.py:917 codenerix_products/models.py:932
+#: codenerix_products/models.py:963 codenerix_products/models.py:974
+#: codenerix_products/models.py:985 codenerix_products/models.py:1039
+#: codenerix_products/models.py:1056 codenerix_products/models.py:1401
+#: codenerix_products/models.py:1436 codenerix_products/models.py:1471
+#: codenerix_products/models.py:1496 codenerix_products/models.py:1508
+#: codenerix_products/models.py:1533 codenerix_products/models.py:1630
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:30
+#: codenerix_products/views.py:374 codenerix_products/views.py:619
+#: codenerix_products/views.py:733 codenerix_products/views.py:988
 msgid "Product"
 msgstr "Producto"
 
-#: codenerix_products_MOD/forms.py:616
+#: codenerix_products/forms.py:620
 msgid "Related products"
 msgstr "Productos relacionados"
 
-#: codenerix_products_MOD/forms.py:625
+#: codenerix_products/forms.py:629
 msgid "Related accesory"
 msgstr "Accesorios relacionados"
 
-#: codenerix_products_MOD/forms.py:774 codenerix_products_MOD/forms.py:775
-#: codenerix_products_MOD/forms.py:776 codenerix_products_MOD/forms.py:833
-#: codenerix_products_MOD/forms.py:834 codenerix_products_MOD/forms.py:835
-#: codenerix_products_MOD/models.py:1424 codenerix_products_MOD/models.py:1458
-#: codenerix_products_MOD/models.py:1483 codenerix_products_MOD/models.py:1495
-#: codenerix_products_MOD/models.py:1503 codenerix_products_MOD/models.py:1521
-#: codenerix_products_MOD/templates/codenerix_products/productfeature_sublist.html:31
-#: codenerix_products_MOD/templates/codenerix_products/productfeaturespecial_sublist.html:32
-#: codenerix_products_MOD/templates/codenerix_products/productfinalattribute_sublist.html:31
+#: codenerix_products/forms.py:776 codenerix_products/forms.py:777
+#: codenerix_products/forms.py:778 codenerix_products/forms.py:835
+#: codenerix_products/forms.py:836 codenerix_products/forms.py:837
+#: codenerix_products/models.py:1439 codenerix_products/models.py:1473
+#: codenerix_products/models.py:1498 codenerix_products/models.py:1510
+#: codenerix_products/models.py:1518 codenerix_products/models.py:1535
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:31
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:32
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:31
 msgid "Value"
 msgstr "Valor"
 
-#: codenerix_products_MOD/forms.py:1040
+#: codenerix_products/forms.py:1042
 msgid "The select product haven't video url"
 msgstr "El producto seleccionado no tiene una URL del video"
 
-#: codenerix_products_MOD/forms.py:1047 codenerix_products_MOD/forms.py:1087
+#: codenerix_products/forms.py:1049 codenerix_products/forms.py:1089
 msgid "Option products"
 msgstr "Opciones del producto"
 
-#: codenerix_products_MOD/forms.py:1120
+#: codenerix_products/forms.py:1122
 msgid "Title and alternative text of the image"
 msgstr "Título y texto alternativo de la imagen"
 
-#: codenerix_products_MOD/forms.py:1122 codenerix_products_MOD/models.py:193
-#: codenerix_products_MOD/models.py:197 codenerix_products_MOD/models.py:224
-#: codenerix_products_MOD/models.py:229 codenerix_products_MOD/models.py:248
+#: codenerix_products/forms.py:1124 codenerix_products/models.py:199
+#: codenerix_products/models.py:203 codenerix_products/models.py:230
+#: codenerix_products/models.py:235 codenerix_products/models.py:254
 msgid "Description"
 msgstr "Descripción"
 
-#: codenerix_products_MOD/models.py:52
+#: codenerix_products/models.py:58
 msgid "Porcentaje sobre el precio del producto"
 msgstr "Porcentaje sobre el precio del producto"
 
-#: codenerix_products_MOD/models.py:53
+#: codenerix_products/models.py:59
 msgid "Incremento sobre el precio del producto"
 msgstr "Incremento sobre el precio del producto"
 
-#: codenerix_products_MOD/models.py:54
+#: codenerix_products/models.py:60
 msgid "Precio final"
 msgstr "Precio final"
 
-#: codenerix_products_MOD/models.py:61
+#: codenerix_products/models.py:67
 msgid "Sin validacion"
 msgstr "Sin validación"
 
-#: codenerix_products_MOD/models.py:62
+#: codenerix_products/models.py:68
 msgid "Boolean"
 msgstr "Booleano"
 
-#: codenerix_products_MOD/models.py:63
+#: codenerix_products/models.py:69
 msgid "Lista de opciones"
 msgstr "Lista de opciones"
 
-#: codenerix_products_MOD/models.py:67
+#: codenerix_products/models.py:73
 msgid "Right"
 msgstr "Derecha"
 
-#: codenerix_products_MOD/models.py:68
+#: codenerix_products/models.py:74
 msgid "Left"
 msgstr "Izquierda"
 
-#: codenerix_products_MOD/models.py:101 codenerix_products_MOD/models.py:115
-#: codenerix_products_MOD/models.py:676
+#: codenerix_products/models.py:107 codenerix_products/models.py:121
+#: codenerix_products/models.py:682
 msgid "Tax (%)"
 msgstr "Impuesto (%)"
 
-#: codenerix_products_MOD/models.py:102 codenerix_products_MOD/models.py:114
-#: codenerix_products_MOD/models.py:223 codenerix_products_MOD/models.py:228
-#: codenerix_products_MOD/models.py:260 codenerix_products_MOD/models.py:271
-#: codenerix_products_MOD/models.py:317 codenerix_products_MOD/models.py:370
-#: codenerix_products_MOD/models.py:417 codenerix_products_MOD/models.py:442
-#: codenerix_products_MOD/models.py:446
-#: codenerix_products_MOD/templates/codenerix_products/productdocument_sublist.html:30
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:33
-#: codenerix_products_MOD/views.py:630 codenerix_products_MOD/views.py:644
-#: codenerix_products_MOD/views.py:731 codenerix_products_MOD/views.py:2344
-#: codenerix_products_MOD/views.py:2573
+#: codenerix_products/models.py:108 codenerix_products/models.py:120
+#: codenerix_products/models.py:229 codenerix_products/models.py:234
+#: codenerix_products/models.py:266 codenerix_products/models.py:277
+#: codenerix_products/models.py:323 codenerix_products/models.py:376
+#: codenerix_products/models.py:423 codenerix_products/models.py:448
+#: codenerix_products/models.py:452
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:30
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:33
+#: codenerix_products/views.py:635 codenerix_products/views.py:652
+#: codenerix_products/views.py:739 codenerix_products/views.py:2374
+#: codenerix_products/views.py:2603
 msgid "Name"
 msgstr "Nombre"
 
-#: codenerix_products_MOD/models.py:103 codenerix_products_MOD/models.py:117
+#: codenerix_products/models.py:109 codenerix_products/models.py:123
 msgid "Default"
 msgstr "Por defecto"
 
-#: codenerix_products_MOD/models.py:104 codenerix_products_MOD/models.py:116
+#: codenerix_products/models.py:110 codenerix_products/models.py:122
 msgid "Recargo de equivalencia (%)"
 msgstr "Recargo de equivalencia (%)"
 
-#: codenerix_products_MOD/models.py:122
+#: codenerix_products/models.py:128
 msgid ""
 "Cannot delete type tax model, relationship between type tax model and "
 "products"
 msgstr ""
 "No se puede eliminar el tipo de impuesto, esta relacionado con productos"
 
-#: codenerix_products_MOD/models.py:163
+#: codenerix_products/models.py:169
 msgid "Type value"
 msgstr "Tipo de valor"
 
-#: codenerix_products_MOD/models.py:164 codenerix_products_MOD/models.py:987
-#: codenerix_products_MOD/models.py:1027
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:35
-#: codenerix_products_MOD/views.py:979 codenerix_products_MOD/views.py:2350
+#: codenerix_products/models.py:170 codenerix_products/models.py:995
+#: codenerix_products/models.py:1044
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:35
+#: codenerix_products/views.py:990 codenerix_products/views.py:2380
 msgid "Price"
 msgstr "Precio"
 
-#: codenerix_products_MOD/models.py:165
+#: codenerix_products/models.py:171
 msgid "Type price"
 msgstr "Tipo de precio"
 
-#: codenerix_products_MOD/models.py:166 codenerix_products_MOD/models.py:174
-#: codenerix_products_MOD/models.py:261 codenerix_products_MOD/models.py:309
-#: codenerix_products_MOD/models.py:319 codenerix_products_MOD/models.py:351
-#: codenerix_products_MOD/models.py:374 codenerix_products_MOD/models.py:398
-#: codenerix_products_MOD/models.py:423 codenerix_products_MOD/models.py:680
-#: codenerix_products_MOD/models.py:708 codenerix_products_MOD/models.py:911
-#: codenerix_products_MOD/models.py:926 codenerix_products_MOD/models.py:956
-#: codenerix_products_MOD/models.py:967 codenerix_products_MOD/models.py:1026
-#: codenerix_products_MOD/models.py:1373 codenerix_products_MOD/models.py:1388
-#: codenerix_products_MOD/models.py:1554 codenerix_products_MOD/models.py:1567
-#: codenerix_products_MOD/templates/codenerix_products/productdocument_sublist.html:32
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:32
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:34
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:34
-#: codenerix_products_MOD/views.py:631 codenerix_products_MOD/views.py:865
-#: codenerix_products_MOD/views.py:976 codenerix_products_MOD/views.py:1364
+#: codenerix_products/models.py:172 codenerix_products/models.py:180
+#: codenerix_products/models.py:267 codenerix_products/models.py:315
+#: codenerix_products/models.py:325 codenerix_products/models.py:357
+#: codenerix_products/models.py:380 codenerix_products/models.py:404
+#: codenerix_products/models.py:429 codenerix_products/models.py:686
+#: codenerix_products/models.py:715 codenerix_products/models.py:919
+#: codenerix_products/models.py:934 codenerix_products/models.py:964
+#: codenerix_products/models.py:975 codenerix_products/models.py:1043
+#: codenerix_products/models.py:1388 codenerix_products/models.py:1403
+#: codenerix_products/models.py:1618 codenerix_products/models.py:1631
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:32
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:32
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:34
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:34
+#: codenerix_products/views.py:636 codenerix_products/views.py:873
+#: codenerix_products/views.py:989 codenerix_products/views.py:1394
 msgid "Public"
 msgstr "Público"
 
-#: codenerix_products_MOD/models.py:167 codenerix_products_MOD/models.py:175
-#: codenerix_products_MOD/models.py:310 codenerix_products_MOD/models.py:316
-#: codenerix_products_MOD/models.py:356 codenerix_products_MOD/models.py:369
-#: codenerix_products_MOD/models.py:402 codenerix_products_MOD/models.py:427
-#: codenerix_products_MOD/models.py:634 codenerix_products_MOD/models.py:654
-#: codenerix_products_MOD/models.py:910 codenerix_products_MOD/models.py:925
-#: codenerix_products_MOD/models.py:1372 codenerix_products_MOD/models.py:1387
-#: codenerix_products_MOD/models.py:1615 codenerix_products_MOD/models.py:1629
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:31
-#: codenerix_products_MOD/views.py:735 codenerix_products_MOD/views.py:864
-#: codenerix_products_MOD/views.py:1363
+#: codenerix_products/models.py:173 codenerix_products/models.py:181
+#: codenerix_products/models.py:316 codenerix_products/models.py:322
+#: codenerix_products/models.py:362 codenerix_products/models.py:375
+#: codenerix_products/models.py:408 codenerix_products/models.py:433
+#: codenerix_products/models.py:640 codenerix_products/models.py:660
+#: codenerix_products/models.py:918 codenerix_products/models.py:933
+#: codenerix_products/models.py:1387 codenerix_products/models.py:1402
+#: codenerix_products/models.py:1679 codenerix_products/models.py:1693
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:31
+#: codenerix_products/views.py:743 codenerix_products/views.py:872
+#: codenerix_products/views.py:1393
 msgid "Order"
 msgstr "Orden"
 
-#: codenerix_products_MOD/models.py:171 codenerix_products_MOD/models.py:350
-#: codenerix_products_MOD/models.py:544 codenerix_products_MOD/models.py:574
-#: codenerix_products_MOD/models.py:601 codenerix_products_MOD/models.py:677
-#: codenerix_products_MOD/models.py:705 codenerix_products_MOD/models.py:1023
-#: codenerix_products_MOD/models.py:1036
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:30
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:30
-#: codenerix_products_MOD/views.py:374 codenerix_products_MOD/views.py:970
+#: codenerix_products/models.py:177 codenerix_products/models.py:356
+#: codenerix_products/models.py:550 codenerix_products/models.py:580
+#: codenerix_products/models.py:607 codenerix_products/models.py:683
+#: codenerix_products/models.py:712 codenerix_products/models.py:1040
+#: codenerix_products/models.py:1053
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:30
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:30
+#: codenerix_products/views.py:374 codenerix_products/views.py:983
 msgid "Family"
 msgstr "Familia"
 
-#: codenerix_products_MOD/models.py:172 codenerix_products_MOD/models.py:397
-#: codenerix_products_MOD/models.py:545 codenerix_products_MOD/models.py:575
-#: codenerix_products_MOD/models.py:602 codenerix_products_MOD/models.py:678
-#: codenerix_products_MOD/models.py:706 codenerix_products_MOD/models.py:1024
-#: codenerix_products_MOD/models.py:1037
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:31
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:31
-#: codenerix_products_MOD/views.py:413 codenerix_products_MOD/views.py:627
-#: codenerix_products_MOD/views.py:645 codenerix_products_MOD/views.py:971
+#: codenerix_products/models.py:178 codenerix_products/models.py:403
+#: codenerix_products/models.py:551 codenerix_products/models.py:581
+#: codenerix_products/models.py:608 codenerix_products/models.py:684
+#: codenerix_products/models.py:713 codenerix_products/models.py:1041
+#: codenerix_products/models.py:1054
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:31
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:31
+#: codenerix_products/views.py:413 codenerix_products/views.py:632
+#: codenerix_products/views.py:653 codenerix_products/views.py:984
 msgid "Category"
 msgstr "Categoría"
 
-#: codenerix_products_MOD/models.py:173
+#: codenerix_products/models.py:179
 msgid "Type Value"
 msgstr "Tipo de valor"
 
-#: codenerix_products_MOD/models.py:212
+#: codenerix_products/models.py:218
 msgid "Meta Title"
 msgstr "Meta title"
 
-#: codenerix_products_MOD/models.py:213 codenerix_products_MOD/models.py:273
+#: codenerix_products/models.py:219 codenerix_products/models.py:279
 msgid "Meta Description"
 msgstr "Meta description"
 
-#: codenerix_products_MOD/models.py:214
+#: codenerix_products/models.py:220
 msgid "Meta Keywords"
 msgstr "Meta keywords"
 
-#: codenerix_products_MOD/models.py:222 codenerix_products_MOD/models.py:259
-#: codenerix_products_MOD/models.py:276 codenerix_products_MOD/views.py:732
-#: codenerix_products_MOD/views.py:2345 codenerix_products_MOD/views.py:2574
+#: codenerix_products/models.py:228 codenerix_products/models.py:265
+#: codenerix_products/models.py:282 codenerix_products/views.py:740
+#: codenerix_products/views.py:2375 codenerix_products/views.py:2604
 msgid "Slug"
 msgstr "URL amigable"
 
-#: codenerix_products_MOD/models.py:247
+#: codenerix_products/models.py:253
 msgid "Text alternavive image"
 msgstr "Texto alternativo de la imagen"
 
-#: codenerix_products_MOD/models.py:256 codenerix_products_MOD/models.py:274
+#: codenerix_products/models.py:262 codenerix_products/models.py:280
 msgid "Description short"
 msgstr "Descripción corta"
 
-#: codenerix_products_MOD/models.py:257 codenerix_products_MOD/models.py:275
+#: codenerix_products/models.py:263 codenerix_products/models.py:281
 msgid "Description long"
 msgstr "Descripción larga"
 
-#: codenerix_products_MOD/models.py:272
+#: codenerix_products/models.py:278
 msgid "Tittle"
 msgstr "Título"
 
-#: codenerix_products_MOD/models.py:288
+#: codenerix_products/models.py:294
 msgid "TAGs"
 msgstr ""
 
-#: codenerix_products_MOD/models.py:301
+#: codenerix_products/models.py:307
 msgid "Sample description"
 msgstr "Descripción de la muestra"
 
-#: codenerix_products_MOD/models.py:308 codenerix_products_MOD/models.py:318
-#: codenerix_products_MOD/models.py:349 codenerix_products_MOD/models.py:371
-#: codenerix_products_MOD/models.py:396 codenerix_products_MOD/models.py:418
-#: codenerix_products_MOD/models.py:681 codenerix_products_MOD/models.py:710
-#: codenerix_products_MOD/models.py:994 codenerix_products_MOD/models.py:1020
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:33
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:32
-#: codenerix_products_MOD/views.py:629 codenerix_products_MOD/views.py:973
+#: codenerix_products/models.py:314 codenerix_products/models.py:324
+#: codenerix_products/models.py:355 codenerix_products/models.py:377
+#: codenerix_products/models.py:402 codenerix_products/models.py:424
+#: codenerix_products/models.py:687 codenerix_products/models.py:717
+#: codenerix_products/models.py:1002 codenerix_products/models.py:1037
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:33
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:32
+#: codenerix_products/views.py:634 codenerix_products/views.py:986
 msgid "Code"
 msgstr "Código"
 
-#: codenerix_products_MOD/models.py:311 codenerix_products_MOD/models.py:352
-#: codenerix_products_MOD/models.py:399 codenerix_products_MOD/models.py:635
-#: codenerix_products_MOD/models.py:655 codenerix_products_MOD/views.py:734
+#: codenerix_products/models.py:317 codenerix_products/models.py:358
+#: codenerix_products/models.py:405 codenerix_products/models.py:641
+#: codenerix_products/models.py:661 codenerix_products/views.py:742
 msgid "Show menu"
 msgstr "Mostrar en menú"
 
-#: codenerix_products_MOD/models.py:312 codenerix_products_MOD/models.py:355
-#: codenerix_products_MOD/models.py:404
+#: codenerix_products/models.py:318 codenerix_products/models.py:361
+#: codenerix_products/models.py:410
 msgid "Icon"
 msgstr "Icono"
 
-#: codenerix_products_MOD/models.py:312 codenerix_products_MOD/models.py:355
-#: codenerix_products_MOD/models.py:404
+#: codenerix_products/models.py:318 codenerix_products/models.py:361
+#: codenerix_products/models.py:410
 msgid ""
 "Se aconseja que sea una imagen superior a 200px transparente y en formato "
 "png o svg"
@@ -333,85 +333,85 @@ msgstr ""
 "Se aconseja que sea una imagen superior a 200px transparente y en formato "
 "png o svg"
 
-#: codenerix_products_MOD/models.py:320 codenerix_products_MOD/models.py:375
-#: codenerix_products_MOD/models.py:424
+#: codenerix_products/models.py:326 codenerix_products/models.py:381
+#: codenerix_products/models.py:430
 msgid "Show Menu"
 msgstr "Mostrar en menú"
 
-#: codenerix_products_MOD/models.py:334
+#: codenerix_products/models.py:340
 msgid ""
 "Cannot delete family model, relationship between family model and products"
 msgstr "No se puede eliminar la familia, está relacionada con productos"
 
-#: codenerix_products_MOD/models.py:336
+#: codenerix_products/models.py:342
 msgid ""
 "Cannot delete family model, relationship between family model and features"
 msgstr "No se puede eliminar la familia, está relacionada con características"
 
-#: codenerix_products_MOD/models.py:338
+#: codenerix_products/models.py:344
 msgid ""
 "Cannot delete family model, relationship between family model and attributes"
 msgstr "No se puede eliminar la familia, está relacionada con atributos"
 
-#: codenerix_products_MOD/models.py:340
+#: codenerix_products/models.py:346
 msgid ""
 "Cannot delete family model, relationship between family model and feature "
 "special"
 msgstr "No se puede eliminar la familia, está relacionada con productos"
 
-#: codenerix_products_MOD/models.py:342
+#: codenerix_products/models.py:348
 msgid ""
 "Cannot delete family model, relationship between family model and categories"
 msgstr "No se puede eliminar la familia, está relacionada con categorías"
 
-#: codenerix_products_MOD/models.py:353
+#: codenerix_products/models.py:359
 msgid "Show only products in stock"
 msgstr "Mostrar solo productos con stock"
 
-#: codenerix_products_MOD/models.py:354 codenerix_products_MOD/models.py:403
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:30
-#: codenerix_products_MOD/views.py:867 codenerix_products_MOD/views.py:1366
-#: codenerix_products_MOD/views.py:2346 codenerix_products_MOD/views.py:2348
-#: codenerix_products_MOD/views.py:2575
+#: codenerix_products/models.py:360 codenerix_products/models.py:409
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:30
+#: codenerix_products/views.py:875 codenerix_products/views.py:1396
+#: codenerix_products/views.py:2376 codenerix_products/views.py:2378
+#: codenerix_products/views.py:2605
 msgid "Image"
 msgstr "Imagen"
 
-#: codenerix_products_MOD/models.py:354 codenerix_products_MOD/models.py:403
+#: codenerix_products/models.py:360 codenerix_products/models.py:409
 msgid "Se aconseja un tamaño comprendido entre 1200px y 2000px"
 msgstr "Se aconseja un tamaño comprendido entre 1200px y 2000px"
 
-#: codenerix_products_MOD/models.py:372 codenerix_products_MOD/models.py:421
+#: codenerix_products/models.py:378 codenerix_products/models.py:427
 msgid "Family name"
 msgstr "Nombre de la familia"
 
-#: codenerix_products_MOD/models.py:373 codenerix_products_MOD/models.py:422
+#: codenerix_products/models.py:379 codenerix_products/models.py:428
 msgid "Family code"
 msgstr "Código de la familia"
 
-#: codenerix_products_MOD/models.py:376
+#: codenerix_products/models.py:382
 msgid "Show Only Products with Stock"
 msgstr "Mostrar solo productos con stock"
 
-#: codenerix_products_MOD/models.py:381
+#: codenerix_products/models.py:387
 msgid ""
 "Cannot delete category model, relationship between category model and "
 "products"
 msgstr "No se puede eliminar la categoría, está relacionada con productos"
 
-#: codenerix_products_MOD/models.py:383
+#: codenerix_products/models.py:389
 msgid ""
 "Cannot delete category model, relationship between category model and "
 "features"
 msgstr ""
 "No se puede eliminar la categoría, está relacionada con características"
 
-#: codenerix_products_MOD/models.py:385
+#: codenerix_products/models.py:391
 msgid ""
 "Cannot delete category model, relationship between category model and "
 "attributes"
 msgstr "No se puede eliminar la categoría, está relacionada con atributos"
 
-#: codenerix_products_MOD/models.py:387
+#: codenerix_products/models.py:393
 msgid ""
 "Cannot delete category model, relationship between category model and "
 "feature special"
@@ -419,53 +419,53 @@ msgstr ""
 "No se puede eliminar la categoría, está relacionada con características "
 "especiales"
 
-#: codenerix_products_MOD/models.py:389
+#: codenerix_products/models.py:395
 msgid ""
 "Cannot delete category model, relationship between category model and "
 "subcategories"
 msgstr "No se puede eliminar la categoría, está relacionada con subcategorías"
 
-#: codenerix_products_MOD/models.py:400 codenerix_products_MOD/models.py:425
+#: codenerix_products/models.py:406 codenerix_products/models.py:431
 msgid "Show brand (for menu)"
 msgstr "Mostrar la marca (para el menú)"
 
-#: codenerix_products_MOD/models.py:401 codenerix_products_MOD/models.py:426
-#: codenerix_products_MOD/models.py:633 codenerix_products_MOD/models.py:653
-#: codenerix_products_MOD/models.py:914 codenerix_products_MOD/models.py:982
-#: codenerix_products_MOD/models.py:1376
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:35
-#: codenerix_products_MOD/views.py:733 codenerix_products_MOD/views.py:1088
+#: codenerix_products/models.py:407 codenerix_products/models.py:432
+#: codenerix_products/models.py:639 codenerix_products/models.py:659
+#: codenerix_products/models.py:922 codenerix_products/models.py:990
+#: codenerix_products/models.py:1391
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:35
+#: codenerix_products/views.py:741 codenerix_products/views.py:1108
 msgid "Outstanding"
 msgstr "Destacado"
 
-#: codenerix_products_MOD/models.py:419
+#: codenerix_products/models.py:425
 msgid "Category name"
 msgstr "Nombre de la categoría"
 
-#: codenerix_products_MOD/models.py:420
+#: codenerix_products/models.py:426
 msgid "Category code"
 msgstr "Código de la categoría"
 
-#: codenerix_products_MOD/models.py:432
+#: codenerix_products/models.py:438
 msgid ""
 "Cannot delete subcategory model, relationship between subcategory model and "
 "products"
 msgstr "No se puede eliminar la subcategoría, está relacionada con productos"
 
-#: codenerix_products_MOD/models.py:460 codenerix_products_MOD/models.py:476
-#: codenerix_products_MOD/models.py:493
+#: codenerix_products/models.py:466 codenerix_products/models.py:482
+#: codenerix_products/models.py:499
 msgid "Option value"
 msgstr "Valor de la opción"
 
-#: codenerix_products_MOD/models.py:465 codenerix_products_MOD/models.py:481
-#: codenerix_products_MOD/models.py:498
+#: codenerix_products/models.py:471 codenerix_products/models.py:487
+#: codenerix_products/models.py:504
 msgid ""
 "Cannot delete group value model, relationship between group value model and "
 "options"
 msgstr ""
 "No se puede eliminar el grupo de valores, está relacionada con opciones"
 
-#: codenerix_products_MOD/models.py:467
+#: codenerix_products/models.py:473
 msgid ""
 "Cannot delete group value model, relationship between group value model and "
 "features"
@@ -473,14 +473,14 @@ msgstr ""
 "No se puede eliminar el grupo de valores, está relacionada con "
 "características"
 
-#: codenerix_products_MOD/models.py:484
+#: codenerix_products/models.py:490
 msgid ""
 "Cannot delete group value model, relationship between group value model and "
 "attributes"
 msgstr ""
 "No se puede eliminar el grupo de valores, está relacionada con atributos"
 
-#: codenerix_products_MOD/models.py:500
+#: codenerix_products/models.py:506
 msgid ""
 "Cannot delete group value model, relationship between group value model and "
 "feature special"
@@ -488,40 +488,40 @@ msgstr ""
 "No se puede eliminar el grupo de valores, está relacionada con "
 "características especiales"
 
-#: codenerix_products_MOD/models.py:529 codenerix_products_MOD/models.py:534
-#: codenerix_products_MOD/models.py:539
+#: codenerix_products/models.py:535 codenerix_products/models.py:540
+#: codenerix_products/models.py:545
 msgid "Options value"
 msgstr "Opciones de valores"
 
-#: codenerix_products_MOD/models.py:546 codenerix_products_MOD/models.py:577
-#: codenerix_products_MOD/models.py:603
+#: codenerix_products/models.py:552 codenerix_products/models.py:583
+#: codenerix_products/models.py:609
 msgid "List value"
 msgstr "Lista de valores"
 
-#: codenerix_products_MOD/models.py:563
+#: codenerix_products/models.py:569
 msgid ""
 "Cannot delete feature model, relationship between feature model and products"
 msgstr ""
 "No se puede eliminar la características, está relacionada con productos"
 
-#: codenerix_products_MOD/models.py:576 codenerix_products_MOD/models.py:1457
-#: codenerix_products_MOD/templates/codenerix_products/productfinalattribute_sublist.html:30
-#: codenerix_products_MOD/views.py:233
+#: codenerix_products/models.py:582 codenerix_products/models.py:1472
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:30
+#: codenerix_products/views.py:233
 msgid "Attribute"
 msgstr "Atributo"
 
-#: codenerix_products_MOD/models.py:594
+#: codenerix_products/models.py:600
 msgid ""
 "Cannot delete attribute model, relationship between attribute model and "
 "products final"
 msgstr ""
 "No se puede eliminar el atributo, está relacionada con productos finales"
 
-#: codenerix_products_MOD/models.py:604 codenerix_products_MOD/models.py:608
+#: codenerix_products/models.py:610 codenerix_products/models.py:614
 msgid "The value must unique"
 msgstr "El valor debe ser único"
 
-#: codenerix_products_MOD/models.py:626
+#: codenerix_products/models.py:632
 msgid ""
 "Cannot delete feature special model, relationship between feature special "
 "model and products"
@@ -529,100 +529,104 @@ msgstr ""
 "No se puede eliminar la características especial, está relacionada con "
 "productos"
 
-#: codenerix_products_MOD/models.py:638
+#: codenerix_products/models.py:644
 msgid "Missing brand name"
 msgstr "Falta el nombre de la marca"
 
-#: codenerix_products_MOD/models.py:660
+#: codenerix_products/models.py:666
 msgid ""
 "Cannot delete brand model, relationship between brand model and products"
 msgstr "No se puede eliminar la marca, está relacionada con productos"
 
-#: codenerix_products_MOD/models.py:674
+#: codenerix_products/models.py:680
 msgid "Model"
 msgstr "Modelo"
 
-#: codenerix_products_MOD/models.py:675 codenerix_products_MOD/views.py:725
+#: codenerix_products/models.py:681 codenerix_products/views.py:733
 msgid "Brand"
 msgstr "Marca"
 
-#: codenerix_products_MOD/models.py:679 codenerix_products_MOD/models.py:707
-#: codenerix_products_MOD/models.py:1025 codenerix_products_MOD/models.py:1038
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:32
-#: codenerix_products_MOD/views.py:518 codenerix_products_MOD/views.py:628
-#: codenerix_products_MOD/views.py:646 codenerix_products_MOD/views.py:972
+#: codenerix_products/models.py:685 codenerix_products/models.py:714
+#: codenerix_products/models.py:1042 codenerix_products/models.py:1055
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:32
+#: codenerix_products/views.py:518 codenerix_products/views.py:633
+#: codenerix_products/views.py:654 codenerix_products/views.py:985
 msgid "Subcategory"
 msgstr "Subcategoría"
 
-#: codenerix_products_MOD/models.py:682 codenerix_products_MOD/models.py:711
-#: codenerix_products_MOD/models.py:985 codenerix_products_MOD/models.py:995
-#: codenerix_products_MOD/views.py:633
+#: codenerix_products/models.py:688 codenerix_products/models.py:718
+#: codenerix_products/models.py:993 codenerix_products/models.py:1003
+#: codenerix_products/views.py:638
 msgid "Price base"
 msgstr "Precio base"
 
-#: codenerix_products_MOD/models.py:684 codenerix_products_MOD/models.py:712
+#: codenerix_products/models.py:690 codenerix_products/models.py:719
 msgid "Sales"
 msgstr "Ventas"
 
-#: codenerix_products_MOD/models.py:686 codenerix_products_MOD/models.py:713
+#: codenerix_products/models.py:692 codenerix_products/models.py:720
 msgid "Purchase"
 msgstr "Compras"
 
-#: codenerix_products_MOD/models.py:688 codenerix_products_MOD/models.py:714
-#: codenerix_products_MOD/views.py:636
+#: codenerix_products/models.py:694 codenerix_products/models.py:721
+#: codenerix_products/views.py:641
 msgid "Force stock"
 msgstr "Forzar stock"
 
-#: codenerix_products_MOD/models.py:689 codenerix_products_MOD/models.py:715
+#: codenerix_products/models.py:695 codenerix_products/models.py:722
 msgid "Url Video"
 msgstr "Url video"
 
-#: codenerix_products_MOD/models.py:691 codenerix_products_MOD/models.py:716
-#: codenerix_products_MOD/models.py:1520 codenerix_products_MOD/views.py:637
+#: codenerix_products/models.py:697 codenerix_products/models.py:723
+#: codenerix_products/models.py:1534 codenerix_products/views.py:642
 msgid "Feature special"
 msgstr "Característica especial"
 
-#: codenerix_products_MOD/models.py:692 codenerix_products_MOD/models.py:717
-#: codenerix_products_MOD/models.py:997
+#: codenerix_products/models.py:698 codenerix_products/models.py:724
+#: codenerix_products/models.py:1005
 msgid "Packing cost"
 msgstr "Precio de empaquetado"
 
-#: codenerix_products_MOD/models.py:693 codenerix_products_MOD/models.py:718
-#: codenerix_products_MOD/models.py:998
+#: codenerix_products/models.py:699 codenerix_products/models.py:725
+#: codenerix_products/models.py:1006
 msgid "Weight"
 msgstr "Peso"
 
-#: codenerix_products_MOD/models.py:709 codenerix_products_MOD/views.py:632
+#: codenerix_products/models.py:700 codenerix_products/models.py:726
+msgid "Caducable"
+msgstr ""
+
+#: codenerix_products/models.py:716 codenerix_products/views.py:637
 msgid "Tax"
 msgstr "Impuesto"
 
-#: codenerix_products_MOD/models.py:740
+#: codenerix_products/models.py:748
 msgid ""
 "Cannot delete product model, relationship between product model and products "
 "final"
 msgstr ""
 "No se puede eliminar el producto, tiene productos finales relacionados con él"
 
-#: codenerix_products_MOD/models.py:742
+#: codenerix_products/models.py:750
 msgid ""
 "Cannot delete product model, relationship between product model and products "
 "image"
 msgstr "No se puede eliminar el producto, tiene imágenes relacionados con él"
 
-#: codenerix_products_MOD/models.py:744
+#: codenerix_products/models.py:752
 msgid ""
 "Cannot delete product model, relationship between product model and products "
 "document"
 msgstr "No se puede eliminar el producto, tiene documentos relacionados con él"
 
-#: codenerix_products_MOD/models.py:746
+#: codenerix_products/models.py:754
 msgid ""
 "Cannot delete product model, relationship between product model and products "
 "feature"
 msgstr ""
 "No se puede eliminar el producto, tiene características relacionados con él"
 
-#: codenerix_products_MOD/models.py:748
+#: codenerix_products/models.py:756
 msgid ""
 "Cannot delete product model, relationship between product model and products "
 "related"
@@ -630,7 +634,7 @@ msgstr ""
 "No se puede eliminar el producto, tiene productos relacionados relacionados "
 "con él"
 
-#: codenerix_products_MOD/models.py:750
+#: codenerix_products/models.py:758
 msgid ""
 "Cannot delete product model, relationship between product model and products "
 "related sold"
@@ -638,98 +642,94 @@ msgstr ""
 "No se puede eliminar el producto, tiene productos relacionados vendidos "
 "relacionados con él"
 
-#: codenerix_products_MOD/models.py:887 codenerix_products_MOD/models.py:902
+#: codenerix_products/models.py:895 codenerix_products/models.py:910
 msgid "Products related"
 msgstr "Productos relacionados"
 
-#: codenerix_products_MOD/models.py:888 codenerix_products_MOD/models.py:903
+#: codenerix_products/models.py:896 codenerix_products/models.py:911
 msgid "Hits"
 msgstr ""
 
-#: codenerix_products_MOD/models.py:912 codenerix_products_MOD/models.py:927
-#: codenerix_products_MOD/models.py:1374 codenerix_products_MOD/models.py:1389
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:33
-#: codenerix_products_MOD/views.py:866 codenerix_products_MOD/views.py:1365
-#: codenerix_products_MOD/views.py:2347 codenerix_products_MOD/views.py:2349
-#: codenerix_products_MOD/views.py:2576
+#: codenerix_products/models.py:920 codenerix_products/models.py:935
+#: codenerix_products/models.py:1389 codenerix_products/models.py:1404
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:33
+#: codenerix_products/views.py:874 codenerix_products/views.py:1395
+#: codenerix_products/views.py:2377 codenerix_products/views.py:2379
+#: codenerix_products/views.py:2606
 msgid "Principal"
 msgstr "Principal"
 
-#: codenerix_products_MOD/models.py:913 codenerix_products_MOD/models.py:1375
-#: codenerix_products_MOD/models.py:1553
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:34
+#: codenerix_products/models.py:921 codenerix_products/models.py:1390
+#: codenerix_products/models.py:1617
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:34
 msgid "Flagship product"
 msgstr "Producto estrella"
 
-#: codenerix_products_MOD/models.py:981 codenerix_products_MOD/views.py:2352
+#: codenerix_products/models.py:989 codenerix_products/views.py:2382
 msgid "Offer"
 msgstr "Oferta"
 
-#: codenerix_products_MOD/models.py:983 codenerix_products_MOD/views.py:1089
+#: codenerix_products/models.py:991 codenerix_products/views.py:1109
 msgid "Most sold"
 msgstr "Más vendido"
 
-#: codenerix_products_MOD/models.py:990 codenerix_products_MOD/views.py:2354
+#: codenerix_products/models.py:998 codenerix_products/views.py:2384
 msgid "Reviews"
 msgstr "Revisiones"
 
-#: codenerix_products_MOD/models.py:991 codenerix_products_MOD/views.py:2355
+#: codenerix_products/models.py:999 codenerix_products/views.py:2385
 msgid "Reviews count"
 msgstr "Número de revisiones"
 
-#: codenerix_products_MOD/models.py:992 codenerix_products_MOD/models.py:1029
-#: codenerix_products_MOD/views.py:981
+#: codenerix_products/models.py:1000 codenerix_products/models.py:1046
+#: codenerix_products/views.py:992
 msgid "Sample"
 msgstr "Muestra"
 
-#: codenerix_products_MOD/models.py:992
+#: codenerix_products/models.py:1000
 msgid "If this option is checked the product can not be sold"
 msgstr "Si esta marcada, el producto no se podrá vender"
 
-#: codenerix_products_MOD/models.py:994
+#: codenerix_products/models.py:1002
 msgid "If it is empty, code is equal to code product"
 msgstr "Si esta vacío, el código será el mismo que el del producto"
 
-#: codenerix_products_MOD/models.py:995
+#: codenerix_products/models.py:1003
 msgid "If it is empty, price base is equal to price base of product"
 msgstr "Si esta vacío, el precio base es el mismo que el del producto"
 
-#: codenerix_products_MOD/models.py:997
+#: codenerix_products/models.py:1005
 msgid "If it is empty, packing cost is equal to packing cost of product"
 msgstr "Si esta vacío, el precio de empaquetar es el mismo que el del producto"
 
-#: codenerix_products_MOD/models.py:998
+#: codenerix_products/models.py:1006
 msgid "If it is empty, weight is equal to weight of product"
 msgstr "si esta vacío, el peso será el mismo que el del producto"
 
-#: codenerix_products_MOD/models.py:1021 codenerix_products_MOD/models.py:1040
-#: codenerix_products_MOD/views.py:974
+#: codenerix_products/models.py:1038 codenerix_products/models.py:1057
+#: codenerix_products/views.py:987
 msgid "Product Code"
 msgstr "Código del producto"
 
-#: codenerix_products_MOD/models.py:1028 codenerix_products_MOD/views.py:980
+#: codenerix_products/models.py:1045 codenerix_products/views.py:991
 msgid "Is pack"
 msgstr "Es un pack"
 
-#: codenerix_products_MOD/models.py:1061
-msgid "You can not block more stock from the available"
-msgstr ""
-
-#: codenerix_products_MOD/models.py:1075
+#: codenerix_products/models.py:1090
 msgid ""
 "Cannot delete product final model, relationship between product final model "
 "and products final attributes"
 msgstr ""
 "No se puede eliminar el producto final, tiene atributos relacionados con él"
 
-#: codenerix_products_MOD/models.py:1077
+#: codenerix_products/models.py:1092
 msgid ""
 "Cannot delete product final model, relationship between product final model "
 "and products final image"
 msgstr ""
 "No se puede eliminar el producto final, tiene imágenes relacionados con él"
 
-#: codenerix_products_MOD/models.py:1079
+#: codenerix_products/models.py:1094
 msgid ""
 "Cannot delete product final model, relationship between product final model "
 "and products unique"
@@ -737,7 +737,7 @@ msgstr ""
 "No se puede eliminar el producto final, tiene productos únicos relacionados "
 "con él"
 
-#: codenerix_products_MOD/models.py:1081
+#: codenerix_products/models.py:1096
 msgid ""
 "Cannot delete product final model, relationship between product final model "
 "and products flaship"
@@ -745,317 +745,348 @@ msgstr ""
 "No se puede eliminar el producto final, tiene productos estrellas "
 "relacionados con él"
 
-#: codenerix_products_MOD/models.py:1371 codenerix_products_MOD/models.py:1612
+#: codenerix_products/models.py:1386 codenerix_products/models.py:1676
 msgid "Product Final"
 msgstr "Producto Final"
 
-#: codenerix_products_MOD/models.py:1422 codenerix_products_MOD/views.py:1059
-#: codenerix_products_MOD/views.py:1085
+#: codenerix_products/models.py:1437 codenerix_products/views.py:1073
+#: codenerix_products/views.py:1107
 msgid "Attributes"
 msgstr "Atributo"
 
-#: codenerix_products_MOD/models.py:1429 codenerix_products_MOD/views.py:2776
+#: codenerix_products/models.py:1444 codenerix_products/views.py:2806
 msgid "True"
 msgstr "Verdad"
 
-#: codenerix_products_MOD/models.py:1429 codenerix_products_MOD/views.py:2776
+#: codenerix_products/models.py:1444 codenerix_products/views.py:2806
 msgid "False"
 msgstr "Falso"
 
-#: codenerix_products_MOD/models.py:1464 codenerix_products_MOD/models.py:1466
+#: codenerix_products/models.py:1479 codenerix_products/models.py:1481
 msgid "A product final can not have the same attribute"
 msgstr "Un producto final no puede tener el mismo atributo"
 
-#: codenerix_products_MOD/models.py:1482 codenerix_products_MOD/models.py:1494
-#: codenerix_products_MOD/templates/codenerix_products/productfeature_sublist.html:30
-#: codenerix_products_MOD/views.py:158
+#: codenerix_products/models.py:1497 codenerix_products/models.py:1509
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:30
+#: codenerix_products/views.py:158
 msgid "Feature"
 msgstr "Característica"
 
-#: codenerix_products_MOD/models.py:1501 codenerix_products_MOD/models.py:1627
+#: codenerix_products/models.py:1516 codenerix_products/models.py:1691
 msgid "Product final"
 msgstr "Producto final"
 
-#: codenerix_products_MOD/models.py:1502 codenerix_products_MOD/models.py:1522
+#: codenerix_products/models.py:1517 codenerix_products/models.py:1536
 msgid "Box"
 msgstr ""
 
-#: codenerix_products_MOD/models.py:1504
+#: codenerix_products/models.py:1519
+msgid "Caducity"
+msgstr ""
+
+#: codenerix_products/models.py:1520 codenerix_products/models.py:1537
 #, fuzzy
 #| msgid "Stock real"
 msgid "Stock original"
 msgstr "Stock real"
 
-#: codenerix_products_MOD/models.py:1505 codenerix_products_MOD/models.py:1523
-#: codenerix_products_MOD/views.py:1086
+#: codenerix_products/models.py:1521 codenerix_products/models.py:1538
 msgid "Stock real"
 msgstr "Stock real"
 
-#: codenerix_products_MOD/models.py:1506 codenerix_products_MOD/models.py:1524
+#: codenerix_products/models.py:1522 codenerix_products/models.py:1539
 #, fuzzy
 #| msgid "Stock lock"
 msgid "Stock locked"
 msgstr "Stock bloqueado"
 
-#: codenerix_products_MOD/models.py:1540
-msgid "Ya existe un producto final con el valor de la caracteristicas especial"
+#: codenerix_products/models.py:1601
+#, fuzzy
+#| msgid ""
+#| "Ya existe un producto final con el valor de la caracteristicas especial"
+msgid "Ya existe un producto unico con el valor de la caracteristicas especial"
 msgstr ""
 "Ya existe un producto final con el valor de la características especial"
 
-#: codenerix_products_MOD/models.py:1542
-msgid "Product don't seleted"
+#: codenerix_products/models.py:1603
+msgid ""
+"Este producto unico solo se puede cargar en cantidades de uno, porque la "
+"caracteristica especian indica que debe el valor no se puede repetir"
+msgstr ""
+
+#: codenerix_products/models.py:1606
+#, fuzzy
+#| msgid "Product don't seleted"
+msgid "Product final not seleted"
 msgstr "Producto no seleccionado"
 
-#: codenerix_products_MOD/models.py:1555
+#: codenerix_products/models.py:1619
 msgid "View video"
 msgstr "Ver video"
 
-#: codenerix_products_MOD/models.py:1556 codenerix_products_MOD/models.py:1569
+#: codenerix_products/models.py:1620 codenerix_products/models.py:1633
 msgid "Orientazion"
 msgstr "Orientación"
 
-#: codenerix_products_MOD/models.py:1568
+#: codenerix_products/models.py:1632
 msgid "View Video"
 msgstr "Ver Video"
 
-#: codenerix_products_MOD/models.py:1614 codenerix_products_MOD/models.py:1631
+#: codenerix_products/models.py:1678 codenerix_products/models.py:1695
 msgid "Active"
 msgstr "Activo"
 
-#: codenerix_products_MOD/models.py:1628
+#: codenerix_products/models.py:1692
 msgid "Option"
 msgstr "Opción"
 
-#: codenerix_products_MOD/models.py:1630
+#: codenerix_products/models.py:1694
 msgid "Products options"
 msgstr "Opciones de los productos"
 
-#: codenerix_products_MOD/templates/codenerix_products/optionvalue_sublist.html:30
-#: codenerix_products_MOD/templates/codenerix_products/optionvalueattribute_sublist.html:30
-#: codenerix_products_MOD/templates/codenerix_products/optionvaluefeature_sublist.html:30
-#: codenerix_products_MOD/templates/codenerix_products/optionvaluefeaturespecial_sublist.html:30
+#: codenerix_products/templates/codenerix_products/optionvalue_sublist.html:30
+#: codenerix_products/templates/codenerix_products/optionvalueattribute_sublist.html:30
+#: codenerix_products/templates/codenerix_products/optionvaluefeature_sublist.html:30
+#: codenerix_products/templates/codenerix_products/optionvaluefeaturespecial_sublist.html:30
 msgid "Description ES"
 msgstr "Descripción en español"
 
-#: codenerix_products_MOD/templates/codenerix_products/optionvalue_sublist.html:31
-#: codenerix_products_MOD/templates/codenerix_products/optionvalueattribute_sublist.html:31
-#: codenerix_products_MOD/templates/codenerix_products/optionvaluefeature_sublist.html:31
-#: codenerix_products_MOD/templates/codenerix_products/optionvaluefeaturespecial_sublist.html:31
-#: codenerix_products_MOD/templates/codenerix_products/productdocument_sublist.html:33
-#: codenerix_products_MOD/templates/codenerix_products/productfeature_sublist.html:32
-#: codenerix_products_MOD/templates/codenerix_products/productfeaturespecial_sublist.html:33
-#: codenerix_products_MOD/templates/codenerix_products/productfinalattribute_sublist.html:32
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:36
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:36
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:35
+#: codenerix_products/templates/codenerix_products/optionvalue_sublist.html:31
+#: codenerix_products/templates/codenerix_products/optionvalueattribute_sublist.html:31
+#: codenerix_products/templates/codenerix_products/optionvaluefeature_sublist.html:31
+#: codenerix_products/templates/codenerix_products/optionvaluefeaturespecial_sublist.html:31
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:33
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:32
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:33
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:32
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:36
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:36
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:35
 msgid "Delete"
 msgstr "Borrado"
 
-#: codenerix_products_MOD/templates/codenerix_products/optionvalue_sublist.html:42
-#: codenerix_products_MOD/templates/codenerix_products/optionvalueattribute_sublist.html:42
-#: codenerix_products_MOD/templates/codenerix_products/optionvaluefeature_sublist.html:42
-#: codenerix_products_MOD/templates/codenerix_products/optionvaluefeaturespecial_sublist.html:42
-#: codenerix_products_MOD/templates/codenerix_products/productdocument_sublist.html:50
-#: codenerix_products_MOD/templates/codenerix_products/productfeature_sublist.html:46
-#: codenerix_products_MOD/templates/codenerix_products/productfeaturespecial_sublist.html:50
-#: codenerix_products_MOD/templates/codenerix_products/productfinalattribute_sublist.html:46
-#: codenerix_products_MOD/templates/codenerix_products/productimage_sublist.html:62
-#: codenerix_products_MOD/templates/codenerix_products/productrelated_sublist.html:62
-#: codenerix_products_MOD/templates/codenerix_products/subcategory_sublist.html:58
+#: codenerix_products/templates/codenerix_products/optionvalue_sublist.html:42
+#: codenerix_products/templates/codenerix_products/optionvalueattribute_sublist.html:42
+#: codenerix_products/templates/codenerix_products/optionvaluefeature_sublist.html:42
+#: codenerix_products/templates/codenerix_products/optionvaluefeaturespecial_sublist.html:42
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:50
+#: codenerix_products/templates/codenerix_products/productfeature_sublist.html:46
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:50
+#: codenerix_products/templates/codenerix_products/productfinalattribute_sublist.html:46
+#: codenerix_products/templates/codenerix_products/productimage_sublist.html:62
+#: codenerix_products/templates/codenerix_products/productrelated_sublist.html:62
+#: codenerix_products/templates/codenerix_products/subcategory_sublist.html:58
 msgid "Delete option?"
 msgstr "¿Borrar opción?"
 
-#: codenerix_products_MOD/templates/codenerix_products/productdocument_sublist.html:31
+#: codenerix_products/templates/codenerix_products/productdocument_sublist.html:31
 msgid "File"
 msgstr "Ficheros"
 
-#: codenerix_products_MOD/templates/codenerix_products/productfeaturespecial_sublist.html:31
-#: codenerix_products_MOD/views.py:1061
+#: codenerix_products/templates/codenerix_products/productfeaturespecial_sublist.html:31
+#: codenerix_products/views.py:1075
 msgid "Feature Special"
 msgstr "Característica Especial"
 
-#: codenerix_products_MOD/views.py:101
+#: codenerix_products/views.py:101
 msgid "TypeTax"
 msgstr "Tipo de Impuesto"
 
-#: codenerix_products_MOD/views.py:101 codenerix_products_MOD/views.py:158
-#: codenerix_products_MOD/views.py:233 codenerix_products_MOD/views.py:306
-#: codenerix_products_MOD/views.py:413 codenerix_products_MOD/views.py:518
-#: codenerix_products_MOD/views.py:619 codenerix_products_MOD/views.py:773
-#: codenerix_products_MOD/views.py:809 codenerix_products_MOD/views.py:890
-#: codenerix_products_MOD/views.py:961 codenerix_products_MOD/views.py:1308
-#: codenerix_products_MOD/views.py:1390 codenerix_products_MOD/views.py:1543
-#: codenerix_products_MOD/views.py:1686 codenerix_products_MOD/views.py:1831
-#: codenerix_products_MOD/views.py:1897 codenerix_products_MOD/views.py:1963
-#: codenerix_products_MOD/views.py:2027 codenerix_products_MOD/views.py:2119
-#: codenerix_products_MOD/views.py:2211 codenerix_products_MOD/views.py:2304
+#: codenerix_products/views.py:101 codenerix_products/views.py:158
+#: codenerix_products/views.py:233 codenerix_products/views.py:306
+#: codenerix_products/views.py:413 codenerix_products/views.py:518
+#: codenerix_products/views.py:619 codenerix_products/views.py:781
+#: codenerix_products/views.py:817 codenerix_products/views.py:898
+#: codenerix_products/views.py:969 codenerix_products/views.py:1338
+#: codenerix_products/views.py:1420 codenerix_products/views.py:1573
+#: codenerix_products/views.py:1716 codenerix_products/views.py:1861
+#: codenerix_products/views.py:1927 codenerix_products/views.py:1993
+#: codenerix_products/views.py:2057 codenerix_products/views.py:2149
+#: codenerix_products/views.py:2241 codenerix_products/views.py:2334
 msgid "People"
 msgstr "Gente"
 
-#: codenerix_products_MOD/views.py:306
+#: codenerix_products/views.py:306
 msgid "FeatureSpecial"
 msgstr "Característica Especial"
 
-#: codenerix_products_MOD/views.py:465
+#: codenerix_products/views.py:465
 msgid "Subcategories"
 msgstr "Subcategorías"
 
-#: codenerix_products_MOD/views.py:622 codenerix_products_MOD/views.py:964
+#: codenerix_products/views.py:622 codenerix_products/views.py:972
 msgid "Add product & product final"
 msgstr "Añadir producto y producto final"
 
-#: codenerix_products_MOD/views.py:634
+#: codenerix_products/views.py:639
 #, fuzzy
 #| msgid "Sales"
 msgid "Of sales"
 msgstr "Ventas"
 
-#: codenerix_products_MOD/views.py:635
+#: codenerix_products/views.py:640
 #, fuzzy
 #| msgid "Purchase"
 msgid "Of purchase"
 msgstr "Compras"
 
-#: codenerix_products_MOD/views.py:687
+#: codenerix_products/views.py:643 codenerix_products/views.py:993
+#, fuzzy
+#| msgid "Stock real"
+msgid "Stock Original"
+msgstr "Stock real"
+
+#: codenerix_products/views.py:644 codenerix_products/views.py:994
+#, fuzzy
+#| msgid "Stock real"
+msgid "Stock Real"
+msgstr "Stock real"
+
+#: codenerix_products/views.py:645 codenerix_products/views.py:995
+#, fuzzy
+#| msgid "Stock lock"
+msgid "Stock Locked"
+msgstr "Stock bloqueado"
+
+#: codenerix_products/views.py:695
 msgid "Features"
 msgstr "Características"
 
-#: codenerix_products_MOD/views.py:688
+#: codenerix_products/views.py:696
 msgid "Documents"
 msgstr "Documentos"
 
-#: codenerix_products_MOD/views.py:689 codenerix_products_MOD/views.py:1060
+#: codenerix_products/views.py:697 codenerix_products/views.py:1074
 msgid "Images"
 msgstr "Imágenes"
 
-#: codenerix_products_MOD/views.py:690
+#: codenerix_products/views.py:698
 msgid "Products Final"
 msgstr "Productos finales"
 
-#: codenerix_products_MOD/views.py:773
+#: codenerix_products/views.py:781
 msgid "ProductRelationSold"
 msgstr ""
 
-#: codenerix_products_MOD/views.py:809 codenerix_products_MOD/views.py:1308
+#: codenerix_products/views.py:817 codenerix_products/views.py:1338
 msgid "ProductImage"
 msgstr "Imagen del producto"
 
-#: codenerix_products_MOD/views.py:890
+#: codenerix_products/views.py:898
 msgid "ProductDocument"
 msgstr "Documento del producto"
 
-#: codenerix_products_MOD/views.py:961
+#: codenerix_products/views.py:969
 msgid "ProductFinal"
 msgstr "Producto Final"
 
-#: codenerix_products_MOD/views.py:1062
+#: codenerix_products/views.py:1076
 msgid "Product related"
 msgstr "Producto relacionado"
 
-#: codenerix_products_MOD/views.py:1063
+#: codenerix_products/views.py:1077
 msgid "Product accesory"
 msgstr "Accesorio del producto"
 
-#: codenerix_products_MOD/views.py:1064
+#: codenerix_products/views.py:1078
 msgid "Product options"
 msgstr "Opciones del producto"
 
-#: codenerix_products_MOD/views.py:1084
+#: codenerix_products/views.py:1106
 msgid "Identifier"
 msgstr "Identificador"
 
-#: codenerix_products_MOD/views.py:1087
-msgid "Stock lock"
-msgstr "Stock bloqueado"
-
-#: codenerix_products_MOD/views.py:1091
+#: codenerix_products/views.py:1111
 msgid "Public {}"
 msgstr "Público {}"
 
-#: codenerix_products_MOD/views.py:1390
+#: codenerix_products/views.py:1420
 msgid "ProductFinalAttribute"
 msgstr "Atributos del producto final"
 
-#: codenerix_products_MOD/views.py:1422 codenerix_products_MOD/views.py:1489
-#: codenerix_products_MOD/views.py:1575 codenerix_products_MOD/views.py:1634
+#: codenerix_products/views.py:1452 codenerix_products/views.py:1519
+#: codenerix_products/views.py:1605 codenerix_products/views.py:1664
 msgid "Option invalid"
 msgstr "Opción inválida"
 
-#: codenerix_products_MOD/views.py:1429 codenerix_products_MOD/views.py:1496
-#: codenerix_products_MOD/views.py:1582 codenerix_products_MOD/views.py:1641
+#: codenerix_products/views.py:1459 codenerix_products/views.py:1526
+#: codenerix_products/views.py:1612 codenerix_products/views.py:1671
 msgid "Value invalid"
 msgstr "Valor inválido"
 
-#: codenerix_products_MOD/views.py:1543
+#: codenerix_products/views.py:1573
 msgid "ProductFeature"
 msgstr "Característica del  producto"
 
-#: codenerix_products_MOD/views.py:1686
+#: codenerix_products/views.py:1716
 msgid "ProductUnique"
 msgstr "Producto Único"
 
-#: codenerix_products_MOD/views.py:1718 codenerix_products_MOD/views.py:1749
+#: codenerix_products/views.py:1748 codenerix_products/views.py:1779
 msgid "Value existing"
 msgstr "El valor ya existe"
 
-#: codenerix_products_MOD/views.py:1831
+#: codenerix_products/views.py:1861
 msgid "GroupValueFeature"
 msgstr "Grupo de valores para característica"
 
-#: codenerix_products_MOD/views.py:1859 codenerix_products_MOD/views.py:1878
-#: codenerix_products_MOD/views.py:1925 codenerix_products_MOD/views.py:1944
-#: codenerix_products_MOD/views.py:1990 codenerix_products_MOD/views.py:2009
+#: codenerix_products/views.py:1889 codenerix_products/views.py:1908
+#: codenerix_products/views.py:1955 codenerix_products/views.py:1974
+#: codenerix_products/views.py:2020 codenerix_products/views.py:2039
 msgid "List values"
 msgstr "Lista de valores"
 
-#: codenerix_products_MOD/views.py:1897
+#: codenerix_products/views.py:1927
 msgid "GroupValueAttribute"
 msgstr "Grupo de valores para atributos"
 
-#: codenerix_products_MOD/views.py:1963
+#: codenerix_products/views.py:1993
 msgid "GroupValueFeatureSpecial"
 msgstr "Grupo de valores para características especial"
 
-#: codenerix_products_MOD/views.py:2027
+#: codenerix_products/views.py:2057
 msgid "OptionValueFeature"
 msgstr "Opción de característica"
 
-#: codenerix_products_MOD/views.py:2119
+#: codenerix_products/views.py:2149
 msgid "OptionValueAttribute"
 msgstr "Opción de atributo"
 
-#: codenerix_products_MOD/views.py:2211
+#: codenerix_products/views.py:2241
 msgid "OptionValueFeatureSpecial"
 msgstr "Opción de característica especial"
 
-#: codenerix_products_MOD/views.py:2304
+#: codenerix_products/views.py:2334
 msgid "FlagshipProduct"
 msgstr "Producto Estrella"
 
-#: codenerix_products_MOD/views.py:2336 codenerix_products_MOD/views.py:2563
+#: codenerix_products/views.py:2366 codenerix_products/views.py:2593
 msgid "Buy"
 msgstr "Comprar"
 
-#: codenerix_products_MOD/views.py:2337 codenerix_products_MOD/views.py:2564
+#: codenerix_products/views.py:2367 codenerix_products/views.py:2594
 msgid "New"
 msgstr "Nuevo"
 
-#: codenerix_products_MOD/views.py:2338 codenerix_products_MOD/views.py:2565
+#: codenerix_products/views.py:2368 codenerix_products/views.py:2595
 msgid "Wish list"
 msgstr "Lista de deseos"
 
-#: codenerix_products_MOD/views.py:2339 codenerix_products_MOD/views.py:2566
+#: codenerix_products/views.py:2369 codenerix_products/views.py:2596
 msgid "Shopping cart"
 msgstr "Carrito de la compra"
 
-#: codenerix_products_MOD/views.py:2353 codenerix_products_MOD/views.py:2582
+#: codenerix_products/views.py:2383 codenerix_products/views.py:2612
 msgid "Created"
 msgstr "Creado"
 
-#: codenerix_products_MOD/views.py:2816 codenerix_products_MOD/views.py:2867
+#: codenerix_products/views.py:2846 codenerix_products/views.py:2897
 msgid "Products"
 msgstr "Productos"
 
-#: codenerix_products_MOD/views.py:2816 codenerix_products_MOD/views.py:2867
+#: codenerix_products/views.py:2846 codenerix_products/views.py:2897
 msgid "ProductFinalOption"
 msgstr "Opción del producto final"
+
+#~ msgid "Stock lock"
+#~ msgstr "Stock bloqueado"
