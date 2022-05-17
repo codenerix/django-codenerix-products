@@ -2,7 +2,7 @@
 #
 # django-codenerix-products
 #
-# Copyright 2017 Centrologic Computational Logistic Center S.L.
+# Codenerix GNU
 #
 # Project URL : http://www.codenerix.com
 #
@@ -29,8 +29,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models, transaction, IntegrityError
 from django.db.models import F, Q
 from django.utils import timezone
-from django.utils.encoding import smart_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import smart_str
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
 from codenerix.fields import ImageAngularField
@@ -110,7 +110,7 @@ class TypeTax(CodenerixModel):
     recargo_equivalencia = models.FloatField(_("Recargo de equivalencia (%)"), validators=[MinValueValidator(0), MaxValueValidator(100)], blank=False, null=False)
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.name))
+        return u"{}".format(smart_str(self.name))
 
     def __str__(self):
         return self.__unicode__()
@@ -267,7 +267,7 @@ class GenProductBrandText(GenSEOText):  # META: Abstract class
     public = models.BooleanField(_("Public"), blank=True, null=False, default=True)
 
     def __str__(self):
-        return u"{}".format(smart_text(self.description_short))
+        return u"{}".format(smart_str(self.description_short))
 
     def __unicode__(self):
         return self.__str__()
@@ -328,9 +328,9 @@ class Family(CodenerixModel, GenImageFileNull):
 
     def __str__(self):
         if self.code:
-            return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
+            return u"{} ({})".format(smart_str(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_str(self.code))
         else:
-            return u"{}".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
+            return u"{}".format(smart_str(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
 
     def __unicode__(self):
         return self.__str__()
@@ -363,9 +363,9 @@ class Category(CodenerixModel):
 
     def __str__(self):
         if self.code:
-            return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
+            return u"{} ({})".format(smart_str(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_str(self.code))
         else:
-            return u"{}".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
+            return u"{}".format(smart_str(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
 
     def __unicode__(self):
         return self.__str__()
@@ -411,9 +411,9 @@ class Subcategory(CodenerixModel):
 
     def __str__(self):
         if self.code:
-            return u"{} ({})".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_text(self.code))
+            return u"{} ({})".format(smart_str(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name), smart_str(self.code))
         else:
-            return u"{}".format(smart_text(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
+            return u"{}".format(smart_str(getattr(self, settings.LANGUAGES_DATABASES[0].lower()).name))
 
     def __unicode__(self):
         return self.__str__()
@@ -453,7 +453,7 @@ class GroupValues(CodenerixModel):  # META: Abstract class
         return fields
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.name))
+        return u"{}".format(smart_str(self.name))
 
     def __str__(self):
         return self.__unicode__()
@@ -646,9 +646,9 @@ class Brand(CodenerixModel, GenImageFileNull):
             translation = getattr(self, lang_code.lower(), None)
             if translation is not None:
                 if translation.name and len(translation.name) > 0:
-                    name_res = u"{}".format(smart_text(translation.name))
+                    name_res = u"{}".format(smart_str(translation.name))
                 else:
-                    name_res = u"{}".format(smart_text(translation.slug))
+                    name_res = u"{}".format(smart_str(translation.slug))
         return name_res
 
     def __str__(self):
@@ -700,7 +700,7 @@ class GenProduct(CodenerixModel):  # META: Abstract class
     caducable = models.BooleanField(_("Caducable"), blank=True, null=False, default=False)
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.code))
+        return u"{}".format(smart_str(self.code))
 
     def __str__(self):
         return self.__unicode__()
@@ -899,7 +899,7 @@ class ProductRelationSold(CodenerixModel):
         unique_together = (('product', 'related'), )
 
     def __unicode__(self):
-        return u"{} ({})".format(smart_text(self.product), smart_text(self.hits))
+        return u"{} ({})".format(smart_str(self.product), smart_str(self.hits))
 
     def __str__(self):
         return self.__unicode__()
@@ -922,7 +922,7 @@ class ProductImage(CodenerixModel, GenImageFile):
     outstanding = models.BooleanField(_("Outstanding"), default=False)
 
     def __unicode__(self):
-        return u"{} ({})".format(smart_text(self.product), smart_text(self.order))
+        return u"{} ({})".format(smart_str(self.product), smart_str(self.order))
 
     def __str__(self):
         return self.__unicode__()
@@ -964,7 +964,7 @@ class ProductDocument(CodenerixModel, GenDocumentFile):
     public = models.BooleanField(_("Public"), blank=False, null=False, default=False)
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.product))
+        return u"{}".format(smart_str(self.product))
 
     def __str__(self):
         return self.__unicode__()
@@ -1014,7 +1014,7 @@ class ProductFinal(CustomQueryMixin, CodenerixModel):
             name = self.product
 
         if self.ean13:
-            name = u"{} ({})".format(smart_text(name), self.ean13)
+            name = u"{} ({})".format(smart_str(name), self.ean13)
         else:
             name = u"{}".format(name)
         return name
@@ -1391,7 +1391,7 @@ class ProductFinalImage(CodenerixModel, GenImageFile):
     outstanding = models.BooleanField(_("Outstanding"), default=False)
 
     def __unicode__(self):
-        return u"{} ({})".format(smart_text(self.product_final), smart_text(self.order))
+        return u"{} ({})".format(smart_str(self.product_final), smart_str(self.order))
 
     def __str__(self):
         return self.__unicode__()
@@ -1456,9 +1456,9 @@ class ProductFinalAttribute(CodenerixModel):
             if ov:
                 value = ov[field]
         if show_attribute:
-            return u"{}: {}".format(smart_text(self.attribute), smart_text(value))
+            return u"{}: {}".format(smart_str(self.attribute), smart_str(value))
         else:
-            return u"{}".format(smart_text(value))
+            return u"{}".format(smart_str(value))
 
     def __str__(self):
         return self.__unicode__()
@@ -1498,7 +1498,7 @@ class ProductFeature(CodenerixModel):
     value = models.CharField(_("Value"), max_length=80)
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.product))
+        return u"{}".format(smart_str(self.product))
 
     def __str__(self):
         return self.__unicode__()
@@ -1526,7 +1526,7 @@ class ProductUnique(CodenerixModel):
             result = self.value
         else:
             result = self.product_final
-        return u"{} ({})".format(smart_text(result), self.box)
+        return u"{} ({})".format(smart_str(result), self.box)
 
     def __fields__(self, info):
         fields = []
@@ -1620,7 +1620,7 @@ class FlagshipProduct(CustomQueryMixin, CodenerixModel, GenImageFile):
     orientazion = models.CharField(_("Orientazion"), max_length=2, choices=TYPE_ORIENTAZION, blank=False, null=False, default='R')
 
     def __unicode__(self):
-        return u"{}".format(smart_text(self.product_final))
+        return u"{}".format(smart_str(self.product_final))
 
     def __str__(self):
         return self.__unicode__()
@@ -1680,7 +1680,7 @@ class ProductFinalOption(CodenerixModel):
 
     def __unicode__(self):
         lang = get_language_database()
-        return u"{}".format(smart_text(getattr(self, lang).name))
+        return u"{}".format(smart_str(getattr(self, lang).name))
 
     def __str__(self):
         return self.__unicode__()

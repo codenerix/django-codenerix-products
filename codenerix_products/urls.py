@@ -2,7 +2,7 @@
 #
 # django-codenerix-products
 #
-# Copyright 2017 Centrologic Computational Logistic Center S.L.
+# Codenerix GNU
 #
 # Project URL : http://www.codenerix.com
 #
@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.conf.urls import url
+from django.urls import re_path as url
 from .views import FeatureList, AttributeList, FeatureSpecialList, FamilyList, CategoryList, SubcategoryList, ProductList, ProductRelationSoldList, ProductImageList, ProductDocumentList, ProductFinalList, ProductFeatureList, ProductUniqueList
 from .views import FeatureCreate, AttributeCreate, FeatureSpecialCreate, FamilyCreate, CategoryCreate, SubcategoryCreate, ProductCreate, ProductRelationSoldCreate, ProductFinalCreate
 from .views import FeatureCreateModal, AttributeCreateModal, FeatureSpecialCreateModal, FamilyCreateModal, CategoryCreateModal, SubcategoryCreateModal, SubcategoryCreateModalAll, ProductCreateModal, ProductRelationSoldCreateModal, ProductImageCreateModal, ProductDocumentCreateModal, ProductFinalCreateModal, ProductFeatureCreateModal, ProductUniqueCreateModal

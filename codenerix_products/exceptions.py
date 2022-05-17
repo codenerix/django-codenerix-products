@@ -2,7 +2,7 @@
 #
 # django-codenerix-products
 #
-# Copyright 2018 Centrologic Computational Logistic Center S.L.
+# Codenerix GNU
 #
 # Project URL : http://www.codenerix.com
 #
