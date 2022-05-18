@@ -54,12 +54,6 @@ Quickstart
 Documentation
 *************
 
-Coming soon... do you help us? `Codenerix <https://www.codenerix.com/>`_
+Coming soon... do you help us?
 
-You can chat with us `here <https://goo.gl/NgpzBh>`_.
-
-*******
-Credits
-*******
-
-This project has been possible thanks to `Codenerix <http://www.codenerix.com>`_.
+You can get in touch with us `here <https://codenerix.com/contact/>`_.
