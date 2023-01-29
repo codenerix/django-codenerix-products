@@ -21,7 +21,12 @@
 import copy
 
 from operator import or_
-from collections import Iterable
+try:
+    # Python 3.10
+    from collections.abc import Iterable
+except Exception:
+    # Python 3.9 and older
+    from collections import Iterable
 from functools import reduce
 from decimal import Decimal
 
