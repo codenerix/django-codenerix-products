@@ -1,35 +1,51 @@
-
 from django.core.management.base import BaseCommand
 
-from codenerix.lib.debugger import Debugger
+from codenerix_lib.debugger import Debugger
 from django.conf import settings
 
 from django.db import connection, transaction
 
-from codenerix_products.models import MODELS, \
-    GroupValueAttribute, Attribute, OptionValueAttribute, \
-    GroupValueFeature, Feature, OptionValueFeature, \
-    GroupValueFeatureSpecial, FeatureSpecial, OptionValueFeatureSpecial
+from codenerix_products.models import (
+    MODELS,
+    GroupValueAttribute,
+    Attribute,
+    OptionValueAttribute,
+    GroupValueFeature,
+    Feature,
+    OptionValueFeature,
+    GroupValueFeatureSpecial,
+    FeatureSpecial,
+    OptionValueFeatureSpecial,
+)
 
 for info in MODELS:
     field = info[0]
     model = info[1]
     for lang_code in settings.LANGUAGES_DATABASES:
-        cad = "from codenerix_products.models import {}Text{}\n".format(model, lang_code)
+        cad = "from codenerix_products.models import {}Text{}\n".format(
+            model, lang_code
+        )
         exec(cad)
 
 
 class Command(BaseCommand, Debugger):
-
     def migrate(self, model_group, table_source, model_option):
-        model_str = str(model_option).replace('"', '').replace("'", '').replace(">", '').split(".")[-1]
-        
+        model_str = (
+            str(model_option)
+            .replace('"', "")
+            .replace("'", "")
+            .replace(">", "")
+            .split(".")[-1]
+        )
+
         cursor = connection.cursor()
         query = """
             SELECT cpa.id, cpa.list_value_id, cpg.name
             FROM {table} AS cpa, codenerix_products_groupvalue AS cpg
             WHERE cpa.list_value_id = cpg.id
-        """.format(**{'table': table_source})
+        """.format(
+            **{"table": table_source}
+        )
         cursor.execute(query)
         for src in cursor:
             if src[1]:
@@ -43,30 +59,52 @@ class Command(BaseCommand, Debugger):
                     group.save()
 
                 text_lang = []
-                froms = ['codenerix_products_optionvalue cpo', ]
-                conditions = ['cpo.group_id = {}'.format(group_id), ]
+                froms = [
+                    "codenerix_products_optionvalue cpo",
+                ]
+                conditions = [
+                    "cpo.group_id = {}".format(group_id),
+                ]
                 values = []
 
                 for lang_code in settings.LANGUAGES_DATABASES:
-                    model_lang = globals()["{}Text{}".format(model_str, lang_code)]
-                    text_lang.append((lang_code, model_lang._meta.db_table, model_lang))
+                    model_lang = globals()[
+                        "{}Text{}".format(model_str, lang_code)
+                    ]
+                    text_lang.append(
+                        (lang_code, model_lang._meta.db_table, model_lang)
+                    )
 
                     alias = "t{}".format(lang_code.lower())
-                    values.append('{}.description'.format(alias))
-                    froms.append('codenerix_products_optionvaluetext{lang} {alias}'.format(**{'lang': lang_code.lower(), 'alias': alias}))
-                    conditions.append('{}.option_value_id = cpo.id'.format(alias))
+                    values.append("{}.description".format(alias))
+                    froms.append(
+                        "codenerix_products_optionvaluetext{lang} {alias}".format(
+                            **{"lang": lang_code.lower(), "alias": alias}
+                        )
+                    )
+                    conditions.append(
+                        "{}.option_value_id = cpo.id".format(alias)
+                    )
 
-                query_text = "SELECT {} FROM {} WHERE {}".format(",".join(values), ",".join(froms), " AND ".join(conditions))
-                
-                froms = ['codenerix_products_optionvalue cpo', ]
-                conditions = ['cpo.group_id = {}'.format(group_id), ]
+                query_text = "SELECT {} FROM {} WHERE {}".format(
+                    ",".join(values), ",".join(froms), " AND ".join(conditions)
+                )
+
+                froms = [
+                    "codenerix_products_optionvalue cpo",
+                ]
+                conditions = [
+                    "cpo.group_id = {}".format(group_id),
+                ]
                 for tl in text_lang:
                     alias = "t{}".format(tl[0].lower())
                     table = tl[1]
 
-                    froms.append('{} {}'.format(table, alias))
-                    conditions.append('{}.option_value_id = cpo.id'.format(alias))
-                
+                    froms.append("{} {}".format(table, alias))
+                    conditions.append(
+                        "{}.option_value_id = cpo.id".format(alias)
+                    )
+
                 cursor.execute(query_text)
 
                 for option in cursor:
@@ -75,10 +113,12 @@ class Command(BaseCommand, Debugger):
                         a = '{} = "{}"'.format(v, o)
                         cond_extra.append(a)
 
-                    q_option = "SELECT COUNT(*) FROM {} WHERE {} AND {}".format(
-                        ",".join(froms),
-                        " AND ".join(conditions),
-                        " AND ".join(cond_extra)
+                    q_option = (
+                        "SELECT COUNT(*) FROM {} WHERE {} AND {}".format(
+                            ",".join(froms),
+                            " AND ".join(conditions),
+                            " AND ".join(cond_extra),
+                        )
                     )
 
                     cursor.execute(q_option)
@@ -97,9 +137,19 @@ class Command(BaseCommand, Debugger):
                             opt_lang.save()
 
         return 0
-                        
+
     def handle(self, *args, **options):
 
-        self.migrate(GroupValueAttribute, 'codenerix_products_attribute', OptionValueAttribute)
-        self.migrate(GroupValueFeature, 'codenerix_products_feature', OptionValueFeature)
-        self.migrate(GroupValueFeatureSpecial, 'codenerix_products_featurespecial', OptionValueFeatureSpecial)
+        self.migrate(
+            GroupValueAttribute,
+            "codenerix_products_attribute",
+            OptionValueAttribute,
+        )
+        self.migrate(
+            GroupValueFeature, "codenerix_products_feature", OptionValueFeature
+        )
+        self.migrate(
+            GroupValueFeatureSpecial,
+            "codenerix_products_featurespecial",
+            OptionValueFeatureSpecial,
+        )

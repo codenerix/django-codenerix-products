@@ -1,3 +1,15 @@
+django-codenerix-products (4.0.3) stable; urgency=medium
+
+  * Removed dependency with "codenerix.lib.debugger" in favor of "codenerix_lib.debugger"
+
+ -- Juanmi Taboada <juanmi@juanmitaboada.com>  Tue, 09 Apr 2024 09:37:01 +0200
+
+django-codenerix-products (4.0.2) stable; urgency=medium
+
+  * Python 3.10 compatibility
+
+ -- Juanmi Taboada <juanmi@juanmitaboada.com>  Sun, 29 Jan 2023 14:01:00 +0200
+
 django-codenerix-products (4.0.1) stable; urgency=medium
 
   * Django 4.x support
